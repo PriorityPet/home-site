@@ -7,10 +7,10 @@ const Navbar = () => {
       <img src='../vercel.svg' className='w-[10%] h-full object-contain'/>
       <div className="lg:hidden sm:block w-[90%] h-full"></div>
       <div className="sm:hidden lg:flex justify-end items-center w-[90%] h-full gap-7 box-border">
-        <Link href="/" className="font-medium text-slate-500 text-[15px]">Inicio</Link>
-        <Link href="/" className="font-medium text-slate-500 text-[15px]">Centros</Link>
-        <Link href="/" className="font-medium text-slate-500 text-[15px]">Servicios</Link>
-        <Link href="/" className="font-medium text-slate-500 text-[15px]">Especialistas</Link>
+        <Link href="/" className="font-medium text-slate-500 text-[14px]">Inicio</Link>
+        <Link href="/" className="font-medium text-slate-500 text-[14px]">Centros</Link>
+        <Link href="/" className="font-medium text-slate-500 text-[14px]">Servicios</Link>
+        <Link href="/" className="font-medium text-slate-500 text-[14px]">Especialistas</Link>
         <div className="w-fit p-[10px_40px] block relative bg-primary font-semibold text-[13px] text-white rounded-md cursor-pointer">Unirse</div>
       </div>
     </div>

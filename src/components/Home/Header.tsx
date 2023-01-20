@@ -13,7 +13,7 @@ const Header = () => {
 
             <div className="flex flex-col justify-center items-start w-1/2 h-full relative gap-10">
               <div className="flex flex-col w-full gap-4">
-                <p className='text-white font-bold text-5xl w-full'>Aqui encontraras a tu especialista ideal</p>
+                <p className='text-white font-bold text-4xl w-full'>Aqui encontraras a tu especialista ideal</p>
                 <p className='text-white font-light text-base w-[80%] text-left'>lorem impsum dolor sit amet, latin doklor desko rulen dast en impsum dolor sit amet otri.</p>
               </div>
               <div className="flex justify-between items-center w-fit gap-3">
@@ -33,11 +33,11 @@ const Header = () => {
                 <div className="w-full flex flex-col gap-5">
                   
                   <div className="w-full flex flex-col items-start justify-between gap-2">
-                    <p className="font-medium text-sm text-slate-400 w-fit">Especialista</p>
+                    <p className="font-medium text-[13px] text-slate-400 w-fit">Especialista</p>
                     <input type="text" className='w-full h-fit border border-slate-300 rounded bg-white p-[0.5rem_1.5rem] text-sm focus:outline-none' placeholder='Dr. Juan Albert Garcia' />
                   </div>
                   <div className="w-full flex flex-col items-start justify-between gap-2">
-                    <p className="font-medium text-sm text-slate-400 w-fit">Especialista</p>
+                    <p className="font-medium text-[13px] text-slate-400 w-fit">Especialista</p>
                     <input type="text" className='w-full h-fit border border-slate-300 rounded bg-white p-[0.5rem_1.5rem] text-sm focus:outline-none' placeholder='Dr. Juan Albert Garcia' />
                   </div>
 
