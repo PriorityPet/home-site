@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import Navbar from './Navbar'
+import Footer from './Footer'
 
 interface Props {
     title: string
@@ -18,6 +19,7 @@ const Layout = (props:Props) => {
                 <Navbar/>
                 {children}
             </div>
+            <Footer/>
         </div>
     )
 }

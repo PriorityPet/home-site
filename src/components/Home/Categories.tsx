@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { MdOutlineMedicalServices } from "react-icons/md";
+import { useRouter } from 'next/router'
 
 interface Category{
     title: string
@@ -9,6 +10,8 @@ interface Category{
 }
 
 const Categories = () => {
+
+    const router = useRouter()
 
     const [listOfCategories, setListOfCategories] = useState<Array<Category>>([
         {
@@ -43,7 +46,11 @@ const Categories = () => {
     const CategoryCard = (prop:Category) => {
         let {id, title, icon} = prop
         return(
-            <div className={twMerge('cursor-pointer bg-white border border-slate-300 rounded-lg p-[1.25%_0%] h-fit flex flex-col justify-center items-center text-center gap-3', 
+            <div 
+            onClick={()=>{
+                router.push("/centers")
+            }}
+            className={twMerge('cursor-pointer bg-white border border-slate-300 rounded-lg p-[1.25%_0%] h-fit flex flex-col justify-center items-center text-center gap-3', 
             'lg:w-[15%]',
             'md:w-1/2',
             'sm:w-full',
