@@ -13,10 +13,10 @@ const Navbar = () => {
       <div className="lg:hidden sm:block w-[90%] h-full"></div>
       <div className="sm:hidden lg:flex justify-end items-center w-[90%] h-full gap-7 box-border">
         <Link href="/" className="font-medium text-slate-500 text-[14px]">Inicio</Link>
-        <Link href={LocalitiesRoutesEnum.Localities} className="font-medium text-slate-500 text-[14px]">Centros</Link>
-        <Link href={ServicesRoutesEnum.Services} className="font-medium text-slate-500 text-[14px]">Servicios</Link>
+        <Link href={`${LocalitiesRoutesEnum.Localities}`} className="font-medium text-slate-500 text-[14px]">Centros</Link>
+        <Link href={`${ServicesRoutesEnum.Services}`} className="font-medium text-slate-500 text-[14px]">Servicios</Link>
         <Link href="/" className="font-medium text-slate-500 text-[14px]">Especialistas</Link>
-        <Link href={AccountRoutesEnum.SignUp} className="btn btn-primary">Unirse</Link>
+        <Link href={`${AccountRoutesEnum.SignUp}`} className="btn btn-primary">Unirse</Link>
       </div>
     </div>
   )

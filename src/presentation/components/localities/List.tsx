@@ -140,9 +140,7 @@ const List = () => {
             rating
         } = prop
         return(
-            <Link href={{
-                pathname: LocalitiesRoutesEnum.Location + id
-            }} className={twMerge('cursor-pointer overflow-hidden bg-white border border-slate-200 rounded-xl max-h-[45vh] h-[45vh] flex flex-col justify-center items-center', 
+            <Link href={`${LocalitiesRoutesEnum.Location}${id}`} className={twMerge('cursor-pointer overflow-hidden bg-white border border-slate-200 rounded-xl max-h-[45vh] h-[45vh] flex flex-col justify-center items-center', 
             'lg:w-[31.8%]',
             'md:w-1/2',
             'sm:w-full',
