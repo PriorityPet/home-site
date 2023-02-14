@@ -1,3 +1,3 @@
-export default interface IProductRepository {}
+export default interface ILocalitiesRepository {}
 
-export class ProductRepository implements IProductRepository {}
+export class LocalitiesRepository implements ILocalitiesRepository {}

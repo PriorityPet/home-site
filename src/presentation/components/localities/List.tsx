@@ -24,7 +24,7 @@ interface FilterTagProp{
     label: number | string
 }
 
-const Centers = () => {
+const List = () => {
 
     const [listOfCenters, setListOfCenters] = useState<Array<Center>>([
         {
@@ -201,4 +201,4 @@ const Centers = () => {
     )
 }
 
-export default Centers
+export default List

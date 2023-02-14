@@ -1,4 +1,5 @@
+import { DiscoverRoutes } from './discoverRoutes';
 export enum LocalitiesRoutesEnum {
-    Localities = "/localities",
-    Location = "/localities/"
+    Localities = DiscoverRoutes.Discover + "/localities",
+    Location = DiscoverRoutes.Discover + "/localities/"
 }

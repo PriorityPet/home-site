@@ -30,3 +30,13 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+@layer components{
+  .btn{
+    @apply w-fit p-[10px_40px] block relative font-semibold text-[13px] rounded-md cursor-pointer text-center
+  }
+
+  .btn-primary{
+    @apply bg-primary text-white
+  }
+}
