@@ -2,19 +2,19 @@ import React from 'react'
 import { twMerge } from 'tailwind-merge'
 
 interface InputProps{
-    onChange: (str: string | number) => void
+    onChangeCustom: (str: string | number ) => void
     placeholder: string | undefined
     value?: string | number
 }
 
 interface SelectProps{
-    onChange: (str: string | number) => void
+    onChangeCustom: (str: string | number) => void
     placeholder: string | undefined
     value?: string | number
     list: Array<string | number>
 }
 
-export function DefaultInput({ onChange, placeholder, value = "" }: InputProps) {
+export function DefaultInput({ onChangeCustom, placeholder, value = "" }: InputProps) {
   return (
     <input
         className={twMerge([
@@ -23,14 +23,14 @@ export function DefaultInput({ onChange, placeholder, value = "" }: InputProps) 
             "focus:outline-none focus:border-slate-400",
             "placeholder-slate-800"
         ])}
-        onChange={event => onChange(event.target.value)}
+        onChange={event => onChangeCustom(event.target.value)}
         placeholder={placeholder}
         defaultValue={value}
     />
   )
 }
 
-export function InputSelect({ onChange, placeholder, value = "", list = [] }: SelectProps) {
+export function InputSelect({ onChangeCustom, placeholder, value = "", list = [] }: SelectProps) {
   return (
     <select
         className={twMerge([
@@ -39,7 +39,7 @@ export function InputSelect({ onChange, placeholder, value = "", list = [] }: Se
             "focus:outline-none focus:border-slate-400",
             "placeholder-slate-800"
         ])}
-        onChange={event => onChange(event.target.value)}
+        onChange={event => onChangeCustom(event.target.value)}
         defaultValue={value}
     >
         <option value="">{placeholder}</option>

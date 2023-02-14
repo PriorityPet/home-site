@@ -1,9 +1,9 @@
-import Main from "@/presentation/components/home/Main";
+import Main from "@/presentation/components/localities/Main";
 import Layout from "@/presentation/components/core/Layout";
 
 function Home() {
   return (
-    <Layout title="Inicio">
+    <Layout title="Centros">
       <Main/>
     </Layout>
   )
