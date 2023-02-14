@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import { LocalitiesRoutesEnum } from '@/lib/routes/localitiesRoutes'
 
 const Navbar = () => {
   return (
@@ -10,7 +11,7 @@ const Navbar = () => {
       <div className="lg:hidden sm:block w-[90%] h-full"></div>
       <div className="sm:hidden lg:flex justify-end items-center w-[90%] h-full gap-7 box-border">
         <Link href="/" className="font-medium text-slate-500 text-[14px]">Inicio</Link>
-        <Link href="/centers" className="font-medium text-slate-500 text-[14px]">Centros</Link>
+        <Link href={LocalitiesRoutesEnum.Localities} className="font-medium text-slate-500 text-[14px]">Centros</Link>
         <Link href="/" className="font-medium text-slate-500 text-[14px]">Servicios</Link>
         <Link href="/" className="font-medium text-slate-500 text-[14px]">Especialistas</Link>
         <div className="w-fit p-[10px_40px] block relative bg-primary font-semibold text-[13px] text-white rounded-md cursor-pointer">Unirse</div>

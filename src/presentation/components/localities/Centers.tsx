@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
 import { twMerge } from 'tailwind-merge'
 import { FiStar, FiX } from 'react-icons/fi'
-import { InputSelect } from '../Inputs'
+import { InputSelect } from '../core/Inputs'
+import Link from 'next/link'
+import { LocalitiesRoutesEnum } from '@/lib/routes/localitiesRoutes'
 
 interface Center{
     id: number | string
@@ -138,7 +140,9 @@ const Centers = () => {
             rating
         } = prop
         return(
-            <div className={twMerge('cursor-pointer overflow-hidden bg-white border border-slate-200 rounded-xl max-h-[45vh] h-[45vh] flex flex-col justify-center items-center', 
+            <Link href={{
+                pathname: LocalitiesRoutesEnum.Location + id
+            }} className={twMerge('cursor-pointer overflow-hidden bg-white border border-slate-200 rounded-xl max-h-[45vh] h-[45vh] flex flex-col justify-center items-center', 
             'lg:w-[31.8%]',
             'md:w-1/2',
             'sm:w-full',
@@ -159,7 +163,7 @@ const Centers = () => {
                         </p>
                     </div>
                 </div>
-            </div>
+            </Link>
         )
     }
 
@@ -182,7 +186,7 @@ const Centers = () => {
                 <div className="w-[20%]">
                     <InputSelect
                         list={listOfSelect}
-                        onChange={()=>{}}
+                        onChangeCustom={()=>{}}
                         placeholder={listOfSelect[0]}
                         value={listOfSelect[0]}
                     />
