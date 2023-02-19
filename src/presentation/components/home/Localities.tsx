@@ -54,7 +54,13 @@ const Localities = () => {
                 <p className='text-2xl font-semibold text-primary'>Centros medicos</p>
                 <p className="cursor-pointer font-semibold text-sm text-primary w-fit text-center">Mostrar todos</p>
             </div>
-            <div className="flex flex-nowrap sm:flex-wrap justify-between items-center w-full h-fit">
+            <div className={twMerge([
+                "grid gap-4 w-full relative",
+                "lg:grid-cols-4",
+                "md:grid-cols-3",
+                "sm:grid-cols-2",
+                "xs:grid-cols-1",
+            ])}>
                 {listOfLocalities.map((prop, i)=> <LocationCard {...prop}/> )}
             </div>
         </div>
