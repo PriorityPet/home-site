@@ -4,6 +4,7 @@ import { FiStar, FiX } from 'react-icons/fi'
 import { InputSelect } from '../core/Inputs'
 import Link from 'next/link'
 import { LocalitiesRoutesEnum } from '@/lib/routes/localitiesRoutes'
+import { LocationCard } from '../core/Cards/LocationCard'
 
 interface Center{
     id: number | string
@@ -13,10 +14,6 @@ interface Center{
     image: string | undefined
     status: number | string
     rating: string | undefined
-}
-
-interface Status{
-    id: number | string
 }
 
 interface FilterTagProp{
@@ -116,55 +113,6 @@ const List = () => {
         )
     }
 
-    const StatusTag = (status:Status) => {
-        let {id} = status
-        return(
-            <div className={twMerge('w-fit h-fit p-[0.15rem_1rem] rounded font-medium text-sm text-white absolute top-3 right-3',
-                id.toString() === "0" && "bg-success",
-                id.toString() === "1" && "bg-warning",
-            )}>
-                {id.toString() === "0" && "Abierto"}
-                {id.toString() === "1" && "Cerrado"}
-            </div>
-        )
-    }
-
-    const CenterCard = (prop:Center) => {
-        let {
-            id, 
-            name, 
-            direction, 
-            phone,
-            image, 
-            status, 
-            rating
-        } = prop
-        return(
-            <Link href={`${LocalitiesRoutesEnum.Location}${id}`} className={twMerge('cursor-pointer overflow-hidden bg-white border border-slate-200 rounded-xl max-h-[45vh] h-[45vh] flex flex-col justify-center items-center', 
-            'lg:w-[31.8%]',
-            'md:w-1/2',
-            'sm:w-full',
-            'xs:w-full',
-            )} key={id}>
-                <div className="h-[20vh] w-full overflow-hidden relative">
-                    <StatusTag id={status}/>
-                    <img src={image} className='w-full h-full object-cover' alt={name}/>
-                </div>
-                <div className="h-[25vh] w-full px-5 py-4 flex flex-col justify-between">
-                    <p className='font-semibold text-lg text-primary w-full text-ellipsis overflow-hidden whitespace-nowrap'>{name}</p>
-                    <p className='font-normal text-sm text-slate-500 overflow-hidden max-h-[30%]'>{direction}</p>
-                    <p className='font-normal text-sm text-primary'><b>Telefono:</b> {phone}</p>
-                    <div className="flex items-center justify-end w-full border-t pt-2">
-                        <p className='flex items-center justify-start text-warning text-base font-normal gap-1'>
-                            <FiStar/>
-                            {rating}
-                        </p>
-                    </div>
-                </div>
-            </Link>
-        )
-    }
-
     let listOfSelect = [
         "Populares",
         "Nuevos",
@@ -194,7 +142,15 @@ const List = () => {
                 {listOfFilterTags.map((prop, i)=> <FilterTag {...prop}/> )}
                 <p className="font-medium text-sm text-primary underline ml-5">Limpiar</p>
             </div>
-            {listOfCenters.map((prop, i)=> <CenterCard {...prop}/> )}
+            <div className={twMerge([
+                "grid gap-4 w-full relative",
+                "lg:grid-cols-3",
+                "md:grid-cols-3",
+                "sm:grid-cols-2",
+                "xs:grid-cols-1",
+            ])}>
+                {listOfCenters.map((prop, i)=> <LocationCard {...prop}/> )}
+            </div>
         </div>
     )
 }

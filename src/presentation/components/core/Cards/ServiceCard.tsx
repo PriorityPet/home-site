@@ -1,15 +1,7 @@
 import { twMerge } from 'tailwind-merge'
 import { FiStar } from 'react-icons/fi'
-
-interface ServiceProp{
-    id: number | string
-    name: string
-    direction: string
-    phone: string
-    image: string | undefined
-    status: number | string
-    rating: string | undefined
-}
+import { Service } from '@/lib/domain/core/entities/services/service'
+import Link from 'next/link'
 
 interface Status{
     id: number | string
@@ -28,38 +20,39 @@ const StatusTag = (status:Status) => {
     )
 }
 
-export const ServiceCard = (prop:ServiceProp) => {
+export const ServiceCard = (prop:Service) => {
     let {
         id, 
         name, 
-        direction, 
-        phone,
+        categorie,
+        description,
         image, 
         status, 
-        rating
+        price
     } = prop
     return(
-        <div className={twMerge('cursor-pointer overflow-hidden bg-white border border-slate-300 rounded-xl max-h-[45vh] h-[45vh] flex flex-col justify-center items-center', 
-        'lg:w-[31.8%]',
-        'md:w-1/2',
-        'sm:w-full',
-        'xs:w-full',
-        )} key={id}>
+        <Link className={twMerge('cursor-pointer overflow-hidden bg-white border border-slate-300 rounded-xl max-h-[45vh] h-[45vh] flex flex-col justify-center items-center', 
+        //'lg:w-1/4',
+        //'md:w-1/2',
+        //'sm:w-full',
+        //'xs:w-full',
+        )} 
+        href={`/discover/services/${id}`}
+        key={id}>
             <div className="h-[20vh] w-full overflow-hidden relative">
-                <StatusTag id={status}/>
                 <img src={image} className='w-full h-full object-cover' alt={name}/>
             </div>
-            <div className="h-[25vh] w-full px-5 py-4 flex flex-col justify-between">
+            <div className="h-[25vh] w-full px-5 py-4 flex flex-col gap-1 justify-start">
                 <p className='font-semibold text-lg text-primary w-full text-ellipsis overflow-hidden whitespace-nowrap'>{name}</p>
-                <p className='font-normal text-sm text-slate-500 overflow-hidden max-h-[30%]'>{direction}</p>
-                <p className='font-normal text-sm text-primary'><b>Telefono:</b> {phone}</p>
-                <div className="flex items-center justify-end w-full border-t pt-2">
-                    <p className='flex items-center justify-start text-warning text-base font-normal gap-1'>
-                        <FiStar/>
-                        {rating}
-                    </p>
+                <p className='font-semibold text-sm text-slate-500'>{categorie}</p>
+                <div className="w-full h-px bg-slate-200"></div>
+                <p className='font-normal text-sm text-slate-500 overflow-hidden max-h-[29%]'>{description}</p>
+                <div className="w-fit flex justify-start items-center gap-2">
+                    <p className='font-normal text-sm text-slate-500'>Costo:</p>
+                    <p className='w-fit font-semibold rounded-md p-[1%_10.5%] text-sm text-green-800 bg-green-300'>${price}</p>
                 </div>
+                
             </div>
-        </div>
+        </Link>
     )
 }

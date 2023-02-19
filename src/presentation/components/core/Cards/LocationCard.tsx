@@ -39,12 +39,7 @@ export const LocationCard = (prop:LocationProp) => {
         rating
     } = prop
     return(
-        <div className={twMerge('cursor-pointer overflow-hidden bg-white border border-slate-300 rounded-xl max-h-[45vh] h-[45vh] flex flex-col justify-center items-center', 
-        'lg:w-[24.5%]',
-        'md:w-1/2',
-        'sm:w-full',
-        'xs:w-full',
-        )} key={id}>
+        <div className={twMerge('cursor-pointer overflow-hidden bg-white border border-slate-300 rounded-xl max-h-[45vh] h-[45vh] flex flex-col justify-center items-center')} key={id}>
             <div className="h-[20vh] w-full overflow-hidden relative">
                 <StatusTag id={status}/>
                 <img src={image} className='w-full h-full object-cover' alt={name}/>

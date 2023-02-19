@@ -6,20 +6,7 @@ import Link from 'next/link'
 import { LocalitiesRoutesEnum } from '@/lib/routes/localitiesRoutes'
 import { ServicesRoutesEnum } from '@/lib/routes/servicesRoutes'
 import { ServiceCard } from '../core/Cards/ServiceCard'
-
-interface Service{
-    id: number | string
-    name: string
-    direction: string
-    phone: string
-    image: string | undefined
-    status: number | string
-    rating: string | undefined
-}
-
-interface Status{
-    id: number | string
-}
+import { Service } from '@/lib/domain/core/entities/services/service'
 
 interface FilterTagProp{
     key: number | string
@@ -31,76 +18,22 @@ const List = () => {
     const [listOfServices, setListOfServices] = useState<Array<Service>>([
         {
             id: 0,
-            name: "Categoria 1",
-            direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Service.jpg&nocache=1",
+            name: "Servicio 1",
+            categorie: "Salud general",
+            description: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
+            image: "https://media.istockphoto.com/id/1319031310/photo/doctor-writing-a-medical-prescription.jpg?s=612x612&w=0&k=20&c=DWZGM8lBb5Bun7cbxhKT1ruVxRC_itvFzA9jxgoA0N8=",
             status: 0,
-            rating: "4.5"
+            price: "4.5"
         },
         {
             id: 1,
-            name: "Main Caracas Medical Service.",
-            direction: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Service.jpg&nocache=1",
+            name: "Servicio 2",
+            categorie: "Odontología",
+            description: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
+            image: "https://media.istockphoto.com/id/1301555107/photo/offering-patient-centred-care-that-proves-effective-and-efficient.jpg?s=612x612&w=0&k=20&c=ZQ-XMynZeFaYYLHfEhDpiBnjGd8DODsCb57r2ZmZkjw=",
             status: 1,
-            rating: "4.5"
-        },
-        {
-            id: 2,
-            name: "Categoria 1",
-            direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Service.jpg&nocache=1",
-            status: 0,
-            rating: "4.5"
-        },
-        {
-            id: 3,
-            name: "Main Caracas Medical Service.",
-            direction: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Service.jpg&nocache=1",
-            status: 1,
-            rating: "4.5"
-        },
-        {
-            id: 4,
-            name: "Categoria 1",
-            direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Service.jpg&nocache=1",
-            status: 0,
-            rating: "4.5"
-        },
-        {
-            id: 5,
-            name: "Main Caracas Medical Service.",
-            direction: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Service.jpg&nocache=1",
-            status: 1,
-            rating: "4.5"
-        },
-        {
-            id: 6,
-            name: "Categoria 1",
-            direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Service.jpg&nocache=1",
-            status: 0,
-            rating: "4.5"
-        },
-        {
-            id: 7,
-            name: "Main Caracas Medical Service.",
-            direction: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Service.jpg&nocache=1",
-            status: 1,
-            rating: "4.5"
-        },
+            price: "4.5"
+        }
     ])
 
     const FilterTag = (prop:FilterTagProp) => {
@@ -131,7 +64,7 @@ const List = () => {
     ]
 
     return (
-        <div className="flex flex-wrap justify-start items-stretch gap-4 w-3/4 h-fit">
+        <div className="flex flex-col flex-wrap justify-start items-stretch gap-4 w-3/4 h-fit">
             <div className="w-full h-fit flex justify-between items-center pb-2">
                 <p className='text-2xl font-semibold text-primary'>Servicios disponibles en Medhouse</p>
                 <div className="w-[20%]">
@@ -147,7 +80,15 @@ const List = () => {
                 {listOfFilterTags.map((prop, i)=> <FilterTag {...prop}/> )}
                 <p className="font-medium text-sm text-primary underline ml-5">Limpiar</p>
             </div>
-            {listOfServices.map((prop, i)=> <ServiceCard {...prop}/> )}
+            <div className={twMerge([
+                "grid gap-4 w-full relative",
+                "lg:grid-cols-3",
+                "md:grid-cols-3",
+                "sm:grid-cols-2",
+                "xs:grid-cols-1",
+            ])}>
+                {listOfServices.map((prop, _i)=> <ServiceCard {...prop}/> )}
+            </div>
         </div>
     )
 }

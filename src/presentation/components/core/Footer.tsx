@@ -6,7 +6,7 @@ const Footer = () => {
         return(
             <div className="w-1/3 h-full flex flex-col justify-start items-start gap-6">
                 <div className="w-fit h-[2.5rem]">
-                    <img src='../vercel.svg' className='w-full h-full object-contain'/>
+                    <img src='/vercel.svg' className='w-full h-full object-contain'/>
                 </div>
                 <div className="w-full h-fit">
                     <p className='font-light text-sm text-slate-500'>Medhouse coopera con terceros en la provisión de productos y servicios. Todos los Terceros son empresarios en virtud de las disposiciones del Código Civil.</p>
