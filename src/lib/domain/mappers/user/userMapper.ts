@@ -1,5 +1,4 @@
-import { IUser } from "domain/core/entities/userEntity";
-import firebase from "firebase/app";
+import { IUser } from "../../../domain/core/entities/userEntity";
 
 export function userFirebaseToMap(data: any): IUser {
   return {
@@ -17,23 +16,4 @@ export function userFirebaseToMap(data: any): IUser {
     updatedOn: data?.updatedOn ?? null,
     deletedOn: data?.deletedOn ?? null,
   } as IUser;
-}
-
-export function userFromFirebaseToDocumentData(user: IUser): firebase.firestore.DocumentData {
-  const userDocumentData = {
-    authId: user.userId,
-    administradorId: user.authId,
-    nombre:  user.firstName,
-    apellido: user.lastName,
-    status: user.status,
-    email: user.email,
-    avatar: user.avatar,
-    pais: user.country,
-    role: user.role,
-    token: user.token,
-    createdOn: user.createdOn,
-    updatedOn: user.updatedOn,
-  } as firebase.firestore.DocumentData;
-
-  return userDocumentData;
 }
