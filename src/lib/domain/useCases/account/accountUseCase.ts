@@ -18,4 +18,17 @@ export default class AccountUseCase {
         }
     }
 
+    async getAccount(): Promise<IUser> {
+        try {
+
+            const response = await this._repository.getAccount();
+
+            if (response instanceof AccountFailure) throw response;
+
+            return response;
+        } catch (error) {
+        throw error;
+        }
+    }
+
 }

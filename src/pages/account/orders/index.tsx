@@ -1,11 +1,14 @@
 import Layout from '@/presentation/components/core/Layout'
 import Main from '@/presentation/components/account/Orders/Main'
 import React from 'react'
+import AccountLayout from '@/presentation/components/account/AccountLayout'
 
 function Index() {
   return (
     <Layout title='Mis ordenes'>
-      <Main/>
+      <AccountLayout title='Mis reservaciones' description='Todas las transacciones y compras que tengas en Medhouse'>
+        <Main/>
+      </AccountLayout>
     </Layout>
   )
 }
