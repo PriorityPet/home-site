@@ -7,6 +7,7 @@ import { AccountFailure, accountFailuresEnum } from '../../../domain/core/failur
 
 export default interface IAccountRepository {
   updateAccount(): Promise<string | AccountFailure>;
+  getAccount(): Promise<IUser | AccountFailure>;
 }
 
 export class AccountRepository implements IAccountRepository {
@@ -17,6 +18,18 @@ export class AccountRepository implements IAccountRepository {
             const creationDBresponse = await supabase.from("usuarios").insert({})
             
             return creationDBresponse.data ?? "";
+        } catch (error) {
+            const exception = error as any;
+            return new AccountFailure(accountFailuresEnum.tooManyRequest);
+        }
+    }
+
+    async getAccount(): Promise<IUser | AccountFailure> {
+        try {
+            const uid = (await supabase.auth.getUser()).data.user?.id
+            const accountDBresponse = await supabase.from("usuarios").select("*").eq("uid", uid).single()
+            
+            return accountDBresponse.data ?? ""
         } catch (error) {
             const exception = error as any;
             return new AccountFailure(accountFailuresEnum.tooManyRequest);
