@@ -5,8 +5,8 @@ const Footer = () => {
     const LeftSection = () => {
         return(
             <div className="w-1/3 h-full flex flex-col justify-start items-start gap-6">
-                <div className="w-fit h-[2.5rem]">
-                    <img src='/vercel.svg' className='w-full h-full object-contain'/>
+                <div className="w-[60%] h-[4.5rem]">
+                    <img src='https://i0.wp.com/medhaus.com.mx/wp-content/uploads/2022/09/cropped-IMG_5684.jpg?fit=927%2C927&ssl=1' className='w-full h-full object-cover object-center'/>
                 </div>
                 <div className="w-full h-fit">
                     <p className='font-light text-sm text-slate-500'>Medhouse coopera con terceros en la provisión de productos y servicios. Todos los Terceros son empresarios en virtud de las disposiciones del Código Civil.</p>
