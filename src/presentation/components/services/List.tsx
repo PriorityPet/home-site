@@ -66,7 +66,7 @@ const List = () => {
     return (
         <div className="flex flex-col flex-wrap justify-start items-stretch gap-4 w-3/4 h-fit">
             <div className="w-full h-fit flex justify-between items-center pb-2">
-                <p className='text-2xl font-semibold text-primary'>Servicios disponibles en Medhouse</p>
+                <p className='text-2xl font-semibold text-primary'>Servicios disponibles en Medhaus</p>
                 <div className="w-[20%]">
                     <InputSelect
                         list={listOfSelect}

@@ -11,13 +11,15 @@ interface Props {
 const Layout = (props:Props) => {
     const {title, children} = props
     return (
-        <div className='bg-white h-fit'>
+        <div className='h-fit'>
             <Head>
-                <title>{`${title} - Medhouse`}</title>
+                <title>{`${title} - Medhaus`}</title>
             </Head>
-            <div className={`relative block w-full`}>
+            <div className={`relative block w-full bg-slate-100`}>
                 <Navbar/>
-                {children}
+                <div className="pt-[2%] mt-[16vh] pb-[7%] box-border">
+                    {children}
+                </div>
             </div>
             <Footer/>
         </div>

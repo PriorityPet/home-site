@@ -3,10 +3,10 @@ import React from 'react'
 const Header = () => {
   //p-[7rem_10rem_5rem_10rem]
   return (
-    <div className="w-full h-screen bg-white 
-    p-[7%_10%_5%_10%]
+    <div className="w-full h-fit bg-white 
+    p-[0%_10%_4%_10%]
     ">
-      <div className="bg-primary relative w-full h-full rounded-[2rem] overflow-hidden">
+      <div className="bg-primary relative w-full h-fit rounded-[2rem] overflow-hidden">
         
         <div className="w-full h-full bg-gradient-to-r from-slate-900 to-slate-900/50 absolute top-0 left-0">
           <div className="flex justify-between items-center w-full h-full relative px-[5%]">
@@ -17,7 +17,7 @@ const Header = () => {
                 <p className='text-white font-light text-base w-[80%] text-left'>lorem impsum dolor sit amet, latin doklor desko rulen dast en impsum dolor sit amet otri.</p>
               </div>
               <div className="flex justify-between items-center w-fit gap-3">
-                <p className="cursor-pointer font-light text-sm text-white">Ya tengo una cuenta en Medhouse</p>
+                <p className="cursor-pointer font-light text-sm text-white">Ya tengo una cuenta en Medhaus</p>
                 <div className="w-fit text-center p-[10px_40px] block relative bg-white font-semibold text-[13px] text-primary rounded-md cursor-pointer">No tengo una cuenta</div>
               </div>
             </div>
