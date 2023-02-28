@@ -3,7 +3,7 @@ import React from 'react'
 const Header = () => {
   //p-[7rem_10rem_5rem_10rem]
   return (
-    <div className="w-full h-fit bg-white 
+    <div className="w-full h-fit 
     p-[0%_10%_4%_10%]
     ">
       <div className="bg-primary relative w-full h-fit rounded-[2rem] overflow-hidden">
