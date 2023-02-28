@@ -32,9 +32,9 @@ const Header = () => {
 
 function Main() {
   return (
-    <div className="w-full h-full bg-slate-100 relative py-[5%]">
+    <div className="w-full h-full relative py-[10vh]">
       <Header/>
-      <div className="p-[7.5%_20%]">
+      <div className="p-[0%_20%]">
 
       </div>
 

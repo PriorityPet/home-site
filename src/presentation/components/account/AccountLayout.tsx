@@ -60,10 +60,10 @@ const AccountLayout = (props:Props) => {
     const {title, description, children} = props
     return (
         <AccountProvider>
-            <div className="w-full h-full bg-slate-100 relative py-[5%]">
-                <div className="p-[2%_20%]">
+            <div className="w-full h-full bg-slate-100 relative">
+                <div className="p-[0%_20%]">
 
-                    <div className="w-full flex justify-between items-start gap-10 mt-5">
+                    <div className="w-full flex justify-between items-start gap-10">
                         <div className="w-[35%] relative flex flex-col justify-center items-start">
                             <AccountCard/>
                         </div>

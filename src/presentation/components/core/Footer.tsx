@@ -9,10 +9,10 @@ const Footer = () => {
                     <img src='https://i0.wp.com/medhaus.com.mx/wp-content/uploads/2022/09/cropped-IMG_5684.jpg?fit=927%2C927&ssl=1' className='w-full h-full object-cover object-center'/>
                 </div>
                 <div className="w-full h-fit">
-                    <p className='font-light text-sm text-slate-500'>Medhouse coopera con terceros en la provisión de productos y servicios. Todos los Terceros son empresarios en virtud de las disposiciones del Código Civil.</p>
+                    <p className='font-light text-sm text-slate-500'>Medhaus coopera con terceros en la provisión de productos y servicios. Todos los Terceros son empresarios en virtud de las disposiciones del Código Civil.</p>
                 </div>
                 <div className="w-full h-fit">
-                    <p className='font-semibold text-base text-slate-900'>© 2023 Medhouse. Todos los derechos reservados.</p>
+                    <p className='font-semibold text-base text-slate-900'>© 2023 Medhaus. Todos los derechos reservados.</p>
                 </div>
             </div>
         )
