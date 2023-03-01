@@ -99,9 +99,9 @@ function Main() {
                 <div className="h-full w-full px-5 py-4 flex flex-col justify-between items-center">
                     <img src={image} className='w-[100px] h-[100px] rounded-full  overflow-hidden object-cover mx-auto' alt={name}/>
                     <div className="w-full h-fit flex flex-col items-start justify-between gap-1">
-                        <p className='font-semibold text-lg text-primary w-full text-ellipsis overflow-hidden whitespace-nowrap text-center'>{name}</p>
+                        <p className='font-semibold text-lg text-slate-900 w-full text-ellipsis overflow-hidden whitespace-nowrap text-center'>{name}</p>
                         <p className='font-normal text-xs text-slate-500 overflow-hidden max-h-[40vh]'>{direction}</p>
-                        <p className='font-normal text-sm text-primary'>{phone}</p>
+                        <p className='font-normal text-sm text-slate-900'>{phone}</p>
                     </div>
                     <div className="flex items-center justify-between w-full border-t pt-2">
                         <div className={twMerge('w-fit h-fit p-[0.15rem_1rem] rounded font-medium text-[12px] text-white',
@@ -172,7 +172,7 @@ function Main() {
             <div className="w-full flex justify-between items-start gap-5 mt-[2.5%]">
                 <div className="w-1/4 flex flex-col justify-start items-start gap-4 h-fit p-[1%]">
                     <div className="w-full border-b border-b-slate-300 pb-[2.5%]">
-                        <p className="font-bold text-primary">Adicional</p>
+                        <p className="font-bold text-slate-900">Adicional</p>
                     </div>
                     <p className="text-slate-900 font-light text-base">{center["direction"]}</p>
                     <p className="text-slate-900 font-semibold text-base">{center["phone"]}</p>
@@ -190,7 +190,7 @@ function Main() {
                             <p 
                             className={twMerge([
                                 "w-fit p-[1%_2.5%] cursor-pointer",
-                                "border-b-4 border-b-transparent bg-transparent font-normal text-primary",
+                                "border-b-4 border-b-transparent bg-transparent font-normal text-slate-900",
                                 activeTab === tab["id"] && "border-b-primary font-bold"
                             ])}
                             onClick={()=>{ setActiveTab(tab["id"]) }}>{tab["label"]}</p>

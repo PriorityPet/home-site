@@ -12,7 +12,7 @@ export class MedicalRecordRepository implements IMedicalRecordRepository {
 
             const res = await supabase.from("medical_records").select("*")
             
-            return res.data ?? [];
+            return res.data ?? ["", "", ""];
         } catch (error) {
             const exception = error as any;
             return new MedicalRecordFailure(medicalRecordFailuresEnum.tooManyRequest);

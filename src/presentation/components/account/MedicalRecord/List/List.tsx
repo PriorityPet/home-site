@@ -11,36 +11,23 @@ function List() {
 
   const TreatmentComponent = (data:any) => {
     return(
-      <div className="w-full h-[20vh] rounded-lg border bg-white p-3 flex flex-col justify-between items-start">
-        
-        <div className="w-full flex justify-between items-center">
-          <div className="w-full flex justify-start items-center gap-2">
-            <div className='w-3 h-3 rounded-full bg-green-600'></div>
-            <p className="text-sm text-slate-700 font-normal">Por confirmar</p>
-          </div>
-
-          <p className="text-sm text-slate-700 font-semibold">#1</p>
-        </div>
-
-
-        <p className="text-lg text-slate-900 font-bold">Consulta general</p>
-        <p className="text-sm text-slate-700 font-light">Salud</p>
-        
-        <div className="w-full flex justify-between items-center">
+      <div className="w-full h-[20vh] cursor-pointer bg-white border-b border-slate-200 flex justify-start items-center gap-3 rounded-md p-[2%_0%] overflow-hidden">
           
-          <div className="w-1/3 flex flex-col justify-start items-start">
-            <p className="text-sm text-slate-400 font-light">Costo</p>
-            <p className="text-sm text-slate-700 font-normal">5$</p>
-          </div>
-          <div className="w-1/3 flex flex-col justify-start items-start">
-            <p className="text-sm text-slate-400 font-light">Fecha</p>
-            <p className="text-sm text-slate-700 font-normal">12/12/2022</p>
-          </div>
-          <div className="w-1/3 flex flex-col justify-start items-start">
-            <p className="text-sm text-slate-400 font-light">Hora</p>
-            <p className="text-sm text-slate-700 font-normal">12:00AM</p>
-          </div>
-
+        <div className="flex flex-col justify-start items-start w-[15%]">
+          <p className='font-light text-[0.8rem] text-slate-400'>Estado</p>
+          <p className='font-semibold p-[3%_3%] text-center text-[0.7rem] rounded text-green-900 bg-green-400 w-full'>Activo</p>
+        </div>
+        <div className="flex flex-col justify-start items-start w-[40%]">
+          <p className='font-light text-[0.8rem] text-slate-400'>Tratamiento</p>
+          <p className='font-semibold text-[0.9rem] text-slate-900'>{data["date"] ?? "Acetaminofen" }</p>
+        </div>
+        <div className="flex flex-col justify-start items-start w-[30%]">
+          <p className='font-light text-[0.8rem] text-slate-400'>Cantidad</p>
+          <p className='font-semibold text-[0.9rem] text-slate-900'>{data["date"] ?? "300mg" }</p>
+        </div>
+        <div className="flex flex-col justify-start items-start w-[15%]">
+          <p className='font-light text-[0.8rem] text-slate-400'>Durante</p>
+          <p className='font-semibold text-[0.9rem] text-slate-900'>{data["date"] ?? "2 sem." }</p>
         </div>
 
       </div>

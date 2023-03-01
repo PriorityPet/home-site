@@ -19,7 +19,7 @@ export function DefaultInput({ onChangeCustom, placeholder, value = "" }: InputP
     <input
         className={twMerge([
             "min-w-[4rem] w-full max-w-full",
-            "transition bg-white border border-slate-300 rounded-md font-normal text-primary text-sm p-[0.5rem_0.6rem]",
+            "transition bg-white border border-slate-300 rounded-md font-normal text-slate-900 text-sm p-[0.5rem_0.6rem]",
             "focus:outline-none focus:border-slate-400",
             "placeholder-slate-800"
         ])}
@@ -35,7 +35,7 @@ export function InputSelect({ onChangeCustom, placeholder, value = "", list = []
     <select
         className={twMerge([
             "min-w-[4rem] w-full max-w-full",
-            "transition bg-white border border-slate-300 rounded-md font-normal text-primary text-sm p-[0.5rem_0.6rem]",
+            "transition bg-white border border-slate-300 rounded-md font-normal text-slate-900 text-sm p-[0.5rem_0.6rem]",
             "focus:outline-none focus:border-slate-400",
             "placeholder-slate-800"
         ])}

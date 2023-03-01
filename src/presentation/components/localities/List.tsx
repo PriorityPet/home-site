@@ -102,11 +102,11 @@ const List = () => {
         let {label, key} = prop
         return(
             <div key={key} className={twMerge([
-                'w-fit h-fit p-[0.5rem_1rem] border border-slate-200 rounded-md font-medium text-sm text-primary bg-white relative',
+                'w-fit h-fit p-[0.5rem_1rem] border border-slate-200 rounded-md font-medium text-sm text-slate-900 bg-white relative',
                 "flex justify-between items-center"
             ])}>
                 {label}
-                <div className='w-[30px] font-sm flex flex-col justify-center items-center text-primary'>
+                <div className='w-[30px] font-sm flex flex-col justify-center items-center text-slate-900'>
                     <FiX/>
                 </div>
             </div>
@@ -128,7 +128,7 @@ const List = () => {
     return (
         <div className="flex flex-wrap justify-start items-stretch gap-4 w-3/4 h-fit">
             <div className="w-full h-fit flex justify-between items-center pb-2">
-                <p className='text-2xl font-semibold text-primary'>Centros disponibles en Medhaus</p>
+                <p className='text-2xl font-semibold text-slate-900'>Centros disponibles en Medhaus</p>
                 <div className="w-[20%]">
                     <InputSelect
                         list={listOfSelect}
@@ -140,7 +140,7 @@ const List = () => {
             </div>
             <div className="w-full h-fit flex flex-wrap justify-start gap-2 items-center pb-2">
                 {listOfFilterTags.map((prop, i)=> <FilterTag {...prop}/> )}
-                <p className="font-medium text-sm text-primary underline ml-5">Limpiar</p>
+                <p className="font-medium text-sm text-slate-900 underline ml-5">Limpiar</p>
             </div>
             <div className={twMerge([
                 "grid gap-4 w-full relative",

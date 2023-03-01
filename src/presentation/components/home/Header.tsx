@@ -18,7 +18,7 @@ const Header = () => {
               </div>
               <div className="flex justify-between items-center w-fit gap-3">
                 <p className="cursor-pointer font-light text-sm text-white">Ya tengo una cuenta en Medhaus</p>
-                <div className="w-fit text-center p-[10px_40px] block relative bg-white font-semibold text-[13px] text-primary rounded-md cursor-pointer">No tengo una cuenta</div>
+                <div className="w-fit text-center p-[10px_40px] block relative bg-white font-semibold text-[13px] text-slate-900 rounded-md cursor-pointer">No tengo una cuenta</div>
               </div>
             </div>
 
@@ -26,8 +26,8 @@ const Header = () => {
               <div className="bg-white w-[65%] h-fit gap-8 rounded-lg flex flex-col justify-between items-center p-[1.5rem]">
 
                 <div className="border-b border-slate-300 text-center w-full pb-3 flex flex-col items-center justify-center gap-1">
-                  <p className="font-bold text-primary text-lg">Que buscas</p>
-                  <p className="cursor-pointer font-light text-sm text-primary w-fit text-center">lorem impsum dolor sit amet, latin doklor.</p>
+                  <p className="font-bold text-slate-900 text-lg">Que buscas</p>
+                  <p className="cursor-pointer font-light text-sm text-slate-900 w-fit text-center">lorem impsum dolor sit amet, latin doklor.</p>
                 </div>
 
                 <div className="w-full flex flex-col gap-5">
@@ -45,7 +45,7 @@ const Header = () => {
 
                 <div className="w-full flex flex-col items-center justify-center gap-2">
                   <div className="w-full text-center p-[10px_40px] block relative bg-primary font-semibold text-[13px] text-white rounded-md cursor-pointer">Buscar</div>
-                  <p className="cursor-pointer font-light text-sm text-primary w-fit text-center">Necesito mas maneras de filtrar</p>
+                  <p className="cursor-pointer font-light text-sm text-slate-900 w-fit text-center">Necesito mas maneras de filtrar</p>
                 </div> 
 
 

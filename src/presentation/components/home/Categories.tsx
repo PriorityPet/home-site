@@ -61,7 +61,7 @@ const Categories = () => {
                 : 
                     <MdOutlineMedicalServices color='#3D85EC' size={50}/>
                 }
-                <p className="text-primary font-semibold text-[15px]">{title}</p>
+                <p className="text-slate-900 font-semibold text-[15px]">{title}</p>
             </div>
         )
     }

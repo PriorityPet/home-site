@@ -43,7 +43,7 @@ export const ServiceCard = (prop:Service) => {
                 <img src={image} className='w-full h-full object-cover' alt={name}/>
             </div>
             <div className="h-[25vh] w-full px-5 py-4 flex flex-col gap-1 justify-start">
-                <p className='font-semibold text-lg text-primary w-full text-ellipsis overflow-hidden whitespace-nowrap'>{name}</p>
+                <p className='font-semibold text-lg text-slate-900 w-full text-ellipsis overflow-hidden whitespace-nowrap'>{name}</p>
                 <p className='font-semibold text-sm text-slate-500'>{categorie}</p>
                 <div className="w-full h-px bg-slate-200"></div>
                 <p className='font-normal text-sm text-slate-500 overflow-hidden max-h-[29%]'>{description}</p>
