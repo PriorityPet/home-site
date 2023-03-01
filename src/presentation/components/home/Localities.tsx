@@ -47,12 +47,12 @@ const Localities = () => {
     return (
         <div className="w-full px-[10%] bg-slate-200/50 pt-7">
             <div className="flex flex-col justify-center items-center mb-5 gap-1">
-                <p className='text-3xl font-bold text-primary'>Todo lo que necesitas</p>
-                <p className="font-light text-base text-primary w-[50%] text-center">lorem impsum dolor sit amet, latin doklor desko rulen dast en dolor sit amet, latin doklor.</p>
+                <p className='text-3xl font-bold text-slate-900'>Todo lo que necesitas</p>
+                <p className="font-light text-base text-slate-900 w-[50%] text-center">lorem impsum dolor sit amet, latin doklor desko rulen dast en dolor sit amet, latin doklor.</p>
             </div>
             <div className="flex justify-between items-center mb-5">
-                <p className='text-2xl font-semibold text-primary'>Centros medicos</p>
-                <p className="cursor-pointer font-semibold text-sm text-primary w-fit text-center">Mostrar todos</p>
+                <p className='text-2xl font-semibold text-slate-900'>Centros medicos</p>
+                <p className="cursor-pointer font-semibold text-sm text-slate-900 w-fit text-center">Mostrar todos</p>
             </div>
             <div className={twMerge([
                 "grid gap-4 w-full relative",

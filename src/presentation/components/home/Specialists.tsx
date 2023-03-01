@@ -73,9 +73,9 @@ const Specialists = () => {
                 <div className="h-full w-full px-5 py-4 flex flex-col justify-between items-center">
                     <img src={image} className='w-[100px] h-[100px] rounded-full  overflow-hidden object-cover mx-auto' alt={name}/>
                     <div className="w-full h-fit flex flex-col items-start justify-between gap-1">
-                        <p className='font-semibold text-lg text-primary w-full text-ellipsis overflow-hidden whitespace-nowrap text-center'>{name}</p>
+                        <p className='font-semibold text-lg text-slate-900 w-full text-ellipsis overflow-hidden whitespace-nowrap text-center'>{name}</p>
                         <p className='font-normal text-xs text-slate-500 overflow-hidden max-h-[40vh]'>{direction}</p>
-                        <p className='font-normal text-sm text-primary'>{phone}</p>
+                        <p className='font-normal text-sm text-slate-900'>{phone}</p>
                     </div>
                     <div className="flex items-center justify-between w-full border-t pt-2">
                         <div className={twMerge('w-fit h-fit p-[0.15rem_1rem] rounded font-medium text-[12px] text-white',
@@ -98,8 +98,8 @@ const Specialists = () => {
     return (
         <div className="w-full px-[10%] bg-slate-200/50 pb-7">
             <div className="flex justify-between items-center mb-5">
-                <p className='text-2xl font-semibold text-primary'>Especialistas</p>
-                <p className="cursor-pointer font-semibold text-sm text-primary w-fit text-center">Mostrar todos</p>
+                <p className='text-2xl font-semibold text-slate-900'>Especialistas</p>
+                <p className="cursor-pointer font-semibold text-sm text-slate-900 w-fit text-center">Mostrar todos</p>
             </div>
             <div className="flex flex-nowrap sm:flex-wrap justify-between items-center w-full h-fit mb-5">
                 {listOfSpecialists.map((prop, i)=> <SpecialistCard {...prop}/> )}
