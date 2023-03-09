@@ -22,6 +22,10 @@ let list = [
         href: "/account"
     },
     {
+        label: "Mi agenda",
+        href: "/account/agenda"
+    },
+    {
         label: "Mis reservaciones",
         href: "/account/orders"
     },

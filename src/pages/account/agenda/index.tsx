@@ -1,12 +1,12 @@
 import Layout from '@/presentation/components/core/Layout'
-import Main from '@/presentation/components/account/MedicalRecord/Main'
+import Main from '@/presentation/components/account/Agenda/Main'
 import React from 'react'
 import AccountLayout from '@/presentation/components/account/AccountLayout'
 
 function Index() {
   return (
-    <Layout title='Expediente médico'>
-      <AccountLayout title='Expediente médico' description='Todos los tratamientos y diagnosticos que se te asignen en la plataforma'>
+    <Layout title='Mi agenda'>
+      <AccountLayout title='Mi agenda' description='Todas las reservaciones a servicios que tengas en Medhaus'>
         <Main/>
       </AccountLayout>
     </Layout>
