@@ -26,8 +26,7 @@ function Main() {
         </div>
 
         <div className="w-full relative flex justify-start items-start mt-5">
-          <p className="w-1/3 text-slate-900 font-semibold text-base">Reserva</p>
-          <p className="w-2/3 text-slate-900 font-light text-base">Selecciona el día y hora que mejor te convenga para tu reserva</p>
+          <p className="w-full text-slate-900 font-light text-base">Selecciona el día y hora que mejor te convenga para tu reserva</p>
         </div>
 
         <div className="w-full relative flex justify-start items-start mt-5 gap-5">
