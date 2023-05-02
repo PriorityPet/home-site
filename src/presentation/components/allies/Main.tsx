@@ -59,27 +59,32 @@ const TilesInList = ({title}:{
 
 const DoctorsFirst = () => {
     return (
-        <div className='w-full flex flex-col justify-start items-center gap-[0.2rem] h-fit px-[8rem] my-[3rem] text-center'>
+        <div className='w-full flex flex-col justify-start items-center gap-[4rem] h-fit px-[8rem] my-[3rem] text-center'>
             <div className='w-full flex flex-col justify-center items-cente text-center gap-5'>
                 <p className='text-secondary font-bold text-[3rem] leading-[50px]'>Conecta con tus pacientes</p>
-                <p className='text-[#798493] font-light text-base'>Tus pacientes accederán a su portal de salud o descargará la app móvil que será el asistente virtual</p>
+                <p className='text-[#798493] font-light text-base'>Tus pacientes tendrán una app que será su asistente virtual para acompañarlos en la prevención y autocuidado de su salud y bienestar</p>
             </div>
             <div className="w-full flex justify-between items-center gap-[3rem]">
-                <div className='w-1/2 h-full relative flex flex-col justify-start items-start gap-8 pr-[10%]'>
+                <div className='w-1/2 h-full relative flex flex-col justify-start items-start gap-4'>
                     <BenefitInList 
-                        title="Eventos de salud" 
-                        description="Programación y notificación de citas pendientes, toma de medicamento, eventos presenciales o virtuales de la comunidad Medhaus." 
+                        title="Educación, prevención y autocuidado" 
+                        description="Podrás compartir con tus pacientes: contenidos, recomendaciones y programas de prevención, control, nutrición y bienestar que generarán tareas que deberán realizar tus pacientes." 
                         image="../img/icons/icon-1.png" 
                     />
                     <BenefitInList 
                         title="Control de tratamientos" 
-                        description="Gestión de los tratamientos, desde la notificación de uno nuevo, hasta la compra, inicio, cumplimiento, evolución (sintomatología) y finalización." 
+                        description="Tus pacientes tendrán el acompañamiento desde un nuevo tratamiento, cada una de las tomas de medicamentos u órdenes médicas hasta su evolución (recordatorios y sintomatología) y su finalización." 
                         image="../img/icons/icon-2.png" 
                     />
                     <BenefitInList 
                         title="Registros de salud" 
-                        description="Información sobre sus valores y su evolución, recetas y tratamientos, órdenes de estudio diagnósticos y sus resultados." 
+                        description="Tus pacientes tendrán su registro médico (órdenes médicas y resultados, tratamientos y valores y signos vitales) y podrán interactuar contigo para realizar citas, pagos, solicitudes, entre otras." 
                         image="../img/icons/icon-3.png" 
+                    />
+                    <BenefitInList 
+                        title="Comunidad Medhaus" 
+                        description="Podrás publicar contenidos en una comunidad muy grande de pacientes y podrás interactuar con el resto de los médicos y proveedores de la comunidad Medhaus." 
+                        image="../img/icons/icon-4.png" 
                     />
                 </div>
                 <div className='w-1/2 h-full block relative'>

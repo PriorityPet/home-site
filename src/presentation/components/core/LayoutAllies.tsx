@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link';
 import React from 'react'
+import { FiFacebook, FiInstagram, FiLinkedin } from 'react-icons/fi';
 import { twMerge } from 'tailwind-merge';
 
 function LayoutAllies({children, title, activeLink}:{
@@ -25,15 +26,15 @@ function LayoutAllies({children, title, activeLink}:{
                 <Link className={twMerge([
                     "font-light text-base text-secondary",
                     activeLink === "center-1" && "font-bold"
-                ])} href={"/allies"}>Coyoacán</Link>
+                ])} href={"/allies/coyoacan"}>Coyoacán</Link>
                 <Link className={twMerge([
                     "font-light text-base text-secondary",
                     activeLink === "center-2" && "font-bold"
-                ])} href={"/allies"}>Interlomas</Link>
+                ])} href={"/allies/interlomas"}>Interlomas</Link>
                 <Link className={twMerge([
                     "font-light text-base text-secondary",
                     activeLink === "center-3" && "font-bold"
-                ])} href={"/allies"}>Tlalnepantla</Link>
+                ])} href={"/allies/tlalnepantla"}>Tlalnepantla</Link>
             </div>
         </div>
         <div className={`relative block w-full bg-white`}>
