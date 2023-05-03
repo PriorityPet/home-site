@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Header = () => {
@@ -6,7 +7,7 @@ const Header = () => {
             <div className='w-1/2 h-full relative flex flex-col justify-center items-start gap-5'>
                 <p className="text-secondary font-bold text-[3rem] leading-[50px]">Únete a la red de <span className='text-primary'>profesionales y médicos</span> de MedHaus</p>
                 <p className='text-[#798493] font-light text-base'>Contamos con una base de 300 médicos, más de 200 consultorios de alta especialidad, 4 clínicas, laboratorios clínicos, Rayos x y farmacia dentro de nuestras instalaciones.</p>
-                <div className='bg-primary text-white w-fit h-fit px-20 py-3 font-light text-sm rounded-md cursor-pointer hover:bg-dark-primary transition'>Regístrate</div>
+                <Link target='_blank' href={"https://proveedores.medhaus.com.mx/register"} className='bg-primary text-white w-fit h-fit px-20 py-3 font-light text-sm rounded-md cursor-pointer hover:bg-dark-primary transition'>Regístrate</Link>
             </div>
             <div className='w-1/2 h-full block relative'>
                 <img className='w-full h-full object-cover' src='../img/header-top.png' alt='Plataforma médica para médicos'/>

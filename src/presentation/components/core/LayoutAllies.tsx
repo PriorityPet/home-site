@@ -13,6 +13,8 @@ function LayoutAllies({children, title, activeLink}:{
     <div className='bg-white'>
         <Head>
             <title>{`${title} - Medhaus`}</title>
+            <link rel="icon" href="https://i0.wp.com/medhaus.com.mx/wp-content/uploads/2021/06/cropped-logo_med-haus-01.png?fit=32%2C32&amp;ssl=1" sizes="32x32"/>
+            <link rel="icon" href="https://i0.wp.com/medhaus.com.mx/wp-content/uploads/2021/06/cropped-logo_med-haus-01.png?fit=192%2C192&amp;ssl=1" sizes="192x192"/>
         </Head>
         <div className="w-full top-0 left-0 sticky h-[10vh] border-b border-slate-200 bg-white px-[8rem] flex justify-between items-center z-10">
             <div className='w-[13%] h-full'>
