@@ -22,19 +22,19 @@ function LayoutAllies({children, title, activeLink}:{
                 <Link className={twMerge([
                     "font-light text-base text-secondary",
                     activeLink === "platform" && "font-bold"
-                ])} href={"/allies"}>Plataforma</Link>
+                ])} href={"/"}>Plataforma</Link>
                 <Link className={twMerge([
                     "font-light text-base text-secondary",
                     activeLink === "center-1" && "font-bold"
-                ])} href={"/allies/coyoacan"}>Coyoacán</Link>
+                ])} href={"/coyoacan"}>Coyoacán</Link>
                 <Link className={twMerge([
                     "font-light text-base text-secondary",
                     activeLink === "center-2" && "font-bold"
-                ])} href={"/allies/interlomas"}>Interlomas</Link>
+                ])} href={"/interlomas"}>Interlomas</Link>
                 <Link className={twMerge([
                     "font-light text-base text-secondary",
                     activeLink === "center-3" && "font-bold"
-                ])} href={"/allies/tlalnepantla"}>Tlalnepantla</Link>
+                ])} href={"/tlalnepantla"}>Tlalnepantla</Link>
             </div>
         </div>
         <div className={`relative block w-full bg-white`}>

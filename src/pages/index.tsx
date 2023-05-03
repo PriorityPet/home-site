@@ -1,12 +1,13 @@
-import Main from "@/presentation/components/home/Main";
-import Layout from "@/presentation/components/core/Layout";
+import Main from '@/presentation/components/allies/Main'
+import LayoutAllies from '@/presentation/components/core/LayoutAllies'
+import React from 'react'
 
-function Home() {
+function index() {
   return (
-    <Layout title="Inicio">
-      <Main/>
-    </Layout>
+    <LayoutAllies activeLink="platform" title='Alquila en nuestras sucursales médicas'>
+        <Main/>
+    </LayoutAllies>
   )
 }
 
-export default Home
+export default index
