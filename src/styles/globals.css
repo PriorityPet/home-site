@@ -38,4 +38,21 @@ a {
   .btn-primary{
     @apply bg-primary text-white
   }
+
+  .allies-title{
+    @apply text-secondary font-bold text-[1.8rem] leading-[30px] lg:text-[2.7rem] lg:leading-[50px] md:text-[2.7rem] md:leading-[50px]
+  }
+
+  .allies-subtitle{
+    @apply text-secondary font-semibold text-[1.8rem] leading-[30px] lg:text-[2rem] lg:leading-[50px] md:text-[2rem] md:leading-[50px]
+  }
+
+  .allies-description{
+    @apply text-[#798493] font-light text-sm lg:text-base md:text-base
+  }
+
+  .allies-label{
+    @apply text-[#798493] font-light text-sm lg:text-sm md:text-sm
+  }
+
 }
