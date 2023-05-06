@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { FiCheck, FiFacebook, FiInstagram, FiLinkedin } from 'react-icons/fi'
+import { FiAlertOctagon, FiCheck, FiFacebook, FiInstagram, FiLinkedin, FiTruck } from 'react-icons/fi'
 import { twMerge } from 'tailwind-merge'
 
 let list_images = [
@@ -89,6 +89,15 @@ const Header = () => {
                 'lg:w-1/2 lg:text-left',
                 'md:w-1/2 md:text-left'
             ])}>
+                <div className="w-full border border-1 border-yellow-700 bg-yellow-100 h-fit text-left flex justify-start items-center p-3 rounded-md gap-3">
+                    <div className='w-8 h-8 flex justify-center items-center text-yellow-700 text-2xl'>
+                        <FiAlertOctagon/>
+                    </div>
+                    <div className="">
+                        <p className='text-yellow-700 text-base font-semibold'>Advertencia</p>
+                        <p className='text-yellow-700 text-sm font-light'>Este proyecto está en construcción</p>
+                    </div>
+                </div>
                 <p className="allies-title">En <span className='text-primary'>Interlomas</span>, tienes el centro médico perfecto para ti</p>
                 <p className='allies-description'>Nuestros locales cuentan con servicios adicionales completamente equipados</p>
             </div>
@@ -276,7 +285,7 @@ const Footer = () => {
 
 function Main() {
   return (
-    <div>
+    <div className='md:mt-0 lg:mt-0 mt-[8rem]'>
         <Header/>
         <Installations/>
         <Benefits/>

@@ -47,19 +47,19 @@ function LayoutAllies({children, title, activeLink}:{
                         "md:w-[40%] md:grid"
                     ])}>
                         <Link className={twMerge([
-                            "font-light text-base text-secondary",
+                            "font-light text-sm text-secondary",
                             activeLink === "platform" && "font-bold"
                         ])} href={"/"}>Plataforma</Link>
                         <Link className={twMerge([
-                            "font-light text-base text-secondary",
+                            "font-light text-sm text-secondary",
                             activeLink === "center-1" && "font-bold"
                         ])} href={"/coyoacan"}>Coyoacán</Link>
                         <Link className={twMerge([
-                            "font-light text-base text-secondary",
+                            "font-light text-sm text-secondary",
                             activeLink === "center-2" && "font-bold"
                         ])} href={"/interlomas"}>Interlomas</Link>
                         <Link className={twMerge([
-                            "font-light text-base text-secondary",
+                            "font-light text-sm text-secondary",
                             activeLink === "center-3" && "font-bold"
                         ])} href={"/tlalnepantla"}>Tlalnepantla</Link>
                     </div>
