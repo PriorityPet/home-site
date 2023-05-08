@@ -1,50 +1,32 @@
-import React, {useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { twMerge } from 'tailwind-merge'
 import { FiStar } from 'react-icons/fi'
 import { SpecialistCard } from '../core/Cards/SpecialistCard'
 import { Specialist } from '@/lib/domain/core/entities/specialists/specialist'
 import Link from 'next/link'
+import { HomeContext, IHomeContext } from './context/HomeContext'
 
 const Specialists = () => {
+    const { state, actions, dispatch } = useContext<IHomeContext>(HomeContext);
+    const { getSpecialists } = actions
 
-    const [listOfSpecialists, setListOfSpecialists] = useState<Array<Specialist>>([
-        {
-            id: 0,
-            name: "Dr. Juan Alberto Garcia",
-            direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://image.sciencenorway.no/1852530.webp?imageId=1852530&x=0&y=0&cropw=100&croph=100&width=482&height=322",
-            status: 0,
-            rating: "4.5"
-        },
-        {
-            id: 1,
-            name: "Dra. Maria Perez Alvarez",
-            direction: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://t4.ftcdn.net/jpg/03/17/85/49/360_F_317854905_2idSdvi2ds3yejmk8mhvxYr1OpdVTrSM.jpg",
-            status: 1,
-            rating: "4.5"
-        },
-        {
-            id: 0,
-            name: "Dr. Juan Alberto Garcia",
-            direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://image.sciencenorway.no/1852530.webp?imageId=1852530&x=0&y=0&cropw=100&croph=100&width=482&height=322",
-            status: 0,
-            rating: "4.5"
-        },
-        {
-            id: 1,
-            name: "Dra. Maria Perez Alvarez",
-            direction: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://t4.ftcdn.net/jpg/03/17/85/49/360_F_317854905_2idSdvi2ds3yejmk8mhvxYr1OpdVTrSM.jpg",
-            status: 1,
-            rating: "4.5"
-        },
-    ])
+    const { 
+        data: specialists, 
+        loading: specialistsLoading, 
+        successful: specialistsSuccess, 
+        error: specialistsError
+    } = state.getSpecialists;
+
+    const [loadedList, setLoadedList] = useState(false)
+
+    const loadAPI = () => {
+        getSpecialists()(dispatch)
+        setLoadedList(true)
+    }
+
+    useEffect(() => {
+        loadAPI()
+    }, [loadedList])
 
     return (
         <div className="w-full px-[10%] pb-7">
@@ -52,15 +34,29 @@ const Specialists = () => {
                 <p className='lg:header-title title'>Especialistas</p>
                 <Link href={"/discover/specialists"} className="paragraph">Mostrar todos</Link>
             </div>
-            <div className={twMerge([
-                "grid gap-4 w-full relative",
-                "lg:grid-cols-4",
-                "md:grid-cols-4",
-                "sm:grid-cols-2",
-                "xs:grid-cols-1",
-            ])}>
-                {listOfSpecialists.map((prop, i)=> <SpecialistCard {...prop}/> )}
-            </div>
+            {specialistsLoading &&
+                <div className="w-full flex flex-col justify-center items-center">
+                    <p className="font-bold text-slate-900 text-lg">Un momento...</p>
+                    <p className="font-light text-slate-500 text-base">Cargando los centros médicos.</p>
+                </div>
+            }
+            {(specialistsSuccess && [...specialists as Array<Specialist>].length > 0) &&
+                <div className={twMerge([
+                    "grid gap-4 w-full relative",
+                    "lg:grid-cols-3",
+                    "md:grid-cols-3",
+                    "sm:grid-cols-2",
+                    "xs:grid-cols-1",
+                ])}>
+                    {[...specialists as Array<Specialist>].map((prop, i)=> <SpecialistCard {...prop}/>)}
+                </div>
+            }
+            {(specialistsSuccess && [...specialists as Array<Specialist>].length === 0) &&
+                <div className="w-full flex flex-col justify-center items-center">
+                    <p className="font-bold text-slate-900 text-lg">Vaya, no hay especialistas aún</p>
+                    <p className="font-light text-slate-500 text-base">Lo sentimos, pero en la plataforma no hay especialistas todavia.</p>
+                </div>
+            }
         </div>
     )
 }

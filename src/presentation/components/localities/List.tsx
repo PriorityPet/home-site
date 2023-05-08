@@ -76,13 +76,6 @@ const List = () => {
                 {listOfFilterTags.map((prop, i)=> <FilterTag {...prop}/> )}
                 <p className="font-medium text-sm text-slate-900 underline ml-5">Limpiar</p>
             </div>}
-            <div className={twMerge([
-                "grid gap-4 w-full relative",
-                "lg:grid-cols-2",
-                "md:grid-cols-2",
-                "sm:grid-cols-2",
-                "xs:grid-cols-1",
-            ])}>
                 {medicalCentersLoading &&
                     <div className="w-full flex flex-col justify-center items-center">
                         <p className="font-bold text-slate-900 text-lg">Un momento...</p>
@@ -90,7 +83,15 @@ const List = () => {
                     </div>
                 }
                 {(medicalCentersSuccess && [...medicalCenters as Array<ILocality>].length > 0) &&
-                    [...medicalCenters as Array<ILocality>].map((prop, i)=> <LocationCard key={i} data={prop} />)
+                    <div className={twMerge([
+                        "grid gap-4 w-full relative",
+                        "lg:grid-cols-2",
+                        "md:grid-cols-2",
+                        "sm:grid-cols-2",
+                        "xs:grid-cols-1",
+                    ])}>
+                        {[...medicalCenters as Array<ILocality>].map((prop, i)=> <LocationCard key={i} data={prop} />)}
+                    </div>
                 }
                 {(medicalCentersSuccess && [...medicalCenters as Array<ILocality>].length === 0) &&
                     <div className="w-full flex flex-col justify-center items-center">
@@ -98,7 +99,6 @@ const List = () => {
                         <p className="font-light text-slate-500 text-base">Lo sentimos, pero en la plataforma no hay centros médicos todavia.</p>
                     </div>
                 }
-            </div>
         </div>
     )
 }

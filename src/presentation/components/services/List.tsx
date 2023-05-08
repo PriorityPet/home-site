@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { twMerge } from 'tailwind-merge'
 import { FiStar, FiX } from 'react-icons/fi'
 import { InputSelect } from '../core/Inputs'
@@ -7,6 +7,7 @@ import { LocalitiesRoutesEnum } from '@/lib/routes/localitiesRoutes'
 import { ServicesRoutesEnum } from '@/lib/routes/servicesRoutes'
 import { ServiceCard } from '../core/Cards/ServiceCard'
 import { Service } from '@/lib/domain/core/entities/services/service'
+import { IServicesContext, ServicesContext } from './context/ServicesContext'
 
 interface FilterTagProp{
     key: number | string
@@ -15,26 +16,17 @@ interface FilterTagProp{
 
 const List = () => {
 
-    const [listOfServices, setListOfServices] = useState<Array<Service>>([
-        {
-            id: 0,
-            name: "Servicio 1",
-            categorie: "Salud general",
-            description: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            image: "https://media.istockphoto.com/id/1319031310/photo/doctor-writing-a-medical-prescription.jpg?s=612x612&w=0&k=20&c=DWZGM8lBb5Bun7cbxhKT1ruVxRC_itvFzA9jxgoA0N8=",
-            status: 0,
-            price: "4.5"
-        },
-        {
-            id: 1,
-            name: "Servicio 2",
-            categorie: "Odontología",
-            description: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            image: "https://media.istockphoto.com/id/1301555107/photo/offering-patient-centred-care-that-proves-effective-and-efficient.jpg?s=612x612&w=0&k=20&c=ZQ-XMynZeFaYYLHfEhDpiBnjGd8DODsCb57r2ZmZkjw=",
-            status: 1,
-            price: "4.5"
-        }
-    ])
+    const { state, actions, dispatch } = useContext<IServicesContext>(ServicesContext);
+    const { getServices } = actions
+
+    const { 
+        data: services, 
+        loading: servicesLoading, 
+        successful: servicesSuccess, 
+        error: servicesError
+    } = state.getServices;
+
+    const [loadedList, setLoadedList] = useState(false)
 
     const FilterTag = (prop:FilterTagProp) => {
         let {label, key} = prop
@@ -59,6 +51,15 @@ const List = () => {
 
     let listOfFilterTags: any[] = []
 
+    const loadAPI = () => {
+        getServices()(dispatch)
+        setLoadedList(true)
+    }
+
+    useEffect(() => {
+        loadAPI()
+    }, [loadedList])
+
     return (
         <div className="flex flex-col flex-wrap justify-start items-stretch gap-4 w-full lg:w-3/4 h-fit">
             <div className="w-full h-fit flex justify-between items-center pb-2">
@@ -76,15 +77,29 @@ const List = () => {
                 {listOfFilterTags.map((prop, i)=> <FilterTag {...prop}/> )}
                 <p className="font-medium text-sm text-slate-900 underline ml-5">Limpiar</p>
             </div>}
-            <div className={twMerge([
-                "grid gap-4 w-full relative",
-                "lg:grid-cols-3",
-                "md:grid-cols-3",
-                "sm:grid-cols-2",
-                "xs:grid-cols-1",
-            ])}>
-                {listOfServices.map((prop, _i)=> <ServiceCard {...prop}/> )}
-            </div>
+            {servicesLoading &&
+                <div className="w-full flex flex-col justify-center items-center">
+                    <p className="font-bold text-slate-900 text-lg">Un momento...</p>
+                    <p className="font-light text-slate-500 text-base">Cargando los servicios.</p>
+                </div>
+            }
+            {(servicesSuccess && [...services as Array<Service>].length > 0) &&
+                <div className={twMerge([
+                    "grid gap-4 w-full relative",
+                    "lg:grid-cols-3",
+                    "md:grid-cols-3",
+                    "sm:grid-cols-2",
+                    "xs:grid-cols-1",
+                ])}>
+                    {[...services as Array<Service>].map((prop, _i)=> <ServiceCard {...prop}/> )}
+                </div>
+            }
+            {(servicesSuccess && [...services as Array<Service>].length === 0) &&
+                <div className="w-full flex flex-col justify-center items-center">
+                    <p className="font-bold text-slate-900 text-lg">Vaya, no hay servicios aún</p>
+                    <p className="font-light text-slate-500 text-base">Lo sentimos, pero en la plataforma no hay servicios todavia.</p>
+                </div>
+            }
         </div>
     )
 }

@@ -3,25 +3,18 @@ import { Specialist } from "@/lib/domain/core/entities/specialists/specialist";
 import { LocalityFailure } from "@/lib/domain/core/failures/locality/localityFailure";
 
 
-export interface IHomeState {
-  getMedicalCenters: IHomeHomeState;
-  getSpecialists: IHomeHomeState;
+export interface ISpecialistsState {
+  getSpecialists: ISpecialistsSpecialistsState;
 }
 
-interface IHomeHomeState {
-  data: Array<ILocality> | Array<Specialist> | string | ILocality;
+interface ISpecialistsSpecialistsState {
+  data: Array<Specialist> | string | Specialist;
   loading: boolean;
   successful: boolean;
   error: LocalityFailure | null; 
 }
 
-export const initialState: IHomeState = {
-  getMedicalCenters: {
-    data: [],
-    loading: false,
-    successful: false,
-    error: null,
-  },
+export const initialState: ISpecialistsState = {
   getSpecialists: {
     data: [],
     loading: false,
