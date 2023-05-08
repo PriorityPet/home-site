@@ -1,6 +1,8 @@
-import { AccountFailure } from './../../core/failures/account/accountFailure';
+
 import { IUser } from '../../../domain/core/entities/userEntity';
 import { AccountRepository } from '../../../infrastructure/repositories/account/accountRepository';
+import { AccountFailure } from '../../core/failures/account/accountFailure';
+import { AuthFailure } from '../../core/failures/auth/authFailure';
 
 export default class AccountUseCase {
     private _repository: AccountRepository = new AccountRepository();
