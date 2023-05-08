@@ -1,15 +1,20 @@
 export interface IUser {
   userId: string;
-  authId: string;
+  names: string;
   firstName: string;
   lastName: string;
   status: boolean;
   email: string;
+  curp: string;
+  birthDate: string;
+  sex: number;
+  websiteUrl: string;
+  phone: string;
+  personType: string;
+  avatar: string;
+  address: string;
+  aboutMe: string;
   country: string;
   role: string;
-  token: string;
-  avatar: string;
   createdOn: any | null;
-  updatedOn: any | null;
-  deletedOn: any | null;
 }

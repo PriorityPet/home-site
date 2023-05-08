@@ -5,7 +5,6 @@ export class AuthFailure extends Failure {}
 export const enum authFailuresEnum {
   wrongPassword = "WRONG_PASSWORD",
   tooManyRequest = "TOO_MANY_REQUEST",
-  userNotFound = "USER_NOT_FOUND",
-  serverError = "SERVER_ERROR",
-  alreadyExists = "ALREADY_EXISTS",
+  userNotFound = "INVALID_CREDENTIALS",
+  serverError = "SERVER_ERROR"
 }

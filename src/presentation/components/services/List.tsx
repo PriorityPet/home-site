@@ -57,11 +57,7 @@ const List = () => {
         "Todos",
     ]
 
-    let listOfFilterTags = [
-        {label: "Populares", key: 1},
-        {label: "Abiertos", key: 2},
-        {label: "Odontología", key: 3},
-    ]
+    let listOfFilterTags: any[] = []
 
     return (
         <div className="flex flex-col flex-wrap justify-start items-stretch gap-4 w-3/4 h-fit">
@@ -76,10 +72,10 @@ const List = () => {
                     />
                 </div>
             </div>
-            <div className="w-full h-fit flex flex-wrap justify-start gap-2 items-center pb-2">
+            {listOfFilterTags.length > 0 && <div className="w-full h-fit flex flex-wrap justify-start gap-2 items-center pb-2">
                 {listOfFilterTags.map((prop, i)=> <FilterTag {...prop}/> )}
                 <p className="font-medium text-sm text-slate-900 underline ml-5">Limpiar</p>
-            </div>
+            </div>}
             <div className={twMerge([
                 "grid gap-4 w-full relative",
                 "lg:grid-cols-3",

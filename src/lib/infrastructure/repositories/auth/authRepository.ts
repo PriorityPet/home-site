@@ -1,4 +1,4 @@
-import { IUser } from '../../../domain/core/entities/userEntity';
+import { IUser } from './../../../domain/core/entities/userEntity';
 import { SignUpWithPasswordCredentials, SignInWithPasswordCredentials } from '@supabase/supabase-js';
 import { userSupabaseToMap } from '../../../domain/mappers/user/supabase/userSupabaseMapper';
 import { supabase } from '../../../infrastructure/config/supabase/supabase-client';
@@ -42,7 +42,7 @@ export class AuthRepository implements IAuthRepository {
         nombre: obj.username
       })
       
-      if (creationDBresponse.error?.code === "23505") return new AuthFailure(authFailuresEnum.alreadyExists);
+      if (creationDBresponse.error?.code === "23505") return new AuthFailure(authFailuresEnum.serverError);
       
       nookies.set(undefined, 'access_token', response.data.session?.access_token ?? "", { path: '/' });
       

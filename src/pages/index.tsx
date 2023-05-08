@@ -5,7 +5,7 @@ import React from 'react'
 function index() {
   return (
     <LayoutAllies activeLink="platform" title='Alquila en nuestras sucursales médicas'>
-        <Main/>
+      <Main/>
     </LayoutAllies>
   )
 }

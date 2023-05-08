@@ -19,7 +19,7 @@ const Layout = (props:Props) => {
             </Head>
             <div className={`relative block w-full bg-slate-100`}>
                 <Navbar/>
-                <div className="pt-[2%] mt-[16vh] pb-[7%] box-border">
+                <div className="pt-[2%]  pb-[7%] box-border">
                     {children}
                 </div>
             </div>

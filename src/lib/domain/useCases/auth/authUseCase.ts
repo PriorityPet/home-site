@@ -1,4 +1,4 @@
-import { IUser } from '../../../domain/core/entities/userEntity';
+import { IUser } from './../../core/entities/userEntity';
 import { AuthFailure } from '../../../domain/core/failures/auth/authFailure';
 import { AuthRepository } from '../../../infrastructure/repositories/auth/authRepository';
 

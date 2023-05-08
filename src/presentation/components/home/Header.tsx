@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Header = () => {
@@ -8,17 +9,17 @@ const Header = () => {
     ">
       <div className="bg-primary relative w-full h-fit rounded-[2rem] overflow-hidden">
         
-        <div className="w-full h-full bg-gradient-to-r from-slate-900 to-slate-900/50 absolute top-0 left-0">
+        <div className="w-full h-full bg-gradient-to-r from-[#0C4A6F] to-[#0C4A6F]/50 absolute top-0 left-0">
           <div className="flex justify-between items-center w-full h-full relative px-[5%]">
 
             <div className="flex flex-col justify-center items-start w-1/2 h-full relative gap-10">
               <div className="flex flex-col w-full gap-4">
-                <p className='text-white font-bold text-4xl w-full'>Aqui encontraras a tu especialista ideal</p>
-                <p className='text-white font-light text-base w-[80%] text-left'>lorem impsum dolor sit amet, latin doklor desko rulen dast en impsum dolor sit amet otri.</p>
+                <p className='text-white font-bold text-4xl w-full'>¿Necesitas encontrar un médico rápidamente?</p>
+                <p className='text-white font-light text-base w-full text-left'>MedHaus conecta a los pacientes con una amplia red de médicos y proveedores de servicios de salud.</p>
               </div>
               <div className="flex justify-between items-center w-fit gap-3">
-                <p className="cursor-pointer font-light text-sm text-white">Ya tengo una cuenta en Medhaus</p>
-                <div className="w-fit text-center p-[10px_40px] block relative bg-white font-semibold text-[13px] text-slate-900 rounded-md cursor-pointer">No tengo una cuenta</div>
+                <Link href="/login" className="w-fit text-center p-[10px_40px] block relative border border-white bg-transparent font-semibold text-[13px] text-white rounded-md cursor-pointer">Ya tengo una cuenta</Link>
+                <Link href="/register" className="w-fit text-center p-[10px_40px] block relative bg-white font-semibold text-[13px] text-slate-900 rounded-md cursor-pointer">Quiero registrarme</Link>
               </div>
             </div>
 
@@ -26,18 +27,14 @@ const Header = () => {
               <div className="bg-white w-[65%] h-fit gap-8 rounded-lg flex flex-col justify-between items-center p-[1.5rem]">
 
                 <div className="border-b border-slate-300 text-center w-full pb-3 flex flex-col items-center justify-center gap-1">
-                  <p className="font-bold text-slate-900 text-lg">Que buscas</p>
-                  <p className="cursor-pointer font-light text-sm text-slate-900 w-fit text-center">lorem impsum dolor sit amet, latin doklor.</p>
+                  <p className="font-bold text-slate-900 text-lg">Busca y reserva citas</p>
+                  <p className="cursor-pointer font-light text-sm text-slate-900 w-fit text-center">Encuentra el médico o centro de salud adecuado para ti.</p>
                 </div>
 
                 <div className="w-full flex flex-col gap-5">
                   
                   <div className="w-full flex flex-col items-start justify-between gap-2">
-                    <p className="font-medium text-[13px] text-slate-400 w-fit">Especialista</p>
-                    <input type="text" className='w-full h-fit border border-slate-300 rounded bg-white p-[0.5rem_1.5rem] text-sm focus:outline-none' placeholder='Dr. Juan Albert Garcia' />
-                  </div>
-                  <div className="w-full flex flex-col items-start justify-between gap-2">
-                    <p className="font-medium text-[13px] text-slate-400 w-fit">Especialista</p>
+                    <p className="font-medium text-[13px] text-slate-400 w-fit">Especialista, servicio o padecimiento</p>
                     <input type="text" className='w-full h-fit border border-slate-300 rounded bg-white p-[0.5rem_1.5rem] text-sm focus:outline-none' placeholder='Dr. Juan Albert Garcia' />
                   </div>
 

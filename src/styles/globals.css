@@ -39,6 +39,18 @@ a {
     @apply bg-primary text-white
   }
 
+  .title{
+    @apply text-[#222222] font-medium text-2xl leading-5
+  }
+
+  .subtitle{
+    @apply text-[#222222] font-medium text-base leading-5
+  }
+
+  .paragraph{
+    @apply text-[#716e71] font-normal text-sm leading-5
+  }
+
   .allies-title{
     @apply text-secondary font-bold text-[1.8rem] leading-[30px] lg:text-[2.7rem] lg:leading-[50px] md:text-[2.7rem] md:leading-[50px]
   }

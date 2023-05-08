@@ -1,20 +1,12 @@
-import React, {useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { twMerge } from 'tailwind-merge'
 import { FiStar, FiX } from 'react-icons/fi'
 import { InputSelect } from '../core/Inputs'
 import Link from 'next/link'
 import { LocalitiesRoutesEnum } from '@/lib/routes/localitiesRoutes'
 import { LocationCard } from '../core/Cards/LocationCard'
-
-interface Center{
-    id: number | string
-    name: string
-    direction: string
-    phone: string
-    image: string | undefined
-    status: number | string
-    rating: string | undefined
-}
+import { ILocalitiesContext, LocalitiesContext } from './context/LocalitiesContext'
+import { ILocality } from '@/lib/domain/core/entities/localityEntity'
 
 interface FilterTagProp{
     key: number | string
@@ -23,80 +15,17 @@ interface FilterTagProp{
 
 const List = () => {
 
-    const [listOfCenters, setListOfCenters] = useState<Array<Center>>([
-        {
-            id: 0,
-            name: "Categoria 1",
-            direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Center.jpg&nocache=1",
-            status: 0,
-            rating: "4.5"
-        },
-        {
-            id: 1,
-            name: "Main Caracas Medical Center.",
-            direction: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Center.jpg&nocache=1",
-            status: 1,
-            rating: "4.5"
-        },
-        {
-            id: 2,
-            name: "Categoria 1",
-            direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Center.jpg&nocache=1",
-            status: 0,
-            rating: "4.5"
-        },
-        {
-            id: 3,
-            name: "Main Caracas Medical Center.",
-            direction: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Center.jpg&nocache=1",
-            status: 1,
-            rating: "4.5"
-        },
-        {
-            id: 4,
-            name: "Categoria 1",
-            direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Center.jpg&nocache=1",
-            status: 0,
-            rating: "4.5"
-        },
-        {
-            id: 5,
-            name: "Main Caracas Medical Center.",
-            direction: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Center.jpg&nocache=1",
-            status: 1,
-            rating: "4.5"
-        },
-        {
-            id: 6,
-            name: "Categoria 1",
-            direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Center.jpg&nocache=1",
-            status: 0,
-            rating: "4.5"
-        },
-        {
-            id: 7,
-            name: "Main Caracas Medical Center.",
-            direction: "F4VCG+F49, Centro Comercial Galerias Minas, El Recreo, Distrito Capital",
-            phone: "0212-7636696",
-            image: "https://valleywisehealth.org/wp-content/webpc-passthru.php?src=https://valleywisehealth.org/wp-content/uploads/2020/09/Valleywise-Health-Medical-Center.jpg&nocache=1",
-            status: 1,
-            rating: "4.5"
-        },
-    ])
+    const { state, actions, dispatch } = useContext<ILocalitiesContext>(LocalitiesContext);
+    const { getMedicalCenters } = actions
+
+    const { 
+        data: medicalCenters, 
+        loading: medicalCentersLoading, 
+        successful: medicalCentersSuccess, 
+        error: medicalCentersError
+    } = state.getMedicalCenters;
+
+    const [loadedMedicalCenters, setLoadedMedicalCenters] = useState(false)
 
     const FilterTag = (prop:FilterTagProp) => {
         let {label, key} = prop
@@ -119,11 +48,16 @@ const List = () => {
         "Todos",
     ]
 
-    let listOfFilterTags = [
-        {label: "Populares", key: 1},
-        {label: "Abiertos", key: 2},
-        {label: "Odontología", key: 3},
-    ]
+    let listOfFilterTags: any[] = []
+
+    const loadAPI = () => {
+        getMedicalCenters()(dispatch)
+        setLoadedMedicalCenters(true)
+    }
+
+    useEffect(() => {
+        loadAPI()
+    }, [loadedMedicalCenters])
 
     return (
         <div className="flex flex-wrap justify-start items-stretch gap-4 w-3/4 h-fit">
@@ -138,18 +72,32 @@ const List = () => {
                     />
                 </div>
             </div>
-            <div className="w-full h-fit flex flex-wrap justify-start gap-2 items-center pb-2">
+            {listOfFilterTags.length > 0 && <div className="w-full h-fit flex flex-wrap justify-start gap-2 items-center pb-2">
                 {listOfFilterTags.map((prop, i)=> <FilterTag {...prop}/> )}
                 <p className="font-medium text-sm text-slate-900 underline ml-5">Limpiar</p>
-            </div>
+            </div>}
             <div className={twMerge([
                 "grid gap-4 w-full relative",
-                "lg:grid-cols-3",
-                "md:grid-cols-3",
+                "lg:grid-cols-2",
+                "md:grid-cols-2",
                 "sm:grid-cols-2",
                 "xs:grid-cols-1",
             ])}>
-                {listOfCenters.map((prop, i)=> <LocationCard {...prop}/> )}
+                {medicalCentersLoading &&
+                    <div className="w-full flex flex-col justify-center items-center">
+                        <p className="font-bold text-slate-900 text-lg">Un momento...</p>
+                        <p className="font-light text-slate-500 text-base">Cargando los centros médicos.</p>
+                    </div>
+                }
+                {(medicalCentersSuccess && [...medicalCenters as Array<ILocality>].length > 0) &&
+                    [...medicalCenters as Array<ILocality>].map((prop, i)=> <LocationCard key={i} data={prop} />)
+                }
+                {(medicalCentersSuccess && [...medicalCenters as Array<ILocality>].length === 0) &&
+                    <div className="w-full flex flex-col justify-center items-center">
+                        <p className="font-bold text-slate-900 text-lg">Vaya, no hay centros aún</p>
+                        <p className="font-light text-slate-500 text-base">Lo sentimos, pero en la plataforma no hay centros médicos todavia.</p>
+                    </div>
+                }
             </div>
         </div>
     )
