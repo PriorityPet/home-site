@@ -39,8 +39,16 @@ a {
     @apply bg-primary text-white
   }
 
+  .btn-outline-primary{
+    @apply border border-primary text-primary bg-transparent
+  }
+
   .title{
-    @apply text-[#222222] font-medium text-2xl leading-5
+    @apply text-[#222222] font-medium text-2xl leading-6
+  }
+
+  .header-title{
+    @apply text-slate-900 font-bold text-4xl text-inherit
   }
 
   .subtitle{

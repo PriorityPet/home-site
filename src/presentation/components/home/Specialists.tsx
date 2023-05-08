@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import { FiStar } from 'react-icons/fi'
 import { SpecialistCard } from '../core/Cards/SpecialistCard'
 import { Specialist } from '@/lib/domain/core/entities/specialists/specialist'
+import Link from 'next/link'
 
 const Specialists = () => {
 
@@ -48,8 +49,8 @@ const Specialists = () => {
     return (
         <div className="w-full px-[10%] pb-7">
             <div className="flex justify-between items-center mb-5">
-                <p className='text-2xl font-semibold text-slate-900'>Especialistas</p>
-                <p className="cursor-pointer font-semibold text-sm text-slate-900 w-fit text-center">Mostrar todos</p>
+                <p className='lg:header-title title'>Especialistas</p>
+                <Link href={"/discover/specialists"} className="paragraph">Mostrar todos</Link>
             </div>
             <div className={twMerge([
                 "grid gap-4 w-full relative",

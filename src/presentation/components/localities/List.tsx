@@ -60,7 +60,7 @@ const List = () => {
     }, [loadedMedicalCenters])
 
     return (
-        <div className="flex flex-wrap justify-start items-stretch gap-4 w-3/4 h-fit">
+        <div className="flex flex-wrap justify-start items-stretch gap-4 w-full lg:w-3/4 h-fit">
             <div className="w-full h-fit flex justify-between items-center pb-2">
                 <p className='text-2xl font-semibold text-slate-900'>Centros disponibles en Medhaus</p>
                 <div className="w-[20%]">

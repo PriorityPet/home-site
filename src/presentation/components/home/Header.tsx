@@ -4,11 +4,11 @@ import React from 'react'
 const Header = () => {
   //p-[7rem_10rem_5rem_10rem]
   return (
-    <div className="w-full h-fit 
+    <div className="w-full h-fit hidden lg:block
     p-[0%_10%_4%_10%]
     ">
+
       <div className="bg-primary relative w-full h-fit rounded-[2rem] overflow-hidden">
-        
         <div className="w-full h-full bg-gradient-to-r from-[#0C4A6F] to-[#0C4A6F]/50 absolute top-0 left-0">
           <div className="flex justify-between items-center w-full h-full relative px-[5%]">
 
@@ -51,9 +51,9 @@ const Header = () => {
 
           </div>
         </div>
-
         <img className="w-full h-full object-cover" src="https://educaloi.qc.ca/wp-content/uploads/10069454_1200x563.jpg" alt="doctor-image" />
       </div>
+  
     </div>
   )
 }
