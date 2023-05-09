@@ -5,6 +5,7 @@ import { LocalityFailure } from "@/lib/domain/core/failures/locality/localityFai
 
 export interface IServicesState {
   getServices: IServicesServicesState;
+  getService: IServicesServicesState;
 }
 
 interface IServicesServicesState {
@@ -17,6 +18,12 @@ interface IServicesServicesState {
 export const initialState: IServicesState = {
   getServices: {
     data: [],
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  getService: {
+    data: {} as Service,
     loading: false,
     successful: false,
     error: null,

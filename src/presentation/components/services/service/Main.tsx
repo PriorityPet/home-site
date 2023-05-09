@@ -1,40 +1,34 @@
-import React from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { DefaultInput } from '../../core/Inputs'
 import { FiDollarSign, FiHome } from 'react-icons/fi'
 import ReservationCard from '../../core/Reservation/ReservationCard'
-
-const service = {
-  id: 0,
-  name: "Servicio 1",
-  categorie: "Salud general",
-  description: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-  image: "https://media.istockphoto.com/id/1319031310/photo/doctor-writing-a-medical-prescription.jpg?s=612x612&w=0&k=20&c=DWZGM8lBb5Bun7cbxhKT1ruVxRC_itvFzA9jxgoA0N8=",
-  status: 0,
-  price: "4.5"
-}
+import { IServicesContext, ServicesContext } from '../context/ServicesContext'
+import { Service } from '@/lib/domain/core/entities/services/service'
+import { redirect, usePathname } from "next/navigation";
+import { useRouter } from 'next/router'
 
 function Main() {
 
-  const HeaderComponent = () => {
+  const HeaderComponent = ({service}:{service:Service;}) => {
     return(
       <div className="w-full h-[25vh] rounded-lg overflow-hidden relative">
         <div className="w-full h-full bg-gradient-to-r from-dark-primary/50 to-dark-primary/15 absolute top-0 left-0 flex flex-col justify-center items-start p-8">
-          <p className="text-white font-normal text-2xl">{service["name"]}</p>
-          <p className="text-white font-light text-base">{service["categorie"]}</p>
+          <p className="text-white font-normal text-2xl">{service.name}</p>
+          <p className="text-white font-light text-base">{service.categorie}</p>
         </div>
-        <img className='w-full h-full object-cover object-center' src={service["image"]} alt={service["name"]} />
+        <img className='w-full h-full object-cover object-center' src={service.image} alt={service.name} />
       </div>
     )
   }
 
-  const HeaderInformationComponent = () => {
+  const HeaderInformationComponent = ({service}:{service:Service;}) => {
     return(
       <div className="w-full h-fit relative flex flex-col gap-4">
       </div>
     )
   }
 
-  const InformationComponent = () => {
+  const InformationComponent = ({service}:{service:Service;}) => {
     return(
       <div className="w-full lg:w-[58%] relative h-fit flex flex-col justify-start items-start gap-5">
         <p className='title'>Información de este servicio</p>
@@ -72,14 +66,37 @@ function Main() {
     )
   }
 
+  const pathname = usePathname();
+  const router = useRouter();
+  
+  const { state, actions, dispatch } = useContext<IServicesContext>(ServicesContext);
+  const { getService } = actions
+  const { 
+    data, 
+    loading, 
+    successful, 
+    error 
+  } = state.getService;
+
+  useMemo(() => {
+    const url = pathname?.split("/")
+    if(url){
+      let id = url![url!.length - 1]
+      getService(parseInt(id))(dispatch)
+    }
+  }, [pathname]);
+
   return (
     <div className="w-full h-full relative flex flex-col justify-center items-start gap-5 px-[7%] lg:px-[13%]">
-      <HeaderComponent/>
-      <HeaderInformationComponent/>
-      <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6">
-        <InformationComponent/>
-        <ReservationCard/>
-      </div>
+      {loading && <p>Cargando...</p>}
+      {successful && <>
+        <HeaderComponent service={data as Service} />
+        <HeaderInformationComponent service={data as Service} />
+        <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6">
+          <InformationComponent service={data as Service} />
+          <ReservationCard />
+        </div>
+      </>}
     </div>
   )
 }

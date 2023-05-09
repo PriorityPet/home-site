@@ -5,36 +5,66 @@ import { SpecialistsFailure, specialistsFailuresEnum } from '@/lib/domain/core/f
 
 export default interface ISpecialistsRepository {
     getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure>;
+    getSpecialist(): Promise<Specialist | SpecialistsFailure>;
 }
 
 export class SpecialistsRepository implements ISpecialistsRepository {
-    async getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure> {
-        try {
-          let cookies = nookies.get(undefined, 'access_token');
-    
-          var myHeaders = new Headers();
-    
-          myHeaders.append("Content-Type", "application/json");
-          myHeaders.append("Authorization", `Bearer ${cookies["access_token"]}`);
-    
-          var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-          } as RequestInit;
-    
-          let URL = GET_SPECIALISTS_ENDPOINT as RequestInfo
-    
-          const response = await fetch(URL, requestOptions)
-          let data = await response.json()
-    
-          console.log("GET_SPECIALISTS_ENDPOINT", data["data"])
-    
-          return data["data"] as Array<Specialist> ?? [];
-        } catch (error) {
-          console.log("Error", error)
-          const exception = error as any;
-          return new SpecialistsFailure(specialistsFailuresEnum.serverError);
-        }
-      }
+  async getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure> {
+    try {
+      let cookies = nookies.get(undefined, 'access_token');
+  
+      var myHeaders = new Headers();
+  
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${cookies["access_token"]}`);
+  
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      } as RequestInit;
+  
+      let URL = GET_SPECIALISTS_ENDPOINT as RequestInfo
+  
+      const response = await fetch(URL, requestOptions)
+      let data = await response.json()
+  
+      console.log("GET_SPECIALISTS_ENDPOINT", data["data"])
+  
+      return data["data"] as Array<Specialist> ?? [];
+    } catch (error) {
+      console.log("Error", error)
+      const exception = error as any;
+      return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+    }
+  }
+  async getSpecialist(): Promise<Specialist | SpecialistsFailure> {
+    try {
+      let cookies = nookies.get(undefined, 'access_token');
+  
+      var myHeaders = new Headers();
+  
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${cookies["access_token"]}`);
+  
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      } as RequestInit;
+  
+      let URL = GET_SPECIALISTS_ENDPOINT as RequestInfo
+  
+      const response = await fetch(URL, requestOptions)
+      let data = await response.json()
+  
+      console.log("GET_SPECIALIST_ENDPOINT", data["data"])
+  
+      return data["data"] as Specialist ?? {} as Specialist;
+    } catch (error) {
+      console.log("Error", error)
+      const exception = error as any;
+      return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+    }
+  }
 }

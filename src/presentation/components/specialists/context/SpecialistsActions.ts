@@ -6,6 +6,7 @@ import { Specialist } from '@/lib/domain/core/entities/specialists/specialist';
 
 export interface ISpecialistsActions {
   getSpecialists: Function;
+  getSpecialist: Function;
 }
 
 const getSpecialists = () => async (dispatch: Dispatch<any>) => {
@@ -21,6 +22,20 @@ const getSpecialists = () => async (dispatch: Dispatch<any>) => {
   }
 }
 
+const getSpecialist = () => async (dispatch: Dispatch<any>) => {
+  try {
+    dispatch({ type: "GET_SPECIALIST_LOADING" });
+    
+    const res: Specialist = await new SpecialistsUseCase().getSpecialist();
+
+    dispatch({ type: "GET_SPECIALIST_SUCCESSFUL", payload: { data: res } });
+  } catch (error) {
+    console.log("Error calling action", error)
+    dispatch({ type: "GET_SPECIALIST_ERROR", payload: { error: error } });
+  }
+}
+
 export const actions: ISpecialistsActions = {
-  getSpecialists
+  getSpecialists,
+  getSpecialist,
 }

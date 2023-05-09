@@ -21,4 +21,15 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
+    async getSpecialist(): Promise<Specialist> {
+        try {
+            const response = await this._repository.getSpecialist();
+  
+            if (response instanceof SpecialistsFailure) throw response;
+  
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
 }

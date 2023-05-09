@@ -5,6 +5,7 @@ import { LocalityFailure } from "@/lib/domain/core/failures/locality/localityFai
 
 export interface ISpecialistsState {
   getSpecialists: ISpecialistsSpecialistsState;
+  getSpecialist: ISpecialistsSpecialistsState;
 }
 
 interface ISpecialistsSpecialistsState {
@@ -20,5 +21,11 @@ export const initialState: ISpecialistsState = {
     loading: false,
     successful: false,
     error: null,
-  }
+  },
+  getSpecialist: {
+    data: {} as Specialist,
+    loading: false,
+    successful: false,
+    error: null,
+  },
 }

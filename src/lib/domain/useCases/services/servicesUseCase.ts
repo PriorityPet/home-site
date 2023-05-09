@@ -18,4 +18,16 @@ export default class ServicesUseCase {
             throw error;
         }
     }
+
+    async getService(): Promise<Service> {
+        try {
+            const response = await this._repository.getService();
+  
+            if (response instanceof ServiceFailure) throw response;
+  
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
 }

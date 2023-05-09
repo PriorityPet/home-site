@@ -5,14 +5,12 @@ import { twMerge } from 'tailwind-merge'
 const Header = () => {
     return (
         <div className={twMerge([
-            "w-full flex flex-wrap justify-center items-center gap-[4.5rem] h-[50vh] px-[2rem]",
+            "w-full flex flex-wrap justify-center items-center gap-[4.5rem] h-[50vh] px-[12%]",
             "lg:px-[8rem] lg:h-[90vh] lg:flex-nowrap lg:justify-between",
-            "md:px-[8rem] md:h-[90vh] md:flex-nowrap md:justify-between",
         ])}>
             <div className={twMerge([
                 'w-full h-1/2 relative flex justify-center items-center gap-5 text-center flex-col',
-                'lg:w-1/2 lg:justify-center lg:items-start lg:text-left lg:h-full:',
-                'md:w-1/2 md:justify-center md:items-start md:text-left md:h-full'
+                'lg:w-1/2 lg:justify-center lg:items-start lg:text-left lg:h-full:'
             ])}>
                 <p className={twMerge(["allies-title"])}>Únete a la red de <span className='text-primary'>profesionales y médicos</span> de MedHaus</p>
                 <p className={twMerge(["allies-description"])}>Contamos con una base de 300 médicos, más de 200 consultorios de alta especialidad, 4 clínicas, laboratorios clínicos, Rayos x y farmacia dentro de nuestras instalaciones.</p>
@@ -21,7 +19,6 @@ const Header = () => {
             <div className={twMerge([
                 'w-full h-full relative hidden',
                 "lg:w-1/2 lg:block",
-                "md:w-1/2 md:block",
             ])}>
                 <img className='w-full h-full object-cover' src='../img/header-top.png' alt='Plataforma médica para médicos'/>
             </div>
@@ -32,25 +29,21 @@ const Header = () => {
 const Partners = () => {
     return (
         <div className={twMerge([
-            'w-full flex flex-col justify-center items-center gap-[2rem] h-fit px-[2rem] my-[2rem] text-center',
+            'w-full flex flex-col justify-center items-center gap-[2rem] h-fit px-[12%] my-[2rem] text-center',
             'lg:px-[8rem] lg:my-[5rem]',
-            'md:px-[8rem] md:my-[5rem]',
         ])}>
             <div className={twMerge([
                 'w-full h-full relative flex flex-col justify-center items-start gap-5',
                 'lg:px-[13rem]',
-                'md:px-[13rem]',
             ])}>
                 <p className={twMerge([
                     "text-secondary font-bold text-[1.8rem] leading-[30px]",
                     'lg:text-[3rem] lg:leading-[50px]',
-                    'md:text-[3rem] md:leading-[50px]'
                 ])}>Clientes que forman parte de <span className='text-primary'>nuestra comunidad</span></p>
             </div>
             <div className={twMerge([
                 'w-full h-full block relative',
                 'lg:px-[8rem]',
-                'md:px-[8rem]',
             ])}>
                 <img className='w-full h-full object-contain' src='../img/partners.png' alt='Plataforma médica para médicos'/>
             </div>
@@ -71,7 +64,6 @@ const BenefitInList = ({title, description, image}:{
                 <p className={twMerge([
                     'font-light text-sm text-[#798493]',
                     'lg:text-base',
-                    'md:text-base',
                 ])}>{description}</p>
             </div>
         </div>
@@ -88,7 +80,6 @@ const TilesInList = ({title}:{
                 <p className={twMerge([
                     'font-light text-sm text-[#798493]',
                     'lg:text-base',
-                    'md:text-base',
                 ])}>{title}</p>
             </div>
         </div>
@@ -98,9 +89,8 @@ const TilesInList = ({title}:{
 const DoctorsFirst = () => {
     return (
         <div className={twMerge([
-            'w-full flex flex-col justify-start items-center gap-[4rem] h-fit px-[2rem] my-[1rem] text-center',
+            'w-full flex flex-col justify-start items-center gap-[4rem] h-fit px-[12%] my-[1rem] text-center',
             'lg:px-[8rem] lg:my-[3rem]',
-            'md:px-[8rem] md:my-[3rem]'
         ])}>
             <div className='w-full flex flex-col justify-center items-cente text-center gap-5'>
                 <p className='allies-title'>Conecta con tus pacientes</p>
@@ -109,7 +99,6 @@ const DoctorsFirst = () => {
             <div className="w-full flex justify-between items-center gap-[3rem]">
                 <div className={twMerge([
                     'w-full h-full relative flex flex-col justify-start items-start gap-4',
-                    'lg:w-1/2',
                     'lg:w-1/2',
                 ])}>
                     <BenefitInList 
@@ -136,7 +125,6 @@ const DoctorsFirst = () => {
                 <div className={twMerge([
                     'hidden h-full relative',
                     'lg:block',
-                    'lg:block',
                 ])}>
                     <img className='w-full h-full object-cover' src='../img/doctors-first.png' alt='Plataforma médica para médicos'/>
                 </div>
@@ -148,33 +136,28 @@ const DoctorsFirst = () => {
 const DoctorsSecond = () => {
     return (
         <div className={twMerge([
-            'w-full flex flex-col justify-start items-center gap-[0.2rem] h-fit px-[2rem] my-[1rem] text-center',
+            'w-full flex flex-col justify-start items-center gap-[0.2rem] h-fit px-[12%] my-[1rem] text-center',
             'lg:px-[8rem] lg:my-[3rem]',
-            'md:px-[8rem] md:my-[3rem]'
         ])}>
             <div className={twMerge([
                 'w-full flex flex-col justify-center items-center text-center',
                 'lg:px-[20%]',
-                'md:px-[20%]'
             ])}>
                 <p className={twMerge([
                     "text-secondary font-bold text-[1.8rem] leading-[30px]",
                     'lg:text-[3rem] lg:leading-[50px]',
-                    'md:text-[3rem] md:leading-[50px]'
                 ])}>Administra tu día a día como médico</p>
             </div>
             <div className="w-full flex justify-between items-center gap-[3rem]">
                 <div className={twMerge([
                     'h-full hidden relative',
                     "lg:w-1/2 lg:block ",
-                    "md:w-1/2 md:block ",
                 ])}>
                     <img className='w-full h-full object-cover' src='../img/doctors-second.png' alt='Plataforma médica para médicos'/>
                 </div>
                 <div className={twMerge([
                     'w-full h-full relative flex flex-col justify-start items-start gap-8',
                     'lg:w-1/2 lg:pr-[10%]',
-                    'md:w-1/2 md:pr-[10%]',
                 ])}>
                     <TilesInList 
                         title="Ficha clínica electrónica"
@@ -197,9 +180,7 @@ const DoctorsSecond = () => {
                     <TilesInList 
                         title="Crea campañas o publicaciones en la comunidad" 
                     />
-                    <div className={twMerge([
-                        'bg-primary text-white lg:w-fit md:w-fit w-full h-fit px-20 py-3 font-light text-sm rounded-md cursor-pointer hover:bg-dark-primary transition'
-                    ])}>Regístrate</div>
+                    <Link target='_blank' href={"https://proveedores.medhaus.com.mx/register"} className='bg-primary text-white w-full lg:w-fit h-fit px-20 py-3 font-light text-sm rounded-md cursor-pointer hover:bg-dark-primary transition'>Regístrate</Link>
                 </div>
             </div>
         </div>

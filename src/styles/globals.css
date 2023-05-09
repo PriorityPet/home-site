@@ -60,7 +60,7 @@ a {
   }
 
   .allies-title{
-    @apply text-secondary font-bold text-[1.8rem] leading-[30px] lg:text-[2.7rem] lg:leading-[50px] md:text-[2.7rem] md:leading-[50px]
+    @apply text-secondary font-bold text-[1.8rem] leading-[30px] lg:text-[2.7rem] lg:leading-[50px]
   }
 
   .allies-subtitle{

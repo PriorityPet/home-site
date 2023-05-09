@@ -7,6 +7,7 @@ import { Service } from '@/lib/domain/core/entities/services/service';
 
 export interface IServicesActions {
   getServices: Function;
+  getService: Function;
 }
 
 const getServices = () => async (dispatch: Dispatch<any>) => {
@@ -22,6 +23,20 @@ const getServices = () => async (dispatch: Dispatch<any>) => {
   }
 }
 
+const getService = () => async (dispatch: Dispatch<any>) => {
+  try {
+    dispatch({ type: "GET_SERVICE_LOADING" });
+    
+    const res: Service = await new ServicesUseCase().getService();
+
+    dispatch({ type: "GET_SERVICE_SUCCESSFUL", payload: { data: res } });
+  } catch (error) {
+    console.log("Error calling action", error)
+    dispatch({ type: "GET_SERVICE_ERROR", payload: { error: error } });
+  }
+}
+
 export const actions: IServicesActions = {
-  getServices
+  getServices,
+  getService
 }

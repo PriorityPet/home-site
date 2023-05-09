@@ -1,22 +1,16 @@
-import React from 'react'
+import React, { useContext, useMemo } from 'react'
 import { DefaultInput } from '../../core/Inputs'
 import { FiDollarSign, FiGlobe, FiHome, FiPhone, FiStar } from 'react-icons/fi'
 import ReservationCard from '../../core/Reservation/ReservationCard'
 import { twMerge } from 'tailwind-merge'
-
-const specialist = {
-    id: 0,
-    name: "Dr. Juan Alberto Garcia",
-    direction: "F4VG+F49, Centro Comercial Galerias, El Recreo, Distrito Capital",
-    phone: "0212-7636696",
-    image: "https://image.sciencenorway.no/1852530.webp?imageId=1852530&x=0&y=0&cropw=100&croph=100&width=482&height=322",
-    status: 0,
-    rating: "4.5"
-}
+import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
+import { ISpecialistsContext, SpecialistsContext } from '../context/SpecialistsContext'
+import { Specialist } from '@/lib/domain/core/entities/specialists/specialist'
 
 function Main() {
 
-    const UserCardComponent = () => {
+    const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
         return(
             <div className="w-full lg:w-[30%] relative h-fit flex flex-col justify-start items-start">
                 <div className="w-full h-fit bg-white rounded-lg p-5 shadow-lg border flex flex-col justify-start items-start gap-5">
@@ -26,11 +20,11 @@ function Main() {
                         <p className='paragraph'>Odontólogo</p>
                     </div>
                     <div className={twMerge('w-full h-fit p-[0.35rem_1rem] rounded font-medium text-[12px] text-white text-center',
-                        specialist.status.toString() === "0" && "bg-success",
-                        specialist.status.toString() === "1" && "bg-warning",
+                        specialist?.status?.toString() === "0" && "bg-success",
+                        specialist?.status?.toString() === "1" && "bg-warning",
                     )}>
-                        {specialist.status.toString() === "0" && "Disponible"}
-                        {specialist.status.toString() === "1" && "No disponible"}
+                        {specialist?.status?.toString() === "0" && "Disponible"}
+                        {specialist?.status?.toString() === "1" && "No disponible"}
                     </div>
                     <div className="btn btn-primary w-full">Reservar cita</div>
                 </div>
@@ -38,7 +32,7 @@ function Main() {
         )
     }
 
-    const InformationComponent = () => {
+    const InformationComponent = ({specialist}:{specialist:Specialist}) => {
         return(
             <div className="w-full lg:w-[60%] relative h-fit flex flex-col justify-start items-start gap-5">
                 <p className='title mb-5'>Información sobre mí</p>
@@ -61,7 +55,7 @@ function Main() {
                         </div>
                         <div className="flex flex-col justify-center items-start gap-1">
                             <p className='subtitle'>Teléfono:</p>
-                            <p className='paragraph'>{specialist.phone}</p>
+                            <p className='paragraph'>{specialist?.phone}</p>
                         </div>
                     </div>
                     <div className="w-1/2 flex justify-start items-start gap-3">
@@ -79,12 +73,35 @@ function Main() {
         )
     }
 
-  return (
-    <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6 px-[7%] lg:px-[13%]">
-        <UserCardComponent/>
-        <InformationComponent/>
-    </div>
-  )
+    const pathname = usePathname();
+    const router = useRouter();
+    
+    const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
+    const { getSpecialist } = actions
+    const { 
+      data, 
+      loading, 
+      successful, 
+      error 
+    } = state.getSpecialist;
+  
+    useMemo(() => {
+      const url = pathname?.split("/")
+      if(url){
+        let id = url![url!.length - 1]
+        getSpecialist(parseInt(id))(dispatch)
+      }
+    }, [pathname]);
+
+    return (
+        <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6 px-[7%] lg:px-[13%]">
+            {loading && <p>Cargando...</p>}
+            {successful && <>
+                <UserCardComponent specialist={data as Specialist}/>
+                <InformationComponent specialist={data as Specialist}/>
+            </>}
+        </div>
+    )
 }
 
 export default Main
