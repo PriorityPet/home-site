@@ -32,8 +32,8 @@ export const Benefits = () => {
                     'lg:w-1/2',
                 ])}>
                     <BenefitInList
-                        title="Acceso a una clientela segura" 
-                        description="Contamos con una base de pacientes asegurados, lo que te proporciona una oportunidad única de capturar este mercado y hacer crecer tu negocio." 
+                        title="Centro médico multidisciplinario" 
+                        description="Amplia variedad de servicios médicos, por lo que somos una excelente opción para aquellos que buscan una atención médica completa y de alta calidad en un solo lugar." 
                         image="../img/icons/icon-4.png" 
                     />
                     <BenefitInList 

@@ -49,7 +49,7 @@ const Header = () => {
                 'w-full h-full relative flex flex-col justify-center items-center',
                 'lg:w-1/2 lg:px-[4%]',
             ])}>
-                <ContactForm/>
+                <ContactForm email_to={"fernanda.garcia@medhaus.com.mx"}/>
             </div>
         </div>
     )

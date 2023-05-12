@@ -70,24 +70,37 @@ function LayoutAllies({children, title, activeLink}:{
                         "md:text-base",
                         activeLink === "platform" && "font-bold"
                     ])} href={"/"}>Plataforma</Link>
-                    <Link className={twMerge([
-                        "font-light text-sm text-secondary",
+                    <div className={twMerge([
+                        "relative text-sm text-secondary",
+                        activeDropdown ? "font-semibold" : "font-light",
                         "lg:text-base",
                         "md:text-base",
-                        activeLink === "center-1" && "font-bold"
-                    ])} href={"/coyoacan"}>Coyoacán</Link>
-                    <Link className={twMerge([
-                        "font-light text-sm text-secondary",
-                        "lg:text-base",
-                        "md:text-base",
-                        activeLink === "center-2" && "font-bold"
-                    ])} href={"/interlomas"}>Interlomas</Link>
-                    <Link className={twMerge([
-                        "font-light text-sm text-secondary",
-                        "lg:text-base",
-                        "md:text-base",
-                        activeLink === "center-3" && "font-bold"
-                    ])} href={"/tlalnepantla"}>Tlalnepantla</Link>
+                    ])} onClick={()=>{ setActiveDropdown(!activeDropdown) }}>
+                        Renta con nosotros
+                    </div>
+                    <div className={twMerge([
+                        "border rounded-md w-full flex flex-col justify-center items-start gap-3 overflow-hidden transition",
+                        activeDropdown ? "h-fit p-3 border-slate-200" : "h-0 p-0 border-transparent"
+                    ])}>
+                        <Link className={twMerge([
+                            "font-light text-sm text-secondary",
+                            "lg:text-base",
+                            "md:text-base",
+                            activeLink === "center-1" && "font-bold"
+                        ])} href={"/coyoacan"}>Coyoacán</Link>
+                        <Link className={twMerge([
+                            "font-light text-sm text-secondary",
+                            "lg:text-base",
+                            "md:text-base",
+                            activeLink === "center-2" && "font-bold"
+                        ])} href={"/interlomas"}>Interlomas</Link>
+                        <Link className={twMerge([
+                            "font-light text-sm text-secondary",
+                            "lg:text-base",
+                            "md:text-base",
+                            activeLink === "center-3" && "font-bold"
+                        ])} href={"/tlalnepantla"}>Tlalnepantla</Link>
+                    </div>
                 </div>
             </div>
             {activeDropdown && <div className='hidden md:flex lg:flex flex-col justify-between items-start gap-4 w-[9rem] fixed top-[8%] right-[11%] bg-white border rounded-md p-4 shadow-lg z-10'>
