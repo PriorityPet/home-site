@@ -44,7 +44,7 @@ function LayoutAllies({children, title, activeLink}:{
                     </div>
 
                     <div className={twMerge([
-                        "w-fit hidden grid-cols-2 gap-5 justify-between items-center justify-items-center relative",
+                        "w-fit hidden grid-cols-2 gap-2 justify-between items-center justify-items-center relative",
                         "lg:grid",
                         "md:grid"
                     ])}>
@@ -53,7 +53,7 @@ function LayoutAllies({children, title, activeLink}:{
                             activeLink === "platform" && "font-bold"
                         ])} href={"/"}>Plataforma</Link>
                         
-                        <div className={`relative text-sm text-secondary ${activeDropdown ? "font-semibold" : "font-light"}`} onClick={()=>{ setActiveDropdown(!activeDropdown) }}>
+                        <div className={`cursor-pointer relative text-sm text-white bg-primary rounded-md px-8 py-2 ${activeDropdown ? "font-semibold" : "font-light"}`} onClick={()=>{ setActiveDropdown(!activeDropdown) }}>
                             Renta con nosotros
                         </div>
 
@@ -71,7 +71,7 @@ function LayoutAllies({children, title, activeLink}:{
                         activeLink === "platform" && "font-bold"
                     ])} href={"/"}>Plataforma</Link>
                     <div className={twMerge([
-                        "relative text-sm text-secondary",
+                        "cursor-pointer relative text-sm text-white bg-primary rounded-md w-full py-2 px-2",
                         activeDropdown ? "font-semibold" : "font-light",
                         "lg:text-base",
                         "md:text-base",
@@ -103,7 +103,7 @@ function LayoutAllies({children, title, activeLink}:{
                     </div>
                 </div>
             </div>
-            {activeDropdown && <div className='hidden md:flex lg:flex flex-col justify-between items-start gap-4 w-[9rem] fixed top-[8%] right-[11%] bg-white border rounded-md p-4 shadow-lg z-10'>
+            {activeDropdown && <div className='hidden md:flex lg:flex flex-col justify-between items-start gap-4 w-[9rem] fixed top-[8%] right-[12%] bg-white border rounded-md p-4 shadow-lg z-10'>
                 <Link className={twMerge([
                     "font-light text-sm text-secondary",
                     activeLink === "center-1" && "font-bold"
