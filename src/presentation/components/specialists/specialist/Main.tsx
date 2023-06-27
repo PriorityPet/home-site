@@ -1,56 +1,75 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { DefaultInput } from '../../core/Inputs'
 import { FiDollarSign, FiGlobe, FiHome, FiPhone, FiStar } from 'react-icons/fi'
-import ReservationCard from '../../core/Reservation/ReservationCard'
 import { twMerge } from 'tailwind-merge'
 import { useRouter } from 'next/router'
 import { usePathname } from 'next/navigation'
 import { ISpecialistsContext, SpecialistsContext } from '../context/SpecialistsContext'
 import { Specialist } from '@/lib/domain/core/entities/specialists/specialist'
+import ReservationCard from './reservation/Main'
+import moment from 'moment';
 
-function Main() {
+const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
 
-    const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
-        return(
-            <div className="w-full lg:w-[30%] relative h-fit flex flex-col justify-start items-start">
-                <div className="w-full h-fit bg-white rounded-lg p-5 shadow-lg border flex flex-col justify-start items-start gap-5">
-                    <div className='w-36 h-36 overflow-hidden rounded-full mx-auto'><img src={specialist["image"]} className='w-full h-full object-cover' /></div>
-                    <div className="w-full text-center">
-                        <p className='subtitle'>{specialist["name"]}</p>
-                        <p className='paragraph'>Odontólogo</p>
+    const [ageBirth, setAgeBirth] = useState(0)
+
+    function formatDateBirth(){
+        var years = moment().utc().diff(moment(specialist?.birthDate, "YYYY-MM-DD"), 'years');
+        setAgeBirth(years)
+    }
+    useEffect(()=>{
+        formatDateBirth()
+    },[specialist])
+
+    return(
+        <div className="w-full lg:w-[60%] bg-white rounded-lg p-6 shadow-sm border relative h-fit flex flex-col justify-start items-start gap-5">
+            <div className="w-full h-fit flex justify-start items-center gap-5">
+                <div className='w-36 h-36 overflow-hidden rounded-md'><img src={specialist?.avatar} className='w-full h-full object-cover' /></div>
+                <div className="h-36 flex flex-col justify-start items-start text-left">
+                    <p className='text-lg text-slate-900 font-semibold'>
+                        {specialist.sex === 1 ? "Dra." : "Dr."} {specialist?.names} {specialist?.firstName}
+                    </p>
+                    <div className="flex flex-col justify-center items-start">
+                        <p className='text-base text-slate-500 font-light'>{ageBirth} años</p>
+                        <p className='text-base text-slate-500 font-light'>{specialist?.country}</p>
+                        <p className='text-base text-slate-500 font-light'>CURP: {specialist.curp ?? "-"}</p>
                     </div>
-                    <div className={twMerge('w-full h-fit p-[0.35rem_1rem] rounded font-medium text-[12px] text-white text-center',
-                        specialist?.status?.toString() === "0" && "bg-success",
-                        specialist?.status?.toString() === "1" && "bg-warning",
-                    )}>
-                        {specialist?.status?.toString() === "0" && "Disponible"}
-                        {specialist?.status?.toString() === "1" && "No disponible"}
-                    </div>
-                    <div className="btn btn-primary w-full">Reservar cita</div>
                 </div>
             </div>
-        )
-    }
+            <InformationComponent specialist={specialist} />
+            <LocalitiesComponent specialist={specialist} />
+        </div>
+    )
+}
 
-    const InformationComponent = ({specialist}:{specialist:Specialist}) => {
-        return(
-            <div className="w-full lg:w-[60%] relative h-fit flex flex-col justify-start items-start gap-5">
-                <p className='title mb-5'>Información sobre mí</p>
+const InformationComponent = ({specialist}:{specialist:Specialist}) => {
+    return(
+        <div className="w-full relative h-fit flex flex-col justify-start items-start gap-6">
+            <div className='w-full flex flex-col justify-center items-start gap-2'>
+                <p className='text-lg text-slate-900 font-semibold'>Información sobre mí</p>
+                <div className="w-full bg-slate-300 h-px block relative"></div>
+            </div>
+            <div className="w-full flex flex-col justify-start items-start gap-4">
+                <p className='text-base text-slate-900 font-light'>{specialist?.aboutMe}</p>
                 <div className="w-full flex justify-start items-start gap-3">
-                    <div className="flex justify-center items-center w-12 h-12 text-lg text-slate-900 text-center rounded-md bg-white border">
+                    <div className="flex justify-center items-center w-12 h-12 text-lg text-secondary text-center rounded-md bg-white border">
                         <FiStar/>
                     </div>
-                    <div className="flex flex-col justify-center items-start gap-1">
+                    <div className="flex flex-col justify-center items-start gap-2">
                         <p className='subtitle'>Especialista en:</p>
-                        <p className='paragraph'>Esp. en Ortodoncia, Ms. en Endodoncia, Periodoncia, Odontopediatría</p>
+                        <div className="flex flex-col justify-center items-start gap-1">
+                            {specialist.specialities.map((elem:any)=> 
+                                <div className='w-full flex justify-start items-center gap-2'>
+                                    <span className='w-1 h-1 rounded-full bg-slate-500'></span>
+                                    <p className='paragraph'>{elem["nombre"]} - {elem["institucion"]}</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
-                <div className="w-full bg-slate-300 h-px block relative"></div>
-                <p className='paragraph'>Me especializo en el diagnóstico, tratamiento y prevención de enfermedades y trastornos que afectan la salud oral y dental.</p>
-                <div className="w-full bg-slate-300 h-px block relative"></div>
                 <div className="w-full flex justify-between items-center gap-3">
                     <div className="w-1/2 flex justify-start items-start gap-3">
-                        <div className="flex justify-center items-center w-12 h-12 text-lg text-slate-900 text-center rounded-md bg-white border">
+                        <div className="flex justify-center items-center w-12 h-12 text-lg text-secondary text-center rounded-md bg-white border">
                             <FiPhone/>
                         </div>
                         <div className="flex flex-col justify-center items-start gap-1">
@@ -59,25 +78,76 @@ function Main() {
                         </div>
                     </div>
                     <div className="w-1/2 flex justify-start items-start gap-3">
-                        <div className="flex justify-center items-center w-12 h-12 text-lg text-slate-900 text-center rounded-md bg-white border">
+                        <div className="flex justify-center items-center w-12 h-12 text-lg text-secondary text-center rounded-md bg-white border">
                             <FiGlobe/>
                         </div>
                         <div className="flex flex-col justify-center items-start gap-1">
                             <p className='subtitle'>Sitio web:</p>
-                            <p className='paragraph'>www.mipagina.com</p>
+                            <p className='paragraph'>{specialist?.websiteUrl}</p>
                         </div>
                     </div>
                 </div>
-                
             </div>
-        )
-    }
+        </div>
+    )
+}
+
+const LocalitiesComponent = ({specialist}:{specialist:Specialist}) => {
+
+    const { state } = useContext<ISpecialistsContext>(SpecialistsContext);
+    const { 
+        data: localities, 
+        loading: loadingLocalities, 
+        successful: loadedLocalities, 
+        error: errorLocalities
+      } = state.getSpecialistLocalities;
+
+    return(
+        <div className="w-full relative h-fit flex flex-col justify-start items-start gap-6">
+            <div className='w-full flex flex-col justify-center items-start gap-2'>
+                <p className='text-lg text-slate-900 font-semibold'>Consultorios</p>
+                <div className="w-full bg-slate-300 h-px block relative"></div>
+            </div>
+            <div className="w-full flex flex-col justify-start items-start gap-4">
+                {loadingLocalities ? 
+                    <div className='w-full h-fit py-6 flex flex-col justify-center items-center gap-2 text-center'>
+                        <p className='text-slate-900 text-base font-medium'>Cargando...</p>
+                        <p className='text-slate-500 text-sm font-light'>Obteniendo los consultorios del especialista</p>    
+                    </div>
+                : localities.length > 0 ? localities.map((elem:any)=> 
+                    <div className="w-full flex justify-start items-start gap-3 border border-slate-300 rounded-md p-3">
+                        <div className='w-[8%] relative flex flex-col justify-start items-center'>
+                            <span className='w-9 h-9 border bg-white text-secondary rounded-md flex flex-col justify-center items-center text-lg'>
+                                <FiHome/>
+                            </span>
+                        </div>
+                        <div className='w-[92%] flex flex-col justify-center items-start gap-2'>
+                            <p className='paragraph text-slate-900'><b>{elem["nombre"]}</b> - Nro. de consultorio: {elem["consultorio"]}</p>
+                            <p className='paragraph'>{elem["ciudad"]} - {elem["direccion"]}</p>
+                        </div>
+                    </div>
+                ) : 
+                    <div className='w-full h-fit py-6 flex flex-col justify-center items-center gap-2 text-center'>
+                        <p className='text-slate-900 text-base font-medium'>Nada por aquí</p>
+                        <p className='text-slate-500 text-sm font-light'>Tal parece que este especialista no tiene consultorios aún</p>    
+                    </div>
+                }
+            </div>
+        </div>
+    )
+}
+
+function Main() {
 
     const pathname = usePathname();
     const router = useRouter();
     
     const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
-    const { getSpecialist } = actions
+    const { 
+        getSpecialist, 
+        getSpecialistLocalities, 
+        getSpecialistServices 
+    } = actions
     const { 
       data, 
       loading, 
@@ -90,15 +160,20 @@ function Main() {
       if(url){
         let id = url![url!.length - 1]
         getSpecialist(parseInt(id))(dispatch)
+        getSpecialistLocalities(parseInt(id))(dispatch)
+        getSpecialistServices(parseInt(id))(dispatch)
       }
     }, [pathname]);
 
     return (
-        <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6 px-[7%] lg:px-[13%]">
-            {loading && <p>Cargando...</p>}
+        <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6 px-[7%] lg:px-[13%] relative">
+            {loading && <div className='w-full h-[40vh] flex flex-col justify-center items-center text-center'>
+                <p className='font-semibold text-base text-slate-900'>Espere un momento...</p>
+                <p className='font-light text-sm text-slate-700'>Obteniendo información del especialista</p>
+            </div>}
             {successful && <>
                 <UserCardComponent specialist={data as Specialist}/>
-                <InformationComponent specialist={data as Specialist}/>
+                <ReservationCard specialist={data as Specialist} />
             </>}
         </div>
     )

@@ -6,13 +6,13 @@ const Footer = () => {
         return(
             <div className="w-full lg:w-1/3 h-full flex flex-col justify-start items-start gap-6">
                 <div className="w-[60%] h-[4.5rem]">
-                    <img src='https://i0.wp.com/medhaus.com.mx/wp-content/uploads/2022/09/cropped-IMG_5684.jpg?fit=927%2C927&ssl=1' className='w-full h-full object-cover object-center'/>
+                    <img src='/logo.png' className='w-full h-full object-cover object-center'/>
                 </div>
                 <div className="w-full h-fit">
-                    <p className='font-light text-sm text-slate-500'>Medhaus coopera con terceros en la provisión de productos y servicios. Todos los Terceros son empresarios en virtud de las disposiciones del Código Civil.</p>
+                    <p className='font-light text-sm text-slate-500'>Prosit coopera con terceros en la provisión de productos y servicios. Todos los Terceros son empresarios en virtud de las disposiciones del Código Civil.</p>
                 </div>
                 <div className="w-full h-fit">
-                    <p className='font-semibold text-base text-slate-900'>© 2023 Medhaus. Todos los derechos reservados.</p>
+                    <p className='font-semibold text-base text-slate-900'>© 2023 Prosit. Todos los derechos reservados.</p>
                 </div>
             </div>
         )

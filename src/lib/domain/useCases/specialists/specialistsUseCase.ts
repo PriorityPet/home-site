@@ -21,9 +21,42 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
-    async getSpecialist(): Promise<Specialist> {
+    async getSpecialist(id:number): Promise<Specialist> {
         try {
-            const response = await this._repository.getSpecialist();
+            const response = await this._repository.getSpecialist(id);
+  
+            if (response instanceof SpecialistsFailure) throw response;
+  
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
+    async getSpecialistLocalities(id:number): Promise<any[]> {
+        try {
+            const response = await this._repository.getSpecialistLocalities(id);
+  
+            if (response instanceof SpecialistsFailure) throw response;
+  
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
+    async getSpecialistServices(id:number): Promise<any[]> {
+        try {
+            const response = await this._repository.getSpecialistServices(id);
+  
+            if (response instanceof SpecialistsFailure) throw response;
+  
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
+    async getAttentionWindowsByService(id:number, date:string): Promise<any[]> {
+        try {
+            const response = await this._repository.getAttentionWindowsByService(id, date);
   
             if (response instanceof SpecialistsFailure) throw response;
   

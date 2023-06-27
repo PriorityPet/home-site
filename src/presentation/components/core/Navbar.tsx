@@ -34,7 +34,7 @@ const Navbar = () => {
         <Ribbon/>
         <div className='w-full bg-white p-[0.5%_10%] max-h-[10vh] h-[9vh] lg:h-[10vh] border-b box-border flex justify-between items-center'>
           <Link className='w-[40%] md:w-[15%] lg:w-[15%] h-full object-contain' href="/marketplace">
-            <img src='https://i0.wp.com/medhaus.com.mx/wp-content/uploads/2022/09/cropped-IMG_5684.jpg?fit=927%2C927&ssl=1' className='w-full h-full object-cover object-center'/>
+            <img src='/logo.png' className='w-full h-full object-cover object-center'/>
           </Link>
           <div
           onClick={()=>{ setActive(!active) }}

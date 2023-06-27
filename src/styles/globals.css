@@ -31,12 +31,18 @@ a {
 }
 
 @layer components{
+  
   .btn{
     @apply w-fit p-[10px_40px] block relative font-semibold text-[13px] rounded-md cursor-pointer text-center
   }
 
+  .btn:disabled,
+  .btn[disabled]{
+    @apply opacity-50 cursor-not-allowed
+  }
+
   .btn-primary{
-    @apply bg-primary text-white
+    @apply bg-primary text-dark-primary
   }
 
   .btn-outline-primary{

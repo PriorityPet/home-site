@@ -93,6 +93,7 @@ export default function Formulary() {
         <div className="w-full flex flex-col gap-2 justify-between items-start relative">
             <p className="font-light text-sm text-slate-900">Email</p>
             <DefaultInput
+              type={"text"}
                 onChangeCustom={(e: any) => handleEmail(e)}
                 placeholder={"usuario@mail.com"}
                 value={values.email}
@@ -101,9 +102,10 @@ export default function Formulary() {
         <div className="w-full flex flex-col gap-2 justify-between items-start relative">
             <p className="font-light text-sm text-slate-900">Contraseña</p>
             <DefaultInput
-                onChangeCustom={(e: any) => handlePassword(e)}
-                placeholder={"Mayor a 6 caracteres"}
-                value={values.password}
+              type={"password"}
+              onChangeCustom={(e: any) => handlePassword(e)}
+              placeholder={"Mayor a 6 caracteres"}
+              value={values.password}
             />
         </div>
         {errors.global !== "" && (

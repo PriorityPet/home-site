@@ -6,10 +6,13 @@ import { LocalityFailure } from "@/lib/domain/core/failures/locality/localityFai
 export interface ISpecialistsState {
   getSpecialists: ISpecialistsSpecialistsState;
   getSpecialist: ISpecialistsSpecialistsState;
+  getSpecialistLocalities: ISpecialistsSpecialistsState;
+  getSpecialistServices: ISpecialistsSpecialistsState;
+  getAttentionWindowsByService: ISpecialistsSpecialistsState;
 }
 
 interface ISpecialistsSpecialistsState {
-  data: Array<Specialist> | string | Specialist;
+  data: any;
   loading: boolean;
   successful: boolean;
   error: LocalityFailure | null; 
@@ -24,6 +27,24 @@ export const initialState: ISpecialistsState = {
   },
   getSpecialist: {
     data: {} as Specialist,
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  getSpecialistLocalities: {
+    data: [],
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  getSpecialistServices: {
+    data: [],
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  getAttentionWindowsByService: {
+    data: [],
     loading: false,
     successful: false,
     error: null,

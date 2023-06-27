@@ -1,13 +1,16 @@
-import Main from '@/presentation/components/allies/Main'
-import LayoutAllies from '@/presentation/components/core/LayoutAllies'
+import Layout from '@/presentation/components/core/Layout'
+import Main from '@/presentation/components/home/Main'
+import HomeProvider from '@/presentation/components/home/context/HomeContext'
 import React from 'react'
 
-function index() {
+function Index() {
   return (
-    <LayoutAllies activeLink="platform" title='Alquila en nuestras sucursales médicas'>
-      <Main/>
-    </LayoutAllies>
+    <Layout title='Encuentra tu especialista ideal'>
+      <HomeProvider>
+        <Main/>
+      </HomeProvider>
+    </Layout>
   )
 }
 
-export default index
+export default Index

@@ -7,7 +7,7 @@ export const UPDATE_USER_ENDPOINT = (id:number) => API_URL + `/doctor/${id}`;
 export const UPDATE_AVATAR_ENDPOINT = (id:number) => API_URL + `/doctor/${id}/avatar`;
 
 export const GET_MEDICAL_SPECIALITIES_ENDPOINT : string = API_URL + '/medical_specialty';
-export const GET_SPECIALISTS_ENDPOINT : string =API_URL + `/specialists`;
+export const GET_SPECIALISTS_ENDPOINT : string = API_URL + `/specialists`;
 
 export const GET_MEDICAL_CENTERS_ENDPOINT : string = API_URL + `/medical_center`;
 

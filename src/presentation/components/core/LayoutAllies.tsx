@@ -31,7 +31,7 @@ function LayoutAllies({children, title, activeLink}:{
                         "md:w-[13%]",
                         "lg:w-[13%]",
                     ])}>
-                        <img className='w-full h-full object-cover' src='https://i0.wp.com/medhaus.com.mx/wp-content/uploads/2022/09/cropped-IMG_5684.jpg?fit=927%2C927&ssl=1' alt='Plataforma médica para médicos'/>
+                        <img className='w-full h-full object-cover' src='/logo.png' alt='Plataforma médica para médicos'/>
                     </div>
                     
                     <div 
@@ -124,8 +124,8 @@ function LayoutAllies({children, title, activeLink}:{
     return (
         <div className='bg-white'>
             <Head>
-                <title>{`${title} - Medhaus`}</title>
-                <link rel="icon" href="https://i0.wp.com/medhaus.com.mx/wp-content/uploads/2021/06/cropped-logo_med-haus-01.png?fit=32%2C32&amp;ssl=1" sizes="32x32"/>
+                <title>{`${title} - Prosit`}</title>
+                <link rel="icon" href="/favicon.png" sizes="32x32"/>
                 <link rel="icon" href="https://i0.wp.com/medhaus.com.mx/wp-content/uploads/2021/06/cropped-logo_med-haus-01.png?fit=192%2C192&amp;ssl=1" sizes="192x192"/>
             </Head>
             <Navbar/>
