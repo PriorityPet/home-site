@@ -2,6 +2,8 @@ import { DefaultInput } from "@/presentation/components/core/Inputs";
 import { useContext, useState, useMemo } from "react";
 import { FiHeart, FiMessageSquare, FiUser } from "react-icons/fi";
 import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext";
+import moment from "moment";
+import { twMerge } from "tailwind-merge";
 
 export const UserConfirmation = ({step, setStep}:{step:number;setStep:React.Dispatch<React.SetStateAction<number>>}) => {
   
@@ -95,11 +97,17 @@ export const UserConfirmation = ({step, setStep}:{step:number;setStep:React.Disp
             <p className='font-medium text-slate-900 text-base'>Fecha de nacimiento</p>
             <p className='font-light text-slate-500 text-sm'>Indica tu fecha de nacimiento para facilitar la información al especialista</p>
           </div>
-          <DefaultInput
-            type='date'
-            onChangeCustom={(e: any) => setUserData({...userData, fechaNacimiento: e})}
-            placeholder={"..."}
+          <input 
+            type="date" 
             value={userData.fechaNacimiento}
+            onChange={(e)=>{ setUserData({...userData, fechaNacimiento: e.target.value}) }} 
+            max={moment().format("YYYY-MM-DD")} 
+            className={twMerge([
+              "w-1/2 relative block",
+              "transition bg-white border border-slate-300 rounded-md font-normal text-slate-900 text-sm p-[0.5rem_0.6rem]",
+              "focus:outline-none focus:border-slate-400",
+              "placeholder-slate-800"
+            ])}
           />
         </div>
       </div>
