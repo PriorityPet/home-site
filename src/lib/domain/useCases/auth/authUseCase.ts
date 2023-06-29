@@ -5,6 +5,18 @@ import { AuthRepository } from '../../../infrastructure/repositories/auth/authRe
 export default class AuthUseCase {
   private _repository: AuthRepository = new AuthRepository();
 
+  async createSubject(obj:any): Promise<string> {
+    try {
+      const response = await this._repository.createSubject(obj);
+
+      if (response instanceof AuthFailure) throw response;
+
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async signInUser(obj: { email: string; password: string }): Promise<string> {
     try {
       const response = await this._repository.signInUser({

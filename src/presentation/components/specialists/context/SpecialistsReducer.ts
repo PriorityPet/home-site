@@ -165,6 +165,72 @@ export const SpecialistsReducer = (state: any, action: any) => {
           error: action.payload.error,
         },
       };
+    case 'CREATE_USER_LOADING':
+      return {
+        ...state,
+        createUser: {
+          ...state.createUser,
+          data: null,
+          loading: true,
+          successful: false,
+          error: null,
+        },
+      };
+    case 'CREATE_USER_SUCCESSFUL':
+      return {
+        ...state,
+        createUser: {
+          ...state.createUser,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      };
+    case 'CREATE_USER_ERROR':
+      return {
+        ...state,
+        createUser: {
+          ...state.createUser,
+          data: null,
+          loading: false,
+          successful: false,
+          error: action.payload.error,
+        },
+      };
+    case 'CHANGE_SERVICE_SUCCESSFUL':
+      return {
+        ...state,
+        changeService: {
+          ...state.changeService,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      };
+    case 'CHANGE_LOCALITY_SUCCESSFUL':
+      return {
+        ...state,
+        changeLocality: {
+          ...state.changeLocality,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      };
+    case 'CHANGE_HOUR_SELECTED_SUCCESSFUL':
+      return {
+        ...state,
+        changeHourSelected: {
+          ...state.changeHourSelected,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      };
     default:
       return state;
   }

@@ -6,6 +6,7 @@ import nookies from 'nookies';
 import { AuthFailure, authFailuresEnum } from '../../../domain/core/failures/auth/authFailure';
 
 export default interface IAuthRepository {
+  createSubject(obj:any): Promise<string | AuthFailure>;
   signInUser(obj: {
     email: string;
     password: string;
@@ -24,6 +25,26 @@ export default interface IAuthRepository {
 }
 
 export class AuthRepository implements IAuthRepository {
+
+  async createSubject(obj:any): Promise<string | AuthFailure> {
+    try {
+      const res = await supabase.from("Sujetos").insert({
+        ...obj,
+        estado: 0,
+        telefono: "",
+        genero: 0,
+        esPaciente: true
+      }).select().single();
+
+      if (res.error) return new AuthFailure(authFailuresEnum.serverError);
+      console.log(res.data)
+
+      return res.data["id"] ?? "";
+    } catch (error) {
+      const exception = error as any;
+      return new AuthFailure(authFailuresEnum.serverError);
+    }
+  }
 
   async signUpUser(obj: {
     email: string;

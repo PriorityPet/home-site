@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { DefaultInput } from '../../core/Inputs'
-import { FiDollarSign, FiGlobe, FiHome, FiPhone, FiStar } from 'react-icons/fi'
+import { FiDollarSign, FiGlobe, FiHome, FiImage, FiPhone, FiStar, FiUser } from 'react-icons/fi'
 import { twMerge } from 'tailwind-merge'
 import { useRouter } from 'next/router'
 import { usePathname } from 'next/navigation'
@@ -24,7 +24,15 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
     return(
         <div className="w-full lg:w-[60%] bg-white rounded-lg p-6 shadow-sm border relative h-fit flex flex-col justify-start items-start gap-5">
             <div className="w-full h-fit flex justify-start items-center gap-5">
-                <div className='w-36 h-36 overflow-hidden rounded-md'><img src={specialist?.avatar} className='w-full h-full object-cover' /></div>
+                <div className='w-36 h-36 overflow-hidden rounded-md border'>
+                    {specialist?.avatar !== "" ? 
+                        <img src={specialist?.avatar} className='w-full h-full object-cover' />
+                    :     
+                        <span className='w-full h-full flex justify-center items-center bg-slate-200 text-slate-400 text-4xl'>
+                            <FiImage/>
+                        </span>
+                    }
+                </div>
                 <div className="h-36 flex flex-col justify-start items-start text-left">
                     <p className='text-lg text-slate-900 font-semibold'>
                         {specialist.sex === 1 ? "Dra." : "Dr."} {specialist?.names} {specialist?.firstName}
@@ -51,23 +59,23 @@ const InformationComponent = ({specialist}:{specialist:Specialist}) => {
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-4">
                 <p className='text-base text-slate-900 font-light'>{specialist?.aboutMe}</p>
-                <div className="w-full flex justify-start items-start gap-3">
-                    <div className="flex justify-center items-center w-12 h-12 text-lg text-secondary text-center rounded-md bg-white border">
-                        <FiStar/>
-                    </div>
-                    <div className="flex flex-col justify-center items-start gap-2">
-                        <p className='subtitle'>Especialista en:</p>
-                        <div className="flex flex-col justify-center items-start gap-1">
-                            {specialist.specialities.map((elem:any)=> 
-                                <div className='w-full flex justify-start items-center gap-2'>
-                                    <span className='w-1 h-1 rounded-full bg-slate-500'></span>
-                                    <p className='paragraph'>{elem["nombre"]} - {elem["institucion"]}</p>
-                                </div>
-                            )}
+                <div className="w-full flex justify-between items-center gap-3">
+                    <div className="w-1/2 flex justify-start items-start gap-3">
+                        <div className="flex justify-center items-center w-12 h-12 text-lg text-secondary text-center rounded-md bg-white border">
+                            <FiStar/>
+                        </div>
+                        <div className="flex flex-col justify-center items-start gap-2">
+                            <p className='subtitle'>Especialista en:</p>
+                            <div className="flex flex-col justify-center items-start gap-1">
+                                {specialist.specialities.map((elem:any)=> 
+                                    <div className='w-full flex justify-start items-center gap-2'>
+                                        <span className='w-1 h-1 rounded-full bg-slate-500'></span>
+                                        <p className='paragraph'>{elem["nombre"]} - {elem["institucion"]}</p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="w-full flex justify-between items-center gap-3">
                     <div className="w-1/2 flex justify-start items-start gap-3">
                         <div className="flex justify-center items-center w-12 h-12 text-lg text-secondary text-center rounded-md bg-white border">
                             <FiPhone/>
@@ -75,15 +83,6 @@ const InformationComponent = ({specialist}:{specialist:Specialist}) => {
                         <div className="flex flex-col justify-center items-start gap-1">
                             <p className='subtitle'>Teléfono:</p>
                             <p className='paragraph'>{specialist?.phone}</p>
-                        </div>
-                    </div>
-                    <div className="w-1/2 flex justify-start items-start gap-3">
-                        <div className="flex justify-center items-center w-12 h-12 text-lg text-secondary text-center rounded-md bg-white border">
-                            <FiGlobe/>
-                        </div>
-                        <div className="flex flex-col justify-center items-start gap-1">
-                            <p className='subtitle'>Sitio web:</p>
-                            <p className='paragraph'>{specialist?.websiteUrl}</p>
                         </div>
                     </div>
                 </div>

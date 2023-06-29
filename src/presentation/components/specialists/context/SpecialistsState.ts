@@ -9,6 +9,10 @@ export interface ISpecialistsState {
   getSpecialistLocalities: ISpecialistsSpecialistsState;
   getSpecialistServices: ISpecialistsSpecialistsState;
   getAttentionWindowsByService: ISpecialistsSpecialistsState;
+  createUser: ISpecialistsSpecialistsState;
+  changeService: ISpecialistsSpecialistsState;
+  changeLocality: ISpecialistsSpecialistsState;
+  changeHourSelected: ISpecialistsSpecialistsState;
 }
 
 interface ISpecialistsSpecialistsState {
@@ -45,6 +49,30 @@ export const initialState: ISpecialistsState = {
   },
   getAttentionWindowsByService: {
     data: [],
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  createUser: {
+    data: null,
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  changeService: {
+    data: null,
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  changeLocality: {
+    data: null,
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  changeHourSelected: {
+    data: null,
     loading: false,
     successful: false,
     error: null,
