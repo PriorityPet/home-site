@@ -3,5 +3,5 @@ export function VALIDATE_EMAIL(email: string) {
 }
 
 export function VALIDATE_STRING(text: string) {
-    return text.match(/\d+/g);
+    return /\d+/g.test(text);
 }

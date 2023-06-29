@@ -109,7 +109,7 @@ export function SpecialSelect({...props}:SpecialSearchProps) {
 
     return(
       <div onClick={()=>{ customClick(props) }} className={twMerge([
-        "transition relative w-full h-fit cursor-pointer justify-center items-start gap-1 bg-white hover:bg-slate-200 p-2"
+        "transition relative w-full h-fit cursor-pointer justify-center items-start bg-white hover:bg-slate-200 p-2"
       ])}>
         <p className='block whitespace-nowrap font-medium text-gray-950 text-[0.9rem] w-full overflow-hidden text-ellipsis'>{props.title}</p>
         <p className='block whitespace-nowrap font-light text-gray-500 text-[0.8rem] w-full overflow-hidden text-ellipsis'>{props.description}</p>
@@ -124,7 +124,7 @@ export function SpecialSelect({...props}:SpecialSearchProps) {
       ])}
     >
       <div onClick={()=>{ setActive(true) }} className={twMerge([
-        "transition relative w-full max-w-[18rem] h-fit cursor-pointer justify-center items-start gap-1 bg-white border border-slate-300 rounded-md p-2"
+        "transition relative w-full h-fit cursor-pointer justify-center items-start bg-white border border-slate-300 rounded-md p-2"
       ])}>
         <p className='block whitespace-nowrap font-medium text-gray-950 text-[0.9rem] w-full overflow-hidden text-ellipsis'>
           {
@@ -139,7 +139,7 @@ export function SpecialSelect({...props}:SpecialSearchProps) {
             activeValue.description ? 
               activeValue.description 
             : 
-              "Selecciona un valor de la"
+              "Selecciona un valor de la lista"
           }
         </p>
       </div>

@@ -2,13 +2,16 @@ import { useContext, useMemo } from "react";
 import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext";
 import { Specialist } from "@/lib/domain/core/entities/specialists/specialist";
 
-export const AppointmentConfirmation = ({step, setStep, specialist}:{
-  step:number;
-  setStep:React.Dispatch<React.SetStateAction<number>>;
+export const AppointmentConfirmation = ({specialist}:{
   specialist:Specialist
 }) => {
 
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
+
+  const {
+    createAppointment,
+    changeStep
+  } = actions
   
   const {
     data,
@@ -20,12 +23,9 @@ export const AppointmentConfirmation = ({step, setStep, specialist}:{
   const { data: id } = state.changeHourSelected
   const { data: appointmentData } = state.changeAppointmentData
 
-  const {
-    createAppointment
-  } = actions
 
   useMemo(()=>{
-    if(successful) setStep(3)
+    if(successful) changeStep(3)(dispatch)
   },[successful])
 
   return(

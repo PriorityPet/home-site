@@ -231,6 +231,17 @@ export const SpecialistsReducer = (state: any, action: any) => {
           error: action.payload.error,
         },
       };
+    case 'CHANGE_STEP_SUCCESSFUL':
+      return {
+        ...state,
+        changeStep: {
+          ...state.changeStep,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      };
     case 'CHANGE_SERVICE_SUCCESSFUL':
       return {
         ...state,

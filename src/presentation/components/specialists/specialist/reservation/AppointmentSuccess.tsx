@@ -1,6 +1,12 @@
 import { FiCheck } from "react-icons/fi";
+import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext";
+import { useContext } from "react"
 
-export const AppointmentSuccess = ({step, setStep}:{step:number;setStep:React.Dispatch<React.SetStateAction<number>>}) => {
+export const AppointmentSuccess = () => {
+
+  const { actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
+  const { changeStep } = actions
+  
   return(
     <div className="w-full h-fit flex flex-col justify-start items-start gap-3">
       
@@ -14,7 +20,7 @@ export const AppointmentSuccess = ({step, setStep}:{step:number;setStep:React.Di
         </div>
       </div>
       <div className="w-full border-t border-slate-300 pt-6 mt-3">
-        <button onClick={()=>{ setStep(0) }} className="btn btn-primary w-full">Regresar</button>
+        <button onClick={()=>{ console.log(0); changeStep(0)(dispatch) }} className="btn btn-primary w-full">Regresar</button>
       </div>
     </div>
   )

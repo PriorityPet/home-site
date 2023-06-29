@@ -153,6 +153,8 @@ function Main() {
       successful, 
       error 
     } = state.getSpecialist;
+
+    const [activeReservationCard, setActiveReservationCard] = useState(false)
   
     useMemo(() => {
       const url = pathname?.split("/")
@@ -172,7 +174,12 @@ function Main() {
             </div>}
             {successful && <>
                 <UserCardComponent specialist={data as Specialist}/>
-                <ReservationCard specialist={data as Specialist} />
+                <ReservationCard setClose={setActiveReservationCard} customStyle={twMerge([
+                    activeReservationCard ? "flex z-10" : "lg:flex hidden"
+                ])} specialist={data as Specialist} />
+                <div className='lg:hidden fixed bottom-0 left-0 w-full p-4 flex flex-col justify-center items-center bg-white'>
+                    <div onClick={()=>{ setActiveReservationCard(true) }} className='btn btn-primary w-full'>Agendar cita</div>
+                </div>
             </>}
         </div>
     )

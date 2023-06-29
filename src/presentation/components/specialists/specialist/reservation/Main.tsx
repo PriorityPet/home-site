@@ -1,7 +1,5 @@
 import { Specialist } from '@/lib/domain/core/entities/specialists/specialist'
-import { DefaultInput, InputSelect, SpecialSelect } from '@/presentation/components/core/Inputs'
-import React, { SetStateAction, useContext, useMemo, useState } from 'react'
-import { FiArrowDown, FiArrowUp, FiBriefcase, FiCheck, FiEdit2, FiHeart, FiMapPin, FiMessageSquare, FiPhone, FiPlusCircle, FiUser } from 'react-icons/fi'
+import React, { useContext, useMemo, useState } from 'react'
 import { ISpecialistsContext, SpecialistsContext } from '../../context/SpecialistsContext'
 import moment from 'moment'
 import 'moment/locale/es';
@@ -11,11 +9,13 @@ import { UserConfirmation } from './UserInformation'
 import { AppointmentConfirmation } from './AppointmentConfirmation'
 import { AppointmentSuccess } from './AppointmentSuccess'
 
-const ReservationCard = ({specialist}:{specialist:Specialist}) => {
+const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Specialist;customStyle:any; setClose:any}) => {
 
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
 
   const {changeAppointmentData} = actions
+
+  const {data: step} = state.changeStep
 
   const {
     successful: changedServiceId,
@@ -39,8 +39,6 @@ const ReservationCard = ({specialist}:{specialist:Specialist}) => {
   const [listOfLocalities, setListOfLocalities] = useState([])
   const [listOfServices, setListOfServices] = useState([])
 
-  const [step, setStep] = useState(0)
-
   function handleFormatList(){
     let list_localities = localities.map((elem:any)=>({
       title: elem["nombre"],
@@ -49,7 +47,6 @@ const ReservationCard = ({specialist}:{specialist:Specialist}) => {
     }))
     setListOfLocalities(list_localities)
 
-    console.log(services)
     let list_services = services.map((elem:any)=>({
       title: elem["nombre"],
       description: elem["descripcion"] + " - $" + elem["precioBase"],
@@ -78,7 +75,12 @@ const ReservationCard = ({specialist}:{specialist:Specialist}) => {
   }, [loadedLocalities, loadedServices]);
 
   return (
-    <div className="w-full lg:w-[40%] bg-white rounded-lg p-6 shadow-sm border sticky top-[12%] h-fit flex flex-col justify-start items-start">
+    <div className={twMerge([
+      "bg-white rounded-lg p-6 shadow-sm border items-start flex-col",
+      "lg:w-[40%] lg:sticky lg:top-[12%] lg:h-fit lg:justify-start lg:overflow-y-auto",
+      "w-full fixed top-[7%] left-0 h-[93%] justify-between overflow-y-scroll",
+      customStyle
+    ])}>
       <div className="w-full h-fit pb-3 mb-3 border-b border-slate-300">
         <p className="text-lg text-slate-900 font-semibold">
           {step === 0 && "Agendar cita"}
@@ -87,10 +89,13 @@ const ReservationCard = ({specialist}:{specialist:Specialist}) => {
           {step === 3 && "Cita creada exitosamente"}
         </p>
       </div>
-      {step === 0 && <DataSelection listOfServices={listOfServices} listOfLocalities={listOfLocalities} step={step} setStep={setStep} />}
-      {step === 1 && <UserConfirmation step={step} setStep={setStep} />}
-      {step === 2 && <AppointmentConfirmation specialist={specialist} step={step} setStep={setStep} />}
-      {step === 3 && <AppointmentSuccess step={step} setStep={setStep} />}
+      {step === 0 && <DataSelection listOfServices={listOfServices} listOfLocalities={listOfLocalities}/>}
+      {step === 1 && <UserConfirmation/>}
+      {step === 2 && <AppointmentConfirmation specialist={specialist}/>}
+      {step === 3 && <AppointmentSuccess/>}
+      <div className='lg:hidden w-full text-center justify-center items-center'>
+        <p onClick={()=>{ setClose(false) }} className='cursor-pointer text-base text-secondary font-light'>Regresar</p>
+      </div>
     </div>
   )
 }
