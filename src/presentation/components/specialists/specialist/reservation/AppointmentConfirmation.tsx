@@ -18,13 +18,14 @@ export const AppointmentConfirmation = ({step, setStep, specialist}:{
   } = state.createAppointment
   const { data: pacienteId } = state.changeUserId
   const { data: id } = state.changeHourSelected
+  const { data: appointmentData } = state.changeAppointmentData
 
   const {
-    createAppointment,
+    createAppointment
   } = actions
 
   useMemo(()=>{
-    if(successful) setStep(2)
+    if(successful) setStep(3)
   },[successful])
 
   return(
@@ -34,19 +35,19 @@ export const AppointmentConfirmation = ({step, setStep, specialist}:{
         
         <div className='w-full h-fit flex justify-center items-start gap-2 text-left'>
           <p className='w-1/3 font-light text-slate-500 text-sm'>Servicio</p>
-          <p className='w-2/3 font-medium text-slate-900 text-base'>Consulta general</p>
+          <p className='w-2/3 font-medium text-slate-900 text-base'>{appointmentData.title}</p>
         </div>
         <div className='w-full h-fit flex justify-center items-start gap-2 text-left'>
           <p className='w-1/3 font-light text-slate-500 text-sm'>El</p>
-          <p className='w-2/3 font-medium text-slate-900 text-base'>23 de Junio 2023</p>
+          <p className='w-2/3 font-medium text-slate-900 text-base'>{appointmentData.date}</p>
         </div>
         <div className='w-full h-fit flex justify-center items-start gap-2 text-left'>
           <p className='w-1/3 font-light text-slate-500 text-sm'>A las</p>
-          <p className='w-2/3 font-medium text-slate-900 text-base'>09:00 am</p>
+          <p className='w-2/3 font-medium text-slate-900 text-base'>{appointmentData.hour}</p>
         </div>
         <div className='w-full h-fit flex justify-center items-start gap-2 text-left'>
           <p className='w-1/3 font-light text-slate-500 text-sm'>Precio de la cita</p>
-          <p className='w-2/3 font-medium text-slate-900 text-base'>$20</p>
+          <p className='w-2/3 font-medium text-slate-900 text-base'>${appointmentData.price}</p>
         </div>
 
       </div>

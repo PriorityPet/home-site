@@ -16,6 +16,7 @@ export interface ISpecialistsActions {
   changeLocality: Function;
   changeHourSelected: Function;
   changeUserId: Function;
+  changeAppointmentData: Function;
 }
 
 const getSpecialists = () => async (dispatch: Dispatch<any>) => {
@@ -117,6 +118,8 @@ const changeHourSelected = (data:string) => async (dispatch: Dispatch<any>) => d
 
 const changeUserId = (data:string) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_USER_ID_SUCCESSFUL", payload: { data } });
 
+const changeAppointmentData = (data:any) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_APPOINTMENT_DATA_SUCCESSFUL", payload: { data } });
+
 export const actions: ISpecialistsActions = {
   getSpecialists,
   getSpecialist,
@@ -129,4 +132,5 @@ export const actions: ISpecialistsActions = {
   changeLocality,
   changeHourSelected,
   changeUserId,
+  changeAppointmentData,
 }

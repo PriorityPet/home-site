@@ -15,25 +15,25 @@ const ReservationCard = ({specialist}:{specialist:Specialist}) => {
 
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
 
-  const { 
-    data: createUserData,
-    loading: createUserLoading,
-    successful: createUserLoaded,
-    error: createUserError
-  } = state.createUser;
+  const {changeAppointmentData} = actions
+
+  const {
+    successful: changedServiceId,
+    data: service
+  } = state.changeService;
+
+  const {
+    data: appointmentData
+  } = state.changeAppointmentData;
 
   const { 
     data: localities,
-    loading: loadingLocalities,
     successful: loadedLocalities,
-    error: errorLocalities
   } = state.getSpecialistLocalities;
 
   const { 
     data: services,
-    loading: loadingServices,
     successful: loadedServices,
-    error: errorServices
   } = state.getSpecialistServices;
 
   const [listOfLocalities, setListOfLocalities] = useState([])
@@ -57,6 +57,20 @@ const ReservationCard = ({specialist}:{specialist:Specialist}) => {
     }))
     setListOfServices(list_services)
   }
+
+  function loadServiceIntoAppointmentData(){
+    let findedService = services.find((elem:any)=> elem["id"] === service )
+    findedService = {
+      ...appointmentData,
+      title: findedService["nombre"],
+      price: findedService["precioBase"]
+    }
+    changeAppointmentData(findedService)(dispatch)
+  }
+
+  useMemo(()=>{
+    if(changedServiceId) loadServiceIntoAppointmentData()
+  },[changedServiceId])
 
   useMemo(() => {
     if (loadedLocalities && loadedServices) handleFormatList()

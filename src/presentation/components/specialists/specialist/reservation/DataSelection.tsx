@@ -12,22 +12,41 @@ const HourComponent = ({hour, setHourSelected, hourSelected}:{
     hourSelected:string;
 }) => {
 
-    let isEqual = hourSelected === hour["id"]
-    let hourToShow = moment(hour["fechaReserva"]).utc().format("hh:mm a")
-    let disabled = moment(hour["fechaReserva"]).utc(true).isBefore(moment().utc())
-    let isntFree = hour["sujetoId"] !== null
+  const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
 
-    return(
-      <div onClick={()=>{ (!disabled || !isntFree) && setHourSelected(hour["id"]) }} className={twMerge([
-        "transition font-normal text-xs w-full h-fit text-center py-2 rounded-md text-secondary  bg-secondary/10 border border-secondary/0",
-        isEqual && "text-white bg-secondary",
-        isntFree && "bg-transparent text-gray-500 line-through",
-        disabled && "bg-transparent text-gray-500 cursor-not-allowed",
-        (!disabled && !isntFree) && "cursor-pointer hover:bg-secondary/20 hover:border-secondary"
-      ])}>
-        <p>{hourToShow}</p>
-      </div>
-    )
+  const {changeAppointmentData} = actions
+  const {
+    data: appointmentData
+  } = state.changeAppointmentData;
+
+  let dateCorrect = moment(hour["fechaReserva"]).toDate()
+
+  let isEqual = hourSelected === hour["id"]
+  let hourToShow = moment(hour["fechaReserva"]).utc().format("hh:mm a")
+  let disabled = moment(dateCorrect).isBefore(moment().utc(true))
+  let isntFree = hour["sujetoId"] !== null
+
+  function selectHour(data:any){
+    setHourSelected(data["id"])
+    let dateDataChanged = {
+      ...appointmentData,
+      date: moment(data["fechaReserva"]).utc().format("dddd, MMMM D YYYY"),
+      hour: moment(data["fechaReserva"]).utc().format("hh:mm a")
+    }
+    changeAppointmentData(dateDataChanged)(dispatch)
+  }
+
+  return(
+    <div onClick={()=>{ (!disabled || !isntFree) && selectHour(hour) }} className={twMerge([
+      "transition font-normal text-xs w-full h-fit text-center py-2 rounded-md text-secondary  bg-secondary/10 border border-secondary/0",
+      isEqual && "text-white bg-secondary",
+      isntFree && "bg-transparent text-gray-500 line-through",
+      disabled && "bg-transparent text-gray-500 cursor-not-allowed",
+      (!disabled && !isntFree) && "cursor-pointer hover:bg-secondary/20 hover:border-secondary"
+    ])}>
+      <p>{hourToShow}</p>
+    </div>
+  )
 }
 
 const DayComponent = ({day, setHourSelected, hourSelected}:{
@@ -118,8 +137,16 @@ export const DataSelection = ({step, setStep, listOfServices, listOfLocalities}:
     error: errorWindows
   } = state.getAttentionWindowsByService;
 
+  const {
+    successful: changedHourSelected
+  } = state.changeHourSelected;
+
   const [hourSelected, setHourSelected] = useState("")
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"))
+
+  useMemo(()=> {
+    if(changeHourSelected) setStep(1)
+  } ,[changedHourSelected])
 
   useMemo(()=> getAttentionWindowsByService(service, date)(dispatch) ,[date])
 
@@ -214,7 +241,7 @@ export const DataSelection = ({step, setStep, listOfServices, listOfLocalities}:
           service === 0 ||
           hourSelected === ""
         } 
-        onClick={()=>{ changeHourSelected(hourSelected)(dispatch); setStep(1); console.log(hourSelected) }}
+        onClick={()=>{ changeHourSelected(hourSelected)(dispatch); }}
         className="btn btn-primary w-full">Agendar</button>
       </div>
 

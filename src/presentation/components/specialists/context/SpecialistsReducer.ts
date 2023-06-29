@@ -275,6 +275,17 @@ export const SpecialistsReducer = (state: any, action: any) => {
           error: null,
         },
       };
+    case 'CHANGE_APPOINTMENT_DATA_SUCCESSFUL':
+      return {
+        ...state,
+        changeAppointmentData: {
+          ...state.changeAppointmentData,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      };
     default:
       return state;
   }

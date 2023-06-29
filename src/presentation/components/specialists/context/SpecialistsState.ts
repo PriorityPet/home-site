@@ -15,6 +15,7 @@ export interface ISpecialistsState {
   changeLocality: ISpecialistsSpecialistsState;
   changeHourSelected: ISpecialistsSpecialistsState;
   changeUserId: ISpecialistsSpecialistsState;
+  changeAppointmentData: ISpecialistsSpecialistsState;
 }
 
 interface ISpecialistsSpecialistsState {
@@ -86,6 +87,12 @@ export const initialState: ISpecialistsState = {
     error: null,
   },
   changeUserId: {
+    data: null,
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  changeAppointmentData: {
     data: null,
     loading: false,
     successful: false,
