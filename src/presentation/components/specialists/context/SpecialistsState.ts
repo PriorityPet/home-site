@@ -9,10 +9,12 @@ export interface ISpecialistsState {
   getSpecialistLocalities: ISpecialistsSpecialistsState;
   getSpecialistServices: ISpecialistsSpecialistsState;
   getAttentionWindowsByService: ISpecialistsSpecialistsState;
+  createAppointment: ISpecialistsSpecialistsState;
   createUser: ISpecialistsSpecialistsState;
   changeService: ISpecialistsSpecialistsState;
   changeLocality: ISpecialistsSpecialistsState;
   changeHourSelected: ISpecialistsSpecialistsState;
+  changeUserId: ISpecialistsSpecialistsState;
 }
 
 interface ISpecialistsSpecialistsState {
@@ -53,6 +55,12 @@ export const initialState: ISpecialistsState = {
     successful: false,
     error: null,
   },
+  createAppointment: {
+    data: null,
+    loading: false,
+    successful: false,
+    error: null,
+  },
   createUser: {
     data: null,
     loading: false,
@@ -72,6 +80,12 @@ export const initialState: ISpecialistsState = {
     error: null,
   },
   changeHourSelected: {
+    data: null,
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  changeUserId: {
     data: null,
     loading: false,
     successful: false,

@@ -7,7 +7,8 @@ export const UserConfirmation = ({step, setStep}:{step:number;setStep:React.Disp
   
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
   const {
-    createUser
+    createUser,
+    changeUserId
   } = actions
 
   const {
@@ -24,8 +25,14 @@ export const UserConfirmation = ({step, setStep}:{step:number;setStep:React.Disp
     fechaNacimiento: "",
   })
 
+  function usetSetterAfterCreation(){
+    changeUserId(data)(dispatch)
+    console.log(data)
+    setStep(2)
+  }
+
   useMemo(() =>{
-    if(successful) setStep(2)
+    if(successful) usetSetterAfterCreation()
   }, [successful])
 
   return(

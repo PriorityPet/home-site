@@ -10,10 +10,12 @@ export interface ISpecialistsActions {
   getSpecialistLocalities: Function;
   getSpecialistServices: Function;
   getAttentionWindowsByService: Function;
+  createAppointment: Function;
   createUser: Function;
   changeService: Function;
   changeLocality: Function;
   changeHourSelected: Function;
+  changeUserId: Function;
 }
 
 const getSpecialists = () => async (dispatch: Dispatch<any>) => {
@@ -81,6 +83,19 @@ const getAttentionWindowsByService = (id:number, date:string) => async (dispatch
   }
 }
 
+const createAppointment = (obj:any) => async (dispatch: Dispatch<any>) => {
+  try {
+    dispatch({ type: "CREATE_APPOINTMENT_LOADING" });
+    
+    const res: any = await new SpecialistsUseCase().createAppointment(obj);
+
+    dispatch({ type: "CREATE_APPOINTMENT_SUCCESSFUL", payload: { data: res } });
+  } catch (error) {
+    console.log("Error calling action", error)
+    dispatch({ type: "CREATE_APPOINTMENT_ERROR", payload: { error: error } });
+  }
+}
+
 const createUser = (obj:any) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch({ type: "CREATE_USER_LOADING" });
@@ -100,14 +115,18 @@ const changeLocality = (id:number) => async (dispatch: Dispatch<any>) => dispatc
 
 const changeHourSelected = (data:string) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_HOUR_SELECTED_SUCCESSFUL", payload: { data } });
 
+const changeUserId = (data:string) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_USER_ID_SUCCESSFUL", payload: { data } });
+
 export const actions: ISpecialistsActions = {
   getSpecialists,
   getSpecialist,
   getSpecialistLocalities,
   getSpecialistServices,
   getAttentionWindowsByService,
+  createAppointment,
   createUser,
   changeService,
   changeLocality,
   changeHourSelected,
+  changeUserId,
 }

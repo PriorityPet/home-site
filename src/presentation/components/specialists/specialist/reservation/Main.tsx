@@ -75,7 +75,7 @@ const ReservationCard = ({specialist}:{specialist:Specialist}) => {
       </div>
       {step === 0 && <DataSelection listOfServices={listOfServices} listOfLocalities={listOfLocalities} step={step} setStep={setStep} />}
       {step === 1 && <UserConfirmation step={step} setStep={setStep} />}
-      {step === 2 && <AppointmentConfirmation step={step} setStep={setStep} />}
+      {step === 2 && <AppointmentConfirmation specialist={specialist} step={step} setStep={setStep} />}
       {step === 3 && <AppointmentSuccess step={step} setStep={setStep} />}
     </div>
   )

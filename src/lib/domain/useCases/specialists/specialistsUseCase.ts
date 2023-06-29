@@ -65,4 +65,15 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
+    async createAppointment(obj:any): Promise<any> {
+        try {
+            const response = await this._repository.createAppointment(obj);
+  
+            if (response instanceof SpecialistsFailure) throw response;
+  
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
 }

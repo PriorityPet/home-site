@@ -1,4 +1,31 @@
-export const AppointmentConfirmation = ({step, setStep}:{step:number;setStep:React.Dispatch<React.SetStateAction<number>>}) => {
+import { useContext, useMemo } from "react";
+import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext";
+import { Specialist } from "@/lib/domain/core/entities/specialists/specialist";
+
+export const AppointmentConfirmation = ({step, setStep, specialist}:{
+  step:number;
+  setStep:React.Dispatch<React.SetStateAction<number>>;
+  specialist:Specialist
+}) => {
+
+  const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
+  
+  const {
+    data,
+    successful,
+    loading,
+    error
+  } = state.createAppointment
+  const { data: pacienteId } = state.changeUserId
+  const { data: id } = state.changeHourSelected
+
+  const {
+    createAppointment,
+  } = actions
+
+  useMemo(()=>{
+    if(successful) setStep(2)
+  },[successful])
 
   return(
     <div className="w-full h-fit flex flex-col justify-start items-start gap-3">
@@ -25,7 +52,13 @@ export const AppointmentConfirmation = ({step, setStep}:{step:number;setStep:Rea
       </div>
 
       <div className="w-full border-t border-slate-300 pt-6 mt-3">
-        <button onClick={()=>{ setStep(3) }} className="btn btn-primary w-full">Confirmar</button>
+        <button 
+        disabled={loading}
+        onClick={()=>{ createAppointment({
+          pacienteId: pacienteId,
+          doctorId: specialist.userId,
+          id: id
+        })(dispatch) }} className="btn btn-primary w-full">{loading ? "Agendando..." : "Confirmar"}</button>
       </div>
 
     </div>

@@ -165,6 +165,39 @@ export const SpecialistsReducer = (state: any, action: any) => {
           error: action.payload.error,
         },
       };
+    case 'CREATE_APPOINTMENT_LOADING':
+      return {
+        ...state,
+        createAppointment: {
+          ...state.createAppointment,
+          data: null,
+          loading: true,
+          successful: false,
+          error: null,
+        },
+      };
+    case 'CREATE_APPOINTMENT_SUCCESSFUL':
+      return {
+        ...state,
+        createAppointment: {
+          ...state.createAppointment,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      };
+    case 'CREATE_APPOINTMENT_ERROR':
+      return {
+        ...state,
+        createAppointment: {
+          ...state.createAppointment,
+          data: null,
+          loading: false,
+          successful: false,
+          error: action.payload.error,
+        },
+      };
     case 'CREATE_USER_LOADING':
       return {
         ...state,
@@ -225,6 +258,17 @@ export const SpecialistsReducer = (state: any, action: any) => {
         ...state,
         changeHourSelected: {
           ...state.changeHourSelected,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      };
+    case 'CHANGE_USER_ID_SUCCESSFUL':
+      return {
+        ...state,
+        changeUserId: {
+          ...state.changeUserId,
           data: action.payload.data,
           loading: false,
           successful: true,

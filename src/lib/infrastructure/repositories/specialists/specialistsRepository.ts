@@ -190,7 +190,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
       let appointment = {
           sujetoId: obj["pacienteId"],
           doctorId: obj["doctorId"],
-          estado: 9
+          estado: 2
       }
       
       let query = supabase.from("Citas")
