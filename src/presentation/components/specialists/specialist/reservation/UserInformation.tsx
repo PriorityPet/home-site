@@ -4,13 +4,15 @@ import { FiHeart, FiMessageSquare, FiUser } from "react-icons/fi";
 import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext";
 import moment from "moment";
 import { twMerge } from "tailwind-merge";
+import { VALIDATE_EMAIL, VALIDATE_STRING } from "@/lib/utils/errors-validation";
 
-export const UserConfirmation = ({step, setStep}:{step:number;setStep:React.Dispatch<React.SetStateAction<number>>}) => {
+export const UserConfirmation = () => {
   
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
   const {
     createUser,
-    changeUserId
+    changeUserId,
+    changeStep
   } = actions
 
   const {
@@ -27,10 +29,13 @@ export const UserConfirmation = ({step, setStep}:{step:number;setStep:React.Disp
     fechaNacimiento: "",
   })
 
+  const [invalidEmail, setInvalidEmail] = useState(false)
+  const [invalidFirstname, setInvalidFirstname] = useState(false)
+  const [invalidSecondname, setInvalidSecondname] = useState(false)
+
   function usetSetterAfterCreation(){
     changeUserId(data)(dispatch)
-    console.log(data)
-    setStep(2)
+    changeStep(2)(dispatch)
   }
 
   useMemo(() =>{
@@ -52,18 +57,38 @@ export const UserConfirmation = ({step, setStep}:{step:number;setStep:React.Disp
             <p className='font-light text-slate-500 text-sm'>Escribe tu nombre completo para la cita</p>
           </div>
           <div className="w-full grid grid-cols-2 justify-start items-center gap-2">
-            <DefaultInput
-              type='text'
-              onChangeCustom={(e: any) => setUserData({...userData, nombres: e})}
-              placeholder={"Nombre"}
-              value={userData.nombres}
-            />
-            <DefaultInput
-              type='text'
-              onChangeCustom={(e: any) => setUserData({...userData, primerApellido: e})}
-              placeholder={"Apellido"}
-              value={userData.primerApellido}
-            />
+            <div className="flex flex-col justify-start items-start">
+              <DefaultInput
+                type='text'
+                onChangeCustom={(e: any)=>{
+                  if(VALIDATE_STRING(e) && e !== ""){
+                    setInvalidFirstname(true)
+                  }else{
+                    setInvalidFirstname(false)
+                    setUserData({...userData, nombres: e})
+                  }
+                }}
+                placeholder={"Nombre"}
+                value={userData.nombres}
+              />
+              {invalidFirstname && <p className="text-xs text-red-700 font-medium">El nombre no puede contener números</p>}
+            </div>
+            <div className="flex flex-col justify-start items-start">
+              <DefaultInput
+                type='text'
+                onChangeCustom={(e: any)=>{
+                  if(VALIDATE_STRING(e) && e !== ""){
+                    setInvalidSecondname(true)
+                  }else{
+                    setInvalidSecondname(false)
+                    setUserData({...userData, primerApellido: e})
+                  }
+                }}
+                placeholder={"Apellido"}
+                value={userData.primerApellido}
+              />
+              {invalidSecondname && <p className="text-xs text-red-700 font-medium">El apellido no puede contener números</p>}
+            </div>
           </div>
         </div>
       </div>
@@ -80,10 +105,18 @@ export const UserConfirmation = ({step, setStep}:{step:number;setStep:React.Disp
           </div>
           <DefaultInput
             type='text'
-            onChangeCustom={(e: any) => setUserData({...userData, email: e})}
+            onChangeCustom={(e: any)=>{
+              if(!VALIDATE_EMAIL(e) && e !== ""){
+                setInvalidEmail(true)
+              }else{ 
+                setInvalidEmail(false)
+                setUserData({...userData, email: e})
+              }
+            }}
             placeholder={"..."}
             value={userData.email}
           />
+          {invalidEmail && <p className="text-xs text-red-700 font-medium">El email no es correcto</p>}
         </div>
       </div>
       <div className='w-full flex justify-start items-start gap-5'>
@@ -103,7 +136,7 @@ export const UserConfirmation = ({step, setStep}:{step:number;setStep:React.Disp
             onChange={(e)=>{ setUserData({...userData, fechaNacimiento: e.target.value}) }} 
             max={moment().format("YYYY-MM-DD")} 
             className={twMerge([
-              "w-1/2 relative block",
+              "w-full relative block",
               "transition bg-white border border-slate-300 rounded-md font-normal text-slate-900 text-sm p-[0.5rem_0.6rem]",
               "focus:outline-none focus:border-slate-400",
               "placeholder-slate-800"
@@ -115,6 +148,9 @@ export const UserConfirmation = ({step, setStep}:{step:number;setStep:React.Disp
         <button 
         disabled={
           loading ||
+          invalidEmail ||
+          invalidFirstname ||
+          invalidSecondname ||
           userData.nombres === "" ||
           userData.primerApellido === "" ||
           userData.email === "" ||

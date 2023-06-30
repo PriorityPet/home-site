@@ -11,6 +11,7 @@ export interface ISpecialistsState {
   getAttentionWindowsByService: ISpecialistsSpecialistsState;
   createAppointment: ISpecialistsSpecialistsState;
   createUser: ISpecialistsSpecialistsState;
+  changeStep: ISpecialistsSpecialistsState;
   changeService: ISpecialistsSpecialistsState;
   changeLocality: ISpecialistsSpecialistsState;
   changeHourSelected: ISpecialistsSpecialistsState;
@@ -64,6 +65,12 @@ export const initialState: ISpecialistsState = {
   },
   createUser: {
     data: null,
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  changeStep: {
+    data: 0,
     loading: false,
     successful: false,
     error: null,

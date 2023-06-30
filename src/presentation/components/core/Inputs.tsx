@@ -109,10 +109,10 @@ export function SpecialSelect({...props}:SpecialSearchProps) {
 
     return(
       <div onClick={()=>{ customClick(props) }} className={twMerge([
-        "transition relative w-full h-fit cursor-pointer justify-center items-start gap-1 bg-white hover:bg-slate-200 p-2"
+        "transition relative w-full h-fit cursor-pointer justify-center items-start bg-white hover:bg-slate-200 p-2"
       ])}>
         <p className='block whitespace-nowrap font-medium text-gray-950 text-[0.9rem] w-full overflow-hidden text-ellipsis'>{props.title}</p>
-        <p className='block whitespace-nowrap font-light text-gray-500 text-[0.8rem] w-full overflow-hidden text-ellipsis'>{props.description}</p>
+        <p className='block whitespace-nowrap font-light text-gray-500 text-[0.8rem] w-full max-w-[90%] overflow-hidden text-ellipsis'>{props.description}</p>
       </div>
     )
   }
@@ -124,7 +124,7 @@ export function SpecialSelect({...props}:SpecialSearchProps) {
       ])}
     >
       <div onClick={()=>{ setActive(true) }} className={twMerge([
-        "transition relative w-full max-w-[18rem] h-fit cursor-pointer justify-center items-start gap-1 bg-white border border-slate-300 rounded-md p-2"
+        "transition relative w-full h-fit cursor-pointer justify-center items-start bg-white border border-slate-300 rounded-md p-2"
       ])}>
         <p className='block whitespace-nowrap font-medium text-gray-950 text-[0.9rem] w-full overflow-hidden text-ellipsis'>
           {
@@ -139,7 +139,7 @@ export function SpecialSelect({...props}:SpecialSearchProps) {
             activeValue.description ? 
               activeValue.description 
             : 
-              "Selecciona un valor de la"
+              "Selecciona un valor de la lista"
           }
         </p>
       </div>
@@ -148,9 +148,9 @@ export function SpecialSelect({...props}:SpecialSearchProps) {
         variants={searchbox}
         animate={active ? "active" : "disabled"}
         className={twMerge([
-            "absolute top-full right-0 w-full bg-white border rounded-md border-slate-100 shadow-md z-[20]"
+            "absolute top-full right-0 w-full block bg-white border rounded-md border-slate-100 shadow-md z-[20]"
         ])}>
-        <div className="max-h-[30vh] min-h-[10vh] h-fit overflow-y-auto">
+        <div className="max-h-[30vh] w-full relative overflow-hidden min-h-[10vh] h-fit overflow-y-auto">
           {props.list.length === 0 ? 
             <EmptyList/> 
           : 

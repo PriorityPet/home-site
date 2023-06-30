@@ -37,7 +37,7 @@ const HourComponent = ({hour, setHourSelected, hourSelected}:{
   }
 
   return(
-    <div onClick={()=>{ (!disabled || !isntFree) && selectHour(hour) }} className={twMerge([
+    <div onClick={()=>{ (!disabled && !isntFree) && selectHour(hour) }} className={twMerge([
       "transition font-normal text-xs w-full h-fit text-center py-2 rounded-md text-secondary  bg-secondary/10 border border-secondary/0",
       isEqual && "text-white bg-secondary",
       isntFree && "bg-transparent text-gray-500 line-through",
@@ -111,9 +111,7 @@ const AttentionWindowsComponent = ({windows, setHourSelected, hourSelected}:{
     )
 }
 
-export const DataSelection = ({step, setStep, listOfServices, listOfLocalities}:{
-  step:number;
-  setStep:React.Dispatch<React.SetStateAction<number>>;
+export const DataSelection = ({listOfServices, listOfLocalities}:{
   listOfServices: any[];
   listOfLocalities: any[];
 }) => {
@@ -124,6 +122,7 @@ export const DataSelection = ({step, setStep, listOfServices, listOfLocalities}:
     changeLocality,
     changeService,
     changeHourSelected,
+    changeStep,
     getAttentionWindowsByService
   } = actions
 
@@ -145,7 +144,7 @@ export const DataSelection = ({step, setStep, listOfServices, listOfLocalities}:
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"))
 
   useMemo(()=> {
-    if(changeHourSelected) setStep(1)
+    if(changedHourSelected) changeStep(1)(dispatch)
   } ,[changedHourSelected])
 
   useMemo(()=> getAttentionWindowsByService(service, date)(dispatch) ,[date])
@@ -230,8 +229,8 @@ export const DataSelection = ({step, setStep, listOfServices, listOfLocalities}:
       }
       {(loadedWindows && windows.length === 0) && 
         <div className="w-full h-fit flex flex-col justify-center items-center text-center gap-2">
-          <p className="text-base text-slate-900 font-medium">Sin ventanas de atención</p>
-          <p className='text-sm text-slate-500 font-light'>No hay ventanas de atención disponibles para este servicio</p>
+          <p className="text-base text-slate-900 font-medium">No hay disponibilidad</p>
+          <p className='text-sm text-slate-500 font-light'>No hay disponibilidad para esta semana</p>
         </div>
       }
       {(loadedWindows && windows.length > 0) && <AttentionWindowsComponent setHourSelected={setHourSelected} hourSelected={hourSelected} windows={windows as any[]} />}

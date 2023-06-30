@@ -5,6 +5,7 @@ import { Specialist } from '@/lib/domain/core/entities/specialists/specialist';
 import AuthUseCase from '@/lib/domain/useCases/auth/authUseCase';
 
 export interface ISpecialistsActions {
+  changeStep: Function;
   getSpecialists: Function;
   getSpecialist: Function;
   getSpecialistLocalities: Function;
@@ -110,6 +111,8 @@ const createUser = (obj:any) => async (dispatch: Dispatch<any>) => {
   }
 }
 
+const changeStep = (step:number) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_STEP_SUCCESSFUL", payload: { data: step } });
+
 const changeService = (id:number) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_SERVICE_SUCCESSFUL", payload: { data: id } });
 
 const changeLocality = (id:number) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_LOCALITY_SUCCESSFUL", payload: { data: id } });
@@ -121,6 +124,7 @@ const changeUserId = (data:string) => async (dispatch: Dispatch<any>) => dispatc
 const changeAppointmentData = (data:any) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_APPOINTMENT_DATA_SUCCESSFUL", payload: { data } });
 
 export const actions: ISpecialistsActions = {
+  changeStep,
   getSpecialists,
   getSpecialist,
   getSpecialistLocalities,
