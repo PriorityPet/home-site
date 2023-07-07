@@ -10,7 +10,6 @@ function Main() {
     <>
       <Header/>
       <HeaderMobile/>
-      <Localities/>
       <Banner/>
       <Specialists/>
     </>
