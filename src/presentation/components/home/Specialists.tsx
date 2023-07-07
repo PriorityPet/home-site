@@ -37,7 +37,7 @@ const Specialists = () => {
             {specialistsLoading &&
                 <div className="w-full flex flex-col justify-center items-center">
                     <p className="font-bold text-slate-900 text-lg">Un momento...</p>
-                    <p className="font-light text-slate-500 text-base">Cargando los centros médicos.</p>
+                    <p className="font-light text-slate-500 text-base">Cargando los especialistas.</p>
                 </div>
             }
             {(specialistsSuccess && [...specialists as Array<Specialist>].length > 0) &&
@@ -48,7 +48,9 @@ const Specialists = () => {
                     "sm:grid-cols-2",
                     "xs:grid-cols-1",
                 ])}>
-                    {[...specialists as Array<Specialist>].map((prop, i)=> <SpecialistCard {...prop}/>)}
+                    {[...specialists as Array<Specialist>][0] && <SpecialistCard {...[...specialists as Array<Specialist>][0]}/>}
+                    {[...specialists as Array<Specialist>][1] && <SpecialistCard {...[...specialists as Array<Specialist>][1]}/>}
+                    {[...specialists as Array<Specialist>][2] && <SpecialistCard {...[...specialists as Array<Specialist>][2]}/>}
                 </div>
             }
             {(specialistsSuccess && [...specialists as Array<Specialist>].length === 0) &&
