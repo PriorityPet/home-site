@@ -13,10 +13,10 @@ const Banner = () => {
                     <div className="flex flex-col justify-center items-start w-full lg:w-1/2 h-full relative gap-7">
                         <div className="flex flex-col w-full gap-4">
                             <p className='lg:header-title title text-white lg:text-white'>Hay más que ofrecerte</p>
-                            <p className='text-white paragraph'>Tenemos servicios cómo la renta de locales y una plataforma para gestionar tu día a día.</p>
+                            <p className='text-white paragraph'>Si eres médico te ofrecemos una plataforma online para el manejo de tus citas, pacientes y mucho más.</p>
                         </div>
                         <div className="flex justify-between items-center w-fit gap-3">
-                            <Link href="/" className="w-fit text-center p-[10px_40px] block relative border border-white bg-transparent font-semibold text-[13px] text-white rounded-md cursor-pointer">Saber más</Link>
+                            <Link href="https://proveedores.prosit.bio/login" className="w-fit text-center p-[10px_40px] block relative border border-white bg-transparent font-semibold text-[13px] text-white rounded-md cursor-pointer">Empezar</Link>
                         </div>
                     </div>
     

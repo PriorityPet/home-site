@@ -15,7 +15,7 @@ const Header = () => {
             <div className="flex flex-col justify-center items-start w-1/2 h-full relative gap-10">
               <div className="flex flex-col w-full gap-4">
                 <p className='text-white font-bold text-4xl w-full'>¿Necesitas encontrar un médico rápidamente?</p>
-                <p className='text-white font-light text-base w-full text-left'>MedHaus conecta a los pacientes con una amplia red de médicos y proveedores de servicios de salud.</p>
+                <p className='text-white font-light text-base w-full text-left'>Prosit conecta a los pacientes con una amplia red de médicos y proveedores de servicios de salud.</p>
               </div>
               <div className="flex justify-between items-center w-fit gap-3">
                 <Link href="/login" className="w-fit text-center p-[10px_40px] block relative border border-white bg-transparent font-semibold text-[13px] text-white rounded-md cursor-pointer">Ya tengo una cuenta</Link>

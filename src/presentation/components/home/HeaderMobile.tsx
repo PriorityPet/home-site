@@ -11,7 +11,7 @@ const HeaderMobile = () => {
         <div className="flex flex-col justify-center items-start w-full h-full relative gap-10">
           <div className="flex flex-col w-full gap-4 text-center">
             <p className='title'>¿Necesitas encontrar un médico rápidamente?</p>
-            <p className='paragraph'>MedHaus conecta a los pacientes con una amplia red de médicos y proveedores de servicios de salud.</p>
+            <p className='paragraph'>Prosit conecta a los pacientes con una amplia red de médicos y proveedores de servicios de salud.</p>
           </div>
           <div className="flex flex-col justify-between items-center w-full gap-3">
             <Link href="/login" className="btn btn-outline-primary w-full">Ya tengo una cuenta</Link>
