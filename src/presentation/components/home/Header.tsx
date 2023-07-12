@@ -17,10 +17,6 @@ const Header = () => {
                 <p className='text-white font-bold text-4xl w-full'>¿Necesitas encontrar un médico rápidamente?</p>
                 <p className='text-white font-light text-base w-full text-left'>Prosit conecta a los pacientes con una amplia red de médicos y proveedores de servicios de salud.</p>
               </div>
-              <div className="flex justify-between items-center w-fit gap-3">
-                <Link href="/login" className="w-fit text-center p-[10px_40px] block relative border border-white bg-transparent font-semibold text-[13px] text-white rounded-md cursor-pointer">Ya tengo una cuenta</Link>
-                <Link href="/register" className="w-fit text-center p-[10px_40px] block relative bg-white font-semibold text-[13px] text-slate-900 rounded-md cursor-pointer">Quiero registrarme</Link>
-              </div>
             </div>
 
             <div className="flex justify-end items-center w-1/2 h-full relative p-[5%_0%_5%_0%]">

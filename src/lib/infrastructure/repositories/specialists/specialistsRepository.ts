@@ -54,7 +54,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
             nombre
           )
         )
-      `).eq("usuarioId", id).single();
+      `).eq("id", id).single();
 
       if(response.error)throw new SpecialistsFailure(response.statusText)
 

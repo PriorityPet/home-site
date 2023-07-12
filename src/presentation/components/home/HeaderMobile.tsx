@@ -13,10 +13,6 @@ const HeaderMobile = () => {
             <p className='title'>¿Necesitas encontrar un médico rápidamente?</p>
             <p className='paragraph'>Prosit conecta a los pacientes con una amplia red de médicos y proveedores de servicios de salud.</p>
           </div>
-          <div className="flex flex-col justify-between items-center w-full gap-3">
-            <Link href="/login" className="btn btn-outline-primary w-full">Ya tengo una cuenta</Link>
-            <Link href="/register" className="btn btn-primary w-full">Quiero registrarme</Link>
-          </div>
         </div>
 
         <div className="bg-white w-full h-fit gap-8 rounded-lg flex flex-col justify-between items-center p-[1.5rem] border shadow-lg">
