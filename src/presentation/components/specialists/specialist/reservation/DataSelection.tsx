@@ -5,6 +5,8 @@ import { FiArrowDown, FiArrowUp, FiBriefcase, FiChevronLeft, FiChevronRight, FiM
 import { twMerge } from "tailwind-merge"
 import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext"
 import { MdArrowBack, MdArrowLeft } from "react-icons/md"
+import { Specialist } from "@/lib/domain/core/entities/specialists/specialist"
+import { usePathname } from "next/navigation"
 
 const HourComponent = ({hour, setHourSelected, hourSelected}:{
     hour:any;
@@ -111,23 +113,25 @@ const AttentionWindowsComponent = ({windows, setHourSelected, hourSelected}:{
     )
 }
 
-export const DataSelection = ({listOfServices, listOfLocalities}:{
-  listOfServices: any[];
+export const DataSelection = ({listOfLocalities, specialist}:{
   listOfLocalities: any[];
+  specialist: Specialist;
 }) => {
 
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
-  
+
   const {
     changeLocality,
     changeService,
     changeHourSelected,
     changeStep,
-    getAttentionWindowsByService
+    getAttentionWindowsByService,
+    getSpecialistServices,
+    changeAppointmentData
   } = actions
 
-  const { data: service } = state.changeService;
-  const { data: locality } = state.changeLocality;
+  const { data: service, successful: changedServiceId } = state.changeService;
+  const { data: locality, successful: changedLocalityId } = state.changeLocality;
 
   const { 
     data: windows, 
@@ -136,18 +140,68 @@ export const DataSelection = ({listOfServices, listOfLocalities}:{
     error: errorWindows
   } = state.getAttentionWindowsByService;
 
+  const { 
+    data: services,
+    successful: loadedServices,
+  } = state.getSpecialistServices;
+
   const {
     successful: changedHourSelected
   } = state.changeHourSelected;
 
+  const {
+    data: appointmentData
+  } = state.changeAppointmentData;
+
   const [hourSelected, setHourSelected] = useState("")
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"))
+
+  const [listOfServices, setListOfServices] = useState([])
+
+  const pathname = usePathname();
+
+  useMemo(() => {
+    if (loadedServices){
+      let list_services = services.map((elem:any)=>({
+        title: elem["nombre"],
+        description: elem["descripcion"] + " - $" + elem["precioBase"],
+        id: elem["id"]
+      }))
+      setListOfServices(list_services)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadedServices]);
+
+
+  function loadServiceIntoAppointmentData(){
+    let findedService = services.find((elem:any)=> elem["id"] === service )
+    findedService = {
+      ...appointmentData,
+      title: findedService["nombre"],
+      price: findedService["precioBase"]
+    }
+    changeAppointmentData(findedService)(dispatch)
+  }
+
+  useMemo(()=>{
+    if(changedServiceId) loadServiceIntoAppointmentData()
+  },[changedServiceId])
 
   useMemo(()=> {
     if(changedHourSelected) changeStep(1)(dispatch)
   } ,[changedHourSelected])
 
   useMemo(()=> getAttentionWindowsByService(service, date)(dispatch) ,[date])
+
+  useMemo(()=>{
+    if(changedLocalityId){
+      const url = pathname?.split("/")
+      if(url){
+        let id = url![url!.length - 1]
+        getSpecialistServices(parseInt(id), locality)(dispatch)
+      }
+    }
+  },[locality])
 
   useMemo(()=>{
     if(service > 0) getAttentionWindowsByService(service, date)(dispatch)

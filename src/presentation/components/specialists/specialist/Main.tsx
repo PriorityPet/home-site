@@ -162,7 +162,6 @@ function Main() {
         let id = url![url!.length - 1]
         getSpecialist(parseInt(id))(dispatch)
         getSpecialistLocalities(parseInt(id))(dispatch)
-        getSpecialistServices(parseInt(id))(dispatch)
       }
     }, [pathname]);
 

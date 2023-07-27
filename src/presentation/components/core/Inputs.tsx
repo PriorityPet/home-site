@@ -160,8 +160,7 @@ export function SpecialSelect({...props}:SpecialSearchProps) {
                 customClick={(value:any)=>{ 
                   setActiveValue(value);
                   props.customClick(value);
-                  props.selectedItem(value); 
-                  console.log(value);
+                  props.selectedItem(value);
                   setActive(false)
                 }}
                 props={elem}
