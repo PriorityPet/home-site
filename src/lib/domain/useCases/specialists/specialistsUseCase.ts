@@ -43,9 +43,9 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
-    async getSpecialistServices(id:number): Promise<any[]> {
+    async getSpecialistServices(id:number, localityId?:number): Promise<any[]> {
         try {
-            const response = await this._repository.getSpecialistServices(id);
+            const response = await this._repository.getSpecialistServices(id, localityId);
   
             if (response instanceof SpecialistsFailure) throw response;
   

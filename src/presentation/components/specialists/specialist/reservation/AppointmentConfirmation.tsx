@@ -1,6 +1,7 @@
-import { useContext, useMemo } from "react";
+import { useContext, useState, useMemo } from "react";
 import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext";
 import { Specialist } from "@/lib/domain/core/entities/specialists/specialist";
+import { usePathname } from "next/navigation";
 
 export const AppointmentConfirmation = ({specialist}:{
   specialist:Specialist
@@ -22,11 +23,22 @@ export const AppointmentConfirmation = ({specialist}:{
   const { data: pacienteId } = state.changeUserId
   const { data: id } = state.changeHourSelected
   const { data: appointmentData } = state.changeAppointmentData
-
+  
+  const pathname = usePathname();
+  
+  const [doctorId, setDoctorId] = useState(0)
 
   useMemo(()=>{
     if(successful) changeStep(3)(dispatch)
   },[successful])
+
+  useMemo(() => {
+    const url = pathname?.split("/")
+    if(url){
+      let id = url![url!.length - 1]
+      setDoctorId(parseInt(id))
+    }
+  }, [pathname]);
 
   return(
     <div className="w-full h-fit flex flex-col justify-start items-start gap-3">
@@ -57,7 +69,7 @@ export const AppointmentConfirmation = ({specialist}:{
         disabled={loading}
         onClick={()=>{ createAppointment({
           pacienteId: pacienteId,
-          doctorId: specialist.userId,
+          doctorId: doctorId,
           id: id
         })(dispatch) }} className="btn btn-primary w-full">{loading ? "Agendando..." : "Confirmar"}</button>
       </div>

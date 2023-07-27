@@ -13,31 +13,14 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
 
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
 
-  const {changeAppointmentData} = actions
-
   const {data: step} = state.changeStep
-
-  const {
-    successful: changedServiceId,
-    data: service
-  } = state.changeService;
-
-  const {
-    data: appointmentData
-  } = state.changeAppointmentData;
 
   const { 
     data: localities,
     successful: loadedLocalities,
   } = state.getSpecialistLocalities;
 
-  const { 
-    data: services,
-    successful: loadedServices,
-  } = state.getSpecialistServices;
-
   const [listOfLocalities, setListOfLocalities] = useState([])
-  const [listOfServices, setListOfServices] = useState([])
 
   function handleFormatList(){
     let list_localities = localities.map((elem:any)=>({
@@ -46,33 +29,12 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
       id: elem["id"]
     }))
     setListOfLocalities(list_localities)
-
-    let list_services = services.map((elem:any)=>({
-      title: elem["nombre"],
-      description: elem["descripcion"] + " - $" + elem["precioBase"],
-      id: elem["id"]
-    }))
-    setListOfServices(list_services)
   }
-
-  function loadServiceIntoAppointmentData(){
-    let findedService = services.find((elem:any)=> elem["id"] === service )
-    findedService = {
-      ...appointmentData,
-      title: findedService["nombre"],
-      price: findedService["precioBase"]
-    }
-    changeAppointmentData(findedService)(dispatch)
-  }
-
-  useMemo(()=>{
-    if(changedServiceId) loadServiceIntoAppointmentData()
-  },[changedServiceId])
-
+  
   useMemo(() => {
-    if (loadedLocalities && loadedServices) handleFormatList()
+    if (loadedLocalities) handleFormatList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadedLocalities, loadedServices]);
+  }, [loadedLocalities]);
 
   return (
     <div className={twMerge([
@@ -89,7 +51,7 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
           {step === 3 && "Cita creada exitosamente"}
         </p>
       </div>
-      {step === 0 && <DataSelection listOfServices={listOfServices} listOfLocalities={listOfLocalities}/>}
+      {step === 0 && <DataSelection specialist={specialist} listOfLocalities={listOfLocalities}/>}
       {step === 1 && <UserConfirmation/>}
       {step === 2 && <AppointmentConfirmation specialist={specialist}/>}
       {step === 3 && <AppointmentSuccess/>}

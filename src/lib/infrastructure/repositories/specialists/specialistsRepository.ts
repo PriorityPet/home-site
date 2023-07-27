@@ -10,7 +10,7 @@ export default interface ISpecialistsRepository {
     getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure>;
     getSpecialist(id:number): Promise<Specialist | SpecialistsFailure>;
     getSpecialistLocalities(id:number): Promise<any[] | SpecialistsFailure>;
-    getSpecialistServices(id:number): Promise<any[] | SpecialistsFailure>;
+    getSpecialistServices(id:number, localityId?:number): Promise<any[] | SpecialistsFailure>;
     getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure>;
     createAppointment(obj:any): Promise<any | SpecialistsFailure>;
 }
@@ -94,7 +94,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
       return new SpecialistsFailure(specialistsFailuresEnum.serverError);
     }
   }
-  async getSpecialistServices(id:number): Promise<any[] | SpecialistsFailure> {
+  async getSpecialistServices(id:number, localityId?:number): Promise<any[] | SpecialistsFailure> {
     try {
       const response = await supabase.from("ServiciosDoctores").select(`
         *,
@@ -107,6 +107,11 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         ...elem,
         ...elem["Servicios"]
       }) )
+
+      if(localityId) {
+        console.log(data)
+        data = data.filter(elem => elem["Servicios"]["localidadId"] === localityId)
+      }
 
       console.log("GET_SPECIALIST_SERVICES_ENDPOINT", data)
   
@@ -190,6 +195,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
       let appointment = {
           sujetoId: obj["pacienteId"],
           doctorId: obj["doctorId"],
+          servicioId: obj["servicioId"],
           estado: 2
       }
       

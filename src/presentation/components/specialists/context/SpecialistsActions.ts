@@ -59,11 +59,11 @@ const getSpecialistLocalities = (id:number) => async (dispatch: Dispatch<any>) =
   }
 }
 
-const getSpecialistServices = (id:number) => async (dispatch: Dispatch<any>) => {
+const getSpecialistServices = (id:number, localityId?:number) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch({ type: "GET_SPECIALIST_SERVICES_LOADING" });
     
-    const res: any[] = await new SpecialistsUseCase().getSpecialistServices(id);
+    const res: any[] = await new SpecialistsUseCase().getSpecialistServices(id, localityId);
 
     dispatch({ type: "GET_SPECIALIST_SERVICES_SUCCESSFUL", payload: { data: res } });
   } catch (error) {
