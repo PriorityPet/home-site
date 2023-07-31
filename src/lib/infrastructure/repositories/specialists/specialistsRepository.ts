@@ -148,47 +148,66 @@ export class SpecialistsRepository implements ISpecialistsRepository {
   async getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure> {
     try {
       
-      date = moment(date).format('YYYY-MM-DD')
-      let dateEnd = moment(date, "YYYY-MM-DD").add(5, 'days').format('YYYY-MM-DD')
+        let queryServiciosEnVentanasAtencion = supabase.from("ServiciosEnVentanasAtencion")
+        .select(`*, VentanasAtencionBase(*)`).eq("servicioId", id)
 
-      let queryToGetSlotsTypeAttentionWindows = supabase.from("VentanasAtencion").select(`
-      *,
-      Citas (*),
-      Servicios (
-        nombre
-      )
-      `).eq("servicioId", id).eq("tipo", 2).filter('fechaInicio', 'gte', date).filter('fechaFin', 'lte', dateEnd)
+        let resServiciosEnVentanasAtencion = await queryServiciosEnVentanasAtencion
 
-      let resSlotsTypeAttentionWindows = await queryToGetSlotsTypeAttentionWindows
-      
-      if(resSlotsTypeAttentionWindows.error) throw new SpecialistsFailure(specialistsFailuresEnum.serverError)
+        if(resServiciosEnVentanasAtencion.data?.length === 0) return []
 
-      let initialDate = moment(date, "YYYY-MM-DD")
-      let finalDate = moment(dateEnd, "YYYY-MM-DD")
-      let list = []
 
-      do {
-        list.push(initialDate.format("YYYY-MM-DD"))
-        initialDate = initialDate.add(1, "days")
-      } while (initialDate.isBefore(finalDate));
-      
-      list = list.map((elem:any)=>{
-        let dateOfWindow = resSlotsTypeAttentionWindows.data!.find((w:any)=> elem === moment(w["fechaInicio"]).format("YYYY-MM-DD") )
-        let object = dateOfWindow ?? {
-          fechaInicio: moment(elem, "YYYY-MM-DD").toDate(),
-          Citas: []
-        }
-        return object
-      })
+        date = moment(date).format('YYYY-MM-DD')
+        let dateEnd = moment(date, "YYYY-MM-DD").add(5, 'days').format('YYYY-MM-DD')
 
-      if(list.every((elem:any)=> elem["Citas"].length === 0 )) return []
-      
-      return list ?? [];
+        let windowAttentionId = resServiciosEnVentanasAtencion.data![0]["ventanaAtencionBaseId"].toString()
+            let queryVentanasAtencion = supabase.from("VentanasAtencion")
+            .select(`*`).eq("ventanaAtencionBaseId", windowAttentionId)
+            .filter('fechaInicio', 'gte', date)
+            .filter('fechaFin', 'lte', dateEnd)
+
+        let resVentanasAtencion = await queryVentanasAtencion
+        
+        if(resVentanasAtencion.data?.length === 0) return []
+
+        let queryCitas = supabase.from("Citas").select(`*`)
+        .in("ventanaAtencionId", resVentanasAtencion.data!.map((elem:any)=> elem["id"] ))
+
+        let resCitas = await queryCitas
+
+        if(resCitas.error) throw new SpecialistsFailure(specialistsFailuresEnum.serverError)
+
+        let initialDate = moment(date, "YYYY-MM-DD")
+        let finalDate = moment(dateEnd, "YYYY-MM-DD")
+        let list = []
+
+        do {
+          list.push(initialDate.format("YYYY-MM-DD"))
+          initialDate = initialDate.add(1, "days")
+        } while (initialDate.isBefore(finalDate));
+
+        list = list.map((elem:any)=>{
+          let dateOfWindow = resCitas.data!.filter((w:any)=> elem === moment(w["fechaReserva"]).format("YYYY-MM-DD") )
+          let object = dateOfWindow ? 
+            {
+              fechaInicio: moment(elem, "YYYY-MM-DD").toDate(),
+              Citas: dateOfWindow
+            }
+          : {
+            fechaInicio: moment(elem, "YYYY-MM-DD").toDate(),
+            Citas: []
+          }
+          return object
+        })
+
+        if(list.every((elem:any)=> elem["Citas"].length === 0 )) return []
+        
+        return list ?? [];
     } catch (error) {
         const exception = error as any;
         return new SpecialistsFailure(specialistsFailuresEnum.serverError);
     }
   }
+  
   async createAppointment(obj:any): Promise<any | SpecialistsFailure> {
     try {
 
