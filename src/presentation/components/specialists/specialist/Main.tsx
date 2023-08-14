@@ -22,7 +22,7 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
     },[specialist])
 
     return(
-        <div className="w-full lg:w-[60%] bg-white rounded-lg p-6 shadow-sm border relative h-fit flex flex-col justify-start items-start gap-5">
+        <div className="w-full lg:w-[55%] bg-white rounded-lg p-6 shadow-sm border relative h-fit flex flex-col justify-start items-start gap-5">
             <div className="w-full h-fit flex justify-start items-center gap-5">
                 <div className='w-36 h-36 overflow-hidden rounded-md border'>
                     {specialist?.avatar !== "" ? 
@@ -166,7 +166,7 @@ function Main() {
     }, [pathname]);
 
     return (
-        <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6 px-[7%] lg:px-[13%] relative">
+        <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6 px-[7%] lg:px-[8%] relative">
             {loading && <div className='w-full h-[40vh] flex flex-col justify-center items-center text-center'>
                 <p className='font-semibold text-base text-slate-900'>Espere un momento...</p>
                 <p className='font-light text-sm text-slate-700'>Obteniendo información del especialista</p>
