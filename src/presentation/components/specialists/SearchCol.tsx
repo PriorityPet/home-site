@@ -21,7 +21,8 @@ const SearchCol = () => {
             <DefaultInput
                 onChangeCustom={onChange}
                 placeholder={"Nombre del servicio..."}
-                value={""}
+                value={""} 
+                type={undefined}            
             />
             <InputSelect
                 list={[]}
