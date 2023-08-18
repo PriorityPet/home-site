@@ -14,8 +14,8 @@ const Layout = (props:Props) => {
         <div className='h-fit'>
             <Head>
                 <title>{`${title} - Prosit`}</title>
-                <link rel="icon" href="/favicon.png" sizes="32x32"/>
-                <link rel="icon" href="/favicon.png" sizes="192x192"/>
+                <link rel="icon" href="/favicon-new.png" sizes="32x32"/>
+                <link rel="icon" href="/favicon-new.png" sizes="192x192"/>
             </Head>
             <div className={`relative block w-full bg-slate-100`}>
                 <Navbar/>
