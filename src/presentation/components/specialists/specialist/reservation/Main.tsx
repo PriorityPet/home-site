@@ -39,7 +39,7 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
   return (
     <div className={twMerge([
       "bg-white rounded-lg p-6 shadow-sm border items-start flex-col",
-      "lg:w-[40%] lg:sticky lg:top-[12%] lg:h-fit lg:justify-start lg:overflow-y-auto",
+      "lg:w-[45%] lg:sticky lg:top-[12%] lg:h-fit lg:justify-start lg:overflow-y-auto",
       "w-full fixed top-[7%] left-0 h-[93%] justify-between overflow-y-scroll",
       customStyle
     ])}>
