@@ -16,7 +16,7 @@ const Banner = () => {
                             <p className='text-white paragraph'>Si eres médico te ofrecemos una plataforma online para el manejo de tus citas, pacientes y mucho más.</p>
                         </div>
                         <div className="flex justify-between items-center w-fit gap-3">
-                            <Link href="https://proveedores.prosit.bio/login" className="w-fit text-center p-[10px_40px] block relative border border-white bg-transparent font-semibold text-[13px] text-white rounded-md cursor-pointer">Empezar</Link>
+                            <Link href={process.env.NEXT_PUBLIC_WEBSITE_PROVIDERS_URL + "login"} className="w-fit text-center p-[10px_40px] block relative border border-white bg-transparent font-semibold text-[13px] text-white rounded-md cursor-pointer">Empezar</Link>
                         </div>
                     </div>
     
