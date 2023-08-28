@@ -25,7 +25,7 @@ const HourComponent = ({hour, setHourSelected, hourSelected}:{
 
   let isEqual = hourSelected === hour["id"]
   let hourToShow = moment(hour["fechaReserva"]).utc().format("hh:mm a")
-  let disabled = moment(dateCorrect).isBefore(moment().utc(true))
+  let disabled = moment(dateCorrect).isBefore(moment().utc(true)) || hour["estado"] === 9
   let isntFree = hour["sujetoId"] !== null
 
   function selectHour(data:any){
