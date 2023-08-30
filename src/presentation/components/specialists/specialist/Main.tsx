@@ -38,7 +38,7 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
                         {specialist.sex === 1 ? "Dra." : "Dr."} {specialist?.names} {specialist?.firstName}
                     </p>
                     <div className="flex flex-col justify-center items-start">
-                        <p className='text-base text-slate-500 font-light'>{ageBirth} años</p>
+                        {ageBirth > 0 && <p className='text-base text-slate-500 font-light'>{ageBirth} años</p>}
                         <p className='text-base text-slate-500 font-light'>{specialist?.country}</p>
                         <p className='text-base text-slate-500 font-light'>CURP: {specialist.curp ?? "-"}</p>
                     </div>
