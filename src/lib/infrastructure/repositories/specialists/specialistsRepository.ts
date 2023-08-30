@@ -212,18 +212,25 @@ export class SpecialistsRepository implements ISpecialistsRepository {
     try {
 
       let appointment = {
-          sujetoId: obj["pacienteId"],
-          doctorId: obj["doctorId"],
-          servicioId: obj["servicioId"],
-          estado: 2
+        sujetoId: obj["pacienteId"],
+        doctorId: obj["doctorId"],
+        servicioId: obj["servicioId"],
+        estado: 2
       }
-      
-      let query = supabase.from("Citas")
 
+      let query = supabase.from("Citas")
       .update(appointment)
       .eq('id', obj["id"])
       
       let res = await query
+      if(res.error) throw new SpecialistsFailure(specialistsFailuresEnum.serverError)
+
+      const resRelation = await supabase.from("PermisosSujetos").insert({
+        sujetoId: obj["pacienteId"],
+        doctorId: obj["doctorId"]
+      }).select();
+
+      if (resRelation.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
 
       return res.data ?? {};
     } catch (error) {
