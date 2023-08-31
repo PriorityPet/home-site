@@ -40,7 +40,7 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
                     <div className="flex flex-col justify-center items-start">
                         {ageBirth > 0 && <p className='text-base text-slate-500 font-light'>{ageBirth} años</p>}
                         <p className='text-base text-slate-500 font-light'>{specialist?.country}</p>
-                        <p className='text-base text-slate-500 font-light'>CURP: {specialist.curp ?? "-"}</p>
+                        {specialist.curp.length > 0 && <p className='text-base text-slate-500 font-light'>CURP: {specialist.curp ?? "-"}</p>}
                     </div>
                 </div>
             </div>
@@ -73,6 +73,7 @@ const InformationComponent = ({specialist}:{specialist:Specialist}) => {
                                         <p className='paragraph'>{elem["nombre"]} - {elem["institucion"]}</p>
                                     </div>
                                 )}
+                                {specialist.specialities.length === 0 && <p className='paragraph'>No especificado</p>}
                             </div>
                         </div>
                     </div>
@@ -121,8 +122,8 @@ const LocalitiesComponent = ({specialist}:{specialist:Specialist}) => {
                             </span>
                         </div>
                         <div className='w-[92%] flex flex-col justify-center items-start gap-2'>
-                            <p className='paragraph text-slate-900'><b>{elem["nombre"]}</b> - Nro. de consultorio: {elem["consultorio"]}</p>
-                            <p className='paragraph'>{elem["ciudad"]} - {elem["direccion"]}</p>
+                            <p className='paragraph text-slate-900'><b>{elem["name"]}</b></p>
+                            <p className='paragraph'>{elem["state"]["name"]} {elem["municipalityId"] && `- ${elem["municipality"]["name"]}`} {elem["countryLocationId"] && `- ${elem["country_location"]["name"]}`}</p>
                         </div>
                     </div>
                 ) : 
@@ -153,6 +154,12 @@ function Main() {
       successful, 
       error 
     } = state.getSpecialist;
+    const { 
+        data: localities, 
+        loading: loadingLocalities, 
+        successful: loadedLocalities, 
+        error: errorLocalities
+      } = state.getSpecialistLocalities;
 
     const [activeReservationCard, setActiveReservationCard] = useState(false)
   
@@ -167,11 +174,11 @@ function Main() {
 
     return (
         <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6 px-[7%] lg:px-[8%] relative">
-            {loading && <div className='w-full h-[40vh] flex flex-col justify-center items-center text-center'>
+            {loadingLocalities && <div className='w-full h-[40vh] flex flex-col justify-center items-center text-center'>
                 <p className='font-semibold text-base text-slate-900'>Espere un momento...</p>
                 <p className='font-light text-sm text-slate-700'>Obteniendo información del especialista</p>
             </div>}
-            {successful && <>
+            {successful && loadedLocalities && <>
                 <UserCardComponent specialist={data as Specialist}/>
                 <ReservationCard setClose={setActiveReservationCard} customStyle={twMerge([
                     activeReservationCard ? "flex z-10" : "lg:flex hidden"

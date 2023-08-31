@@ -24,8 +24,8 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
 
   function handleFormatList(){
     let list_localities = localities.map((elem:any)=>({
-      title: elem["nombre"],
-      description: elem["direccion"],
+      title: elem["name"],
+      description: elem["state"]["name"],
       id: elem["id"]
     }))
     setListOfLocalities(list_localities)
@@ -51,7 +51,18 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
           {step === 3 && "Cita creada exitosamente"}
         </p>
       </div>
-      {step === 0 && <DataSelection specialist={specialist} listOfLocalities={listOfLocalities}/>}
+      {step === 0 && listOfLocalities.length > 0 ?
+      <DataSelection specialist={specialist} listOfLocalities={listOfLocalities}/>
+      :
+        <div className="w-full flex flex-col justify-center items-center">
+          <p className="font-bold text-slate-900 text-base my-3">
+            Vaya, no se encontraron consultorios
+          </p>
+          <p className="font-light text-slate-500 text-sm text-center">
+            Lo sentimos, pero este doctor no tiene consultorios agregados por lo que no puede agendarse una cita.
+          </p>
+        </div>
+      }
       {step === 1 && <UserConfirmation/>}
       {step === 2 && <AppointmentConfirmation specialist={specialist}/>}
       {step === 3 && <AppointmentSuccess/>}

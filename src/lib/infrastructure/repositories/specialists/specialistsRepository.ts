@@ -76,18 +76,27 @@ export class SpecialistsRepository implements ISpecialistsRepository {
   }
   async getSpecialistLocalities(id:number): Promise<any[] | SpecialistsFailure> {
     try {
-      const response = await supabase.from("LocalidadesDoctores").select(`
-        *,
-        Localidades (*)
-      `).eq("doctorId", id);
+      let cookies = nookies.get(undefined, 'access_token');
 
-      if(response.error)throw new SpecialistsFailure(response.statusText)
-      
-      let data = response.data.map((elem:any)=> elem["Localidades"] )
+      var myHeaders = new Headers();
 
-      console.log("GET_SPECIALIST_LOCALITIES_ENDPOINT", data)
-  
-      return data ?? [];
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${cookies["access_token"]}`);
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      } as RequestInit;
+
+      let URL = process.env.NEXT_PUBLIC_API_URL + `/doctor/${id}/location` as RequestInfo
+
+      const response = await fetch(URL, requestOptions)
+      let data = await response.json()
+
+      console.log("GET_USER_LOCALITIES_ENDPOINT", data["data"])
+
+      return data["data"] ?? [];
     } catch (error) {
       console.log("Error", error)
       const exception = error as any;
