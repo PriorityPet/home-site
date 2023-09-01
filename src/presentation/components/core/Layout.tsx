@@ -2,6 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import ScriptGoogle from './ScriptGoogle'
 
 interface Props {
     title: string
@@ -11,6 +12,7 @@ interface Props {
 const Layout = (props:Props) => {
     const {title, children} = props
     return (
+        <>
         <div className='h-fit'>
             <Head>
                 <title>{`${title} - Prosit`}</title>
@@ -25,6 +27,8 @@ const Layout = (props:Props) => {
             </div>
             <Footer/>
         </div>
+        <ScriptGoogle />
+        </>
     )
 }
 
