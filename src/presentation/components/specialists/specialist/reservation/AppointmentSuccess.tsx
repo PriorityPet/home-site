@@ -20,7 +20,7 @@ export const AppointmentSuccess = () => {
         </div>
       </div>
       <div className="w-full border-t border-slate-300 pt-6 mt-3">
-        <button onClick={()=>{ console.log(0); changeStep(0)(dispatch) }} className="btn btn-primary w-full">Regresar</button>
+        <button onClick={()=>{ changeStep(0)(dispatch) }} className="btn btn-primary w-full">Regresar</button>
       </div>
     </div>
   )

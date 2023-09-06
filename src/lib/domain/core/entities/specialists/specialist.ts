@@ -15,9 +15,10 @@ export interface Specialist {
     avatar: string;
     address: string;
     aboutMe: string;
+    shortDescription: string;
     country: string;
     pwaProfressionId: number | null;
-    professionalLicense: string | null;
+    professionalLicense: number | null;
     professionalLicenseInstitution: string | null;
     specialities: any[];
     role: string;

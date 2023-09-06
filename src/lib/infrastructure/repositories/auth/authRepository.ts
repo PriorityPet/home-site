@@ -31,7 +31,6 @@ export class AuthRepository implements IAuthRepository {
       const res = await supabase.from("Sujetos").insert({
         ...obj,
         estado: 0,
-        telefono: "",
         genero: 0,
         esPaciente: true
       }).select().single();

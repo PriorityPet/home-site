@@ -16,6 +16,7 @@ export function specialistDBToMap(data: any): Specialist {
     websiteUrl: data?.sitioWeb ?? "",
     avatar: data?.avatar ?? "",
     aboutMe: data?.acerca ?? "",
+    shortDescription: data?.descripcionCorta ?? "",
     country: data?.paisNacimiento ?? "",
     personType: data?.tipoPersona ?? 0,
     pwaProfressionId: data?.cedulaProfesional ?? null,

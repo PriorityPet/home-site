@@ -2,6 +2,7 @@ import { SpecialSelect } from "@/presentation/components/core/Inputs"
 import moment from "moment"
 import { Dispatch, SetStateAction, useContext, useMemo, useState } from "react"
 import { FiArrowDown, FiArrowUp, FiBriefcase, FiChevronLeft, FiChevronRight, FiMapPin } from "react-icons/fi"
+import { FaRegCalendarAlt } from "react-icons/fa"
 import { twMerge } from "tailwind-merge"
 import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext"
 import { MdArrowBack, MdArrowLeft } from "react-icons/md"
@@ -160,7 +161,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
 
   const pathname = usePathname();
 
-  useMemo(() => {
+  /*useMemo(() => {
     if (loadedServices){
       let list_services = services.map((elem:any)=>({
         title: elem["nombre"],
@@ -170,11 +171,11 @@ export const DataSelection = ({listOfLocalities, specialist}:{
       setListOfServices(list_services)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadedServices]);
+  }, [loadedServices]);*/
 
 
   function loadServiceIntoAppointmentData(){
-    let findedService = services.find((elem:any)=> elem["id"] === service )
+    let findedService = services.find((elem:any)=> elem["id"] === service?.id )
     findedService = {
       ...appointmentData,
       title: findedService["nombre"],
@@ -187,15 +188,15 @@ export const DataSelection = ({listOfLocalities, specialist}:{
     if(changedServiceId) loadServiceIntoAppointmentData()
   },[changedServiceId])
 
-  useMemo(()=> {
+  /*useMemo(()=> {
     if(changedHourSelected) changeStep(1)(dispatch)
-  } ,[changedHourSelected])
+  } ,[changedHourSelected])*/
 
   useMemo(()=> {
-    if(changedServiceId) getAttentionWindowsByService(service, date)(dispatch)
+    if(changedServiceId && service) getAttentionWindowsByService(service?.id, date)(dispatch)
   },[date])
 
-  useMemo(()=>{
+  /*useMemo(()=>{
     if(changedLocalityId){
       const url = pathname?.split("/")
       if(url){
@@ -203,16 +204,16 @@ export const DataSelection = ({listOfLocalities, specialist}:{
         getSpecialistServices(parseInt(id), locality)(dispatch)
       }
     }
-  },[locality])
+  },[locality])*/
 
   useMemo(()=>{
-    if(service > 0) getAttentionWindowsByService(service, date)(dispatch)
+    if(service) getAttentionWindowsByService(service?.id, date)(dispatch)
   },[service])
 
   return(
     <div className="w-full h-fit flex flex-col justify-start items-start gap-3">
       
-      <div className='w-full flex justify-start items-start gap-5'>
+      <div className='w-full flex justify-start items-start gap-5 mb-3'>
         <div className='w-[10%] relative flex flex-col justify-start items-center'>
           <span className='w-9 h-9 border bg-white text-secondary rounded-md flex flex-col justify-center items-center'>
             <FiMapPin/>
@@ -220,10 +221,15 @@ export const DataSelection = ({listOfLocalities, specialist}:{
         </div>
         <div className='w-[90%] relative flex flex-col justify-start items-start gap-2'>
           <div className=''>
-            <p className='font-medium text-slate-900 text-base'>Consultorio</p>
-            <p className='font-light text-slate-500 text-sm'>Selecciona el consultorio que te convenga más</p>
+            <p className='font-medium text-slate-900 text-lg'>Consultorio</p>
+            { !locality && <p className='font-light text-slate-500 text-sm'>Selecciona el consultorio que te convenga más</p>}
+            {locality &&
+              <div className="my-2">
+                <p className='font-medium text-slate-900 text-base'>{locality.name}</p>
+                <p className='font-light text-slate-500 text-sm mt-2'>{locality.postal_code}</p>
+              </div>
+            }
           </div>
-          <SpecialSelect customClick={(value:any)=>{ console.log(value["id"]) }} selectedItem={(value:any)=> changeLocality(value["id"])(dispatch) } list={listOfLocalities} />
         </div>
       </div>
 
@@ -234,17 +240,29 @@ export const DataSelection = ({listOfLocalities, specialist}:{
           </span>
         </div>
         <div className='w-[90%] relative flex flex-col justify-start items-start gap-2'>
-          <div className=''>
-            <p className='font-medium text-slate-900 text-base'>Servicio</p>
+          <div className='w-full'>
+            <p className='font-medium text-slate-900 text-lg'>Servicio</p>
             <p className='font-light text-slate-500 text-sm'>Selecciona la razón por la cual necesitas la consulta</p>
+            { service &&
+              <div className="my-2 relative w-full h-fit justify-center items-start bg-white border border-slate-300 rounded-md p-2">
+                <p className='font-medium text-slate-900 text-base'>{service.nombre}</p>
+                <p className='font-light text-slate-500 text-sm mt-2'>{service.precioBase}</p>
+              </div>
+            }
           </div>
-          <SpecialSelect customClick={(value:any)=>{ console.log(value["id"]) }} selectedItem={(value:any)=> changeService(value["id"])(dispatch) } list={listOfServices} />
         </div>
       </div>
-      <div className='w-full relative flex flex-col justify-start items-start gap-2'>
-        <div className=''>
-          <p className='font-medium text-slate-900 text-base'>Para cuando</p>
-          <p className='font-light text-slate-500 text-sm'>Selecciona la fecha indicada para ti y conoce la disponibilidad</p>
+      <div className='w-full flex flex-col justify-start items-start gap-3'>
+        <div className='flex w-full gap-3'>
+          <div className='w-[10%] relative flex flex-col justify-start items-center'>
+            <span className='w-9 h-9 border bg-white text-secondary rounded-md flex flex-col justify-center items-center'>
+              <FaRegCalendarAlt/>
+            </span>
+          </div>
+          <div className='w-[90%] relative flex flex-col justify-start items-start gap-2'>
+            <p className='font-medium text-slate-900 text-lg'>Para cuando</p>
+            <p className='font-light text-slate-500 text-sm'>Selecciona la fecha indicada para ti y conoce la disponibilidad</p>
+          </div>
         </div>
         {loadedWindows && <div className="w-full flex justify-between items-center">
           <input 
@@ -296,7 +314,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
           service === 0 ||
           hourSelected === ""
         } 
-        onClick={()=>{ changeHourSelected(hourSelected)(dispatch); }}
+        onClick={()=>{ changeHourSelected(hourSelected)(dispatch); changeStep(1)(dispatch) }}
         className="btn btn-primary w-full">Agendar</button>
       </div>
 
