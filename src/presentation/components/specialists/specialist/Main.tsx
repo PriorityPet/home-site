@@ -54,7 +54,7 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
                     <div className="flex flex-col justify-center items-start">
                         <p className='text-base text-slate-500 font-light'>{profesion?.name}</p>
                         <p className='text-base text-slate-500 font-light my-2'>{specialist.shortDescription}</p>
-                        <p className='text-base text-slate-500 font-light'>N° de cédula: {specialist.pwaProfressionId}</p>
+                        {specialist.pwaProfressionId && <p className='text-base text-slate-500 font-light'>N° de cédula: {specialist.pwaProfressionId}</p>}
                     </div>
                 </div>
             </div>
