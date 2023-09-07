@@ -27,7 +27,7 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
     const pathname = usePathname();
     
     useMemo(()=>{
-        if(changedLocalityId){
+        if(changedLocalityId && locality){
             const url = pathname?.split("/")
             if(url){
                 let id = url![url!.length - 1]
