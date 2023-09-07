@@ -45,7 +45,7 @@ const HourComponent = ({hour, setHourSelected, hourSelected}:{
       isEqual && "text-white bg-secondary",
       isntFree && "bg-transparent text-gray-500 line-through",
       disabled && "bg-transparent text-gray-500 cursor-not-allowed",
-      (!disabled && !isntFree) && "cursor-pointer hover:bg-secondary/20 hover:border-secondary"
+      (!disabled && !isntFree) && "cursor-pointer hover:bg-secondary hover:border-secondary"
     ])}>
       <p>{hourToShow}</p>
     </div>
