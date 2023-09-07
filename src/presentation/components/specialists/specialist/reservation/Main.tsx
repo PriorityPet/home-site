@@ -36,8 +36,6 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadedLocalities]);
 
-  console.log(step)
-
   return (
     <div className={twMerge([
       "bg-white rounded-lg p-6 shadow-sm border items-start flex-col",

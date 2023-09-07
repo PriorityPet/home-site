@@ -22,8 +22,10 @@ export const AppointmentConfirmation = ({specialist}:{
   } = state.createAppointment
   const { data: pacienteId } = state.changeUserId
   const { data: id } = state.changeHourSelected
+
   const { data: appointmentData } = state.changeAppointmentData
-  
+  const { data: service, successful: changedServiceId } = state.changeService;
+
   const pathname = usePathname();
   
   const [doctorId, setDoctorId] = useState(0)
@@ -70,6 +72,7 @@ export const AppointmentConfirmation = ({specialist}:{
         onClick={()=>{ createAppointment({
           pacienteId: pacienteId,
           doctorId: doctorId,
+          servicioId: service["id"],
           id: id
         })(dispatch) }} className="btn btn-primary w-full">{loading ? "Agendando..." : "Confirmar"}</button>
       </div>

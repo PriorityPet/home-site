@@ -5,7 +5,11 @@ import { useContext } from "react"
 export const AppointmentSuccess = () => {
 
   const { actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
-  const { changeStep } = actions
+  const { 
+    changeStep,
+    resetUserCreation,
+    resetAppointmentCreation
+  } = actions
   
   return(
     <div className="w-full h-fit flex flex-col justify-start items-start gap-3">
@@ -20,7 +24,11 @@ export const AppointmentSuccess = () => {
         </div>
       </div>
       <div className="w-full border-t border-slate-300 pt-6 mt-3">
-        <button onClick={()=>{ changeStep(0)(dispatch) }} className="btn btn-primary w-full">Regresar</button>
+        <button onClick={()=>{ 
+          changeStep(0)(dispatch);
+          resetUserCreation()(dispatch);
+          resetAppointmentCreation()(dispatch);
+        }} className="btn btn-primary w-full">Regresar</button>
       </div>
     </div>
   )
