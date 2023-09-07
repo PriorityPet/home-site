@@ -192,7 +192,7 @@ export const UserConfirmation = () => {
             placeholder="33 1234 5678"
           />
           </div>
-          {invalidPhoneNumber && <p className="text-xs text-red-700 font-medium">El email no es correcto</p>}
+          {invalidPhoneNumber && <p className="text-xs text-red-700 font-medium">{invalidPhoneNumber}</p>}
         </div>
       </div>
       <div className='w-full flex justify-start items-start gap-5'>
