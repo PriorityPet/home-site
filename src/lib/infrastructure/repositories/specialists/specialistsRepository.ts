@@ -224,7 +224,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         sujetoId: obj["pacienteId"],
         doctorId: obj["doctorId"],
         servicioId: obj["servicioId"],
-        estado: 2
+        estado: 3
       }
 
       let query = supabase.from("Citas")

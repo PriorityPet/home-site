@@ -18,6 +18,8 @@ export interface ISpecialistsActions {
   changeHourSelected: Function;
   changeUserId: Function;
   changeAppointmentData: Function;
+  resetUserCreation: Function
+  resetAppointmentCreation: Function
 }
 
 const getSpecialists = () => async (dispatch: Dispatch<any>) => {
@@ -123,6 +125,9 @@ const changeUserId = (data:string) => async (dispatch: Dispatch<any>) => dispatc
 
 const changeAppointmentData = (data:any) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_APPOINTMENT_DATA_SUCCESSFUL", payload: { data } });
 
+const resetUserCreation = () => async (dispatch: Dispatch<any>) => dispatch({ type: "RESET_CREATION_USER", payload: {} });
+const resetAppointmentCreation = () => async (dispatch: Dispatch<any>) => dispatch({ type: "RESET_CREATION_APPOINTMENT", payload: {} });
+
 export const actions: ISpecialistsActions = {
   changeStep,
   getSpecialists,
@@ -137,4 +142,6 @@ export const actions: ISpecialistsActions = {
   changeHourSelected,
   changeUserId,
   changeAppointmentData,
+  resetUserCreation,
+  resetAppointmentCreation
 }

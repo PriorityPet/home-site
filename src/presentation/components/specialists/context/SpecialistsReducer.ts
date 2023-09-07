@@ -297,6 +297,26 @@ export const SpecialistsReducer = (state: any, action: any) => {
           error: null,
         },
       };
+    case 'RESET_CREATION_USER':
+      return {
+        ...state,
+        createUser: {
+          data: null,
+          loading: false,
+          successful: false,
+          error: null,
+        },
+      };
+    case 'RESET_CREATION_APPOINTMENT':
+      return {
+        ...state,
+        createAppointment: {
+          data: null,
+          loading: false,
+          successful: false,
+          error: null,
+        },
+      };
     default:
       return state;
   }
