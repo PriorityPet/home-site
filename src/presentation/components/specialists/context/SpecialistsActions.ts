@@ -90,11 +90,11 @@ const getBreeds = (obj: { specieId: number }) => async (dispatch: Dispatch<any>)
   }
 }
 
-const getSpecialistLocalities = (id:number) => async (dispatch: Dispatch<any>) => {
+const getSpecialistLocalities = (id:number, type:number) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch({ type: "GET_SPECIALIST_LOCALITIES_LOADING" });
     
-    const res: ILocality[] = await new SpecialistsUseCase().getSpecialistLocalities(id);
+    const res: ILocality[] = await new SpecialistsUseCase().getSpecialistLocalities(id, type);
 
     dispatch({ type: "GET_SPECIALIST_LOCALITIES_SUCCESSFUL", payload: { data: res } });
   } catch (error) {
@@ -103,11 +103,11 @@ const getSpecialistLocalities = (id:number) => async (dispatch: Dispatch<any>) =
   }
 }
 
-const getSpecialistServices = (id:number, localityId?:number) => async (dispatch: Dispatch<any>) => {
+const getSpecialistServices = (id:number, type:number, localityId?:number) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch({ type: "GET_SPECIALIST_SERVICES_LOADING" });
     
-    const res: any[] = await new SpecialistsUseCase().getSpecialistServices(id, localityId);
+    const res: any[] = await new SpecialistsUseCase().getSpecialistServices(id, type, localityId);
 
     dispatch({ type: "GET_SPECIALIST_SERVICES_SUCCESSFUL", payload: { data: res } });
   } catch (error) {

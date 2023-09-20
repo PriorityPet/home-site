@@ -129,7 +129,7 @@ function Main() {
         loading: loadingLocalities, 
         successful: loadedLocalities, 
         error: errorLocalities
-      } = state.getSpecialistLocalities;
+    } = state.getSpecialistLocalities;
 
     const [activeReservationCard, setActiveReservationCard] = useState(false)
   
@@ -138,7 +138,7 @@ function Main() {
       if(url){
         let id = url![url!.length - 1]
         getSpecialist(parseInt(id), parseInt(searchParams.get("type") ?? "0"))(dispatch)
-        getSpecialistLocalities(parseInt(id))(dispatch)
+        getSpecialistLocalities(parseInt(id), parseInt(searchParams.get("type") ?? "0"))(dispatch)
       }
     }, [pathname]);
 

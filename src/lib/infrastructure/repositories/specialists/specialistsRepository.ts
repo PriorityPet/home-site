@@ -8,12 +8,14 @@ import moment from 'moment';
 import { ILocality } from '@/lib/domain/core/entities/localityEntity';
 import { serviceDBToMap } from '@/lib/domain/mappers/service/serviceDBToMap';
 import { SpecialistEnum } from '@/lib/enums/specialist/specialistEnum';
+import { IService } from '@/lib/domain/core/entities/serviceEntity';
 
 export default interface ISpecialistsRepository {
     getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure>;
     getSpecialist(id:number, type: string | number): Promise<Specialist | SpecialistsFailure>;
-    getSpecialistLocalities(id:number): Promise<ILocality[] | SpecialistsFailure>;
+    getSpecialistLocalities(id:number, type:number): Promise<ILocality[] | SpecialistsFailure>;
     getSpecialistServices(id:number, localityId?:number): Promise<any[] | SpecialistsFailure>;
+    getProviderServices(id:number, localityId: number): Promise<any[] | SpecialistsFailure>;
     getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure>;
     createAppointment(obj:any): Promise<any | SpecialistsFailure>;
 }
@@ -73,7 +75,6 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         }
         
         data = {...response.data, tipoPersona: SpecialistEnum.DOCTOR}
-        console.log("DOCTOR", data)
       }
 
       if(type === SpecialistEnum.PROVIDER){
@@ -81,8 +82,29 @@ export class SpecialistsRepository implements ISpecialistsRepository {
   
         if(response.error)throw new SpecialistsFailure(response.statusText)
         
-        data = {...response.data, tipoPersona: SpecialistEnum.PROVIDER}
-        console.log("PROVIDER", data)
+        data = {
+          usuarioId: response.data?.id ?? "",
+          id: response.data?.id ?? "",
+          nombres: response.data?.nombre ?? "",
+          primerApellido: "",
+          segundoApellido: "",
+          telefono: response.data?.telefono ?? "",
+          estado: response.data?.estado ?? 0,
+          email: response.data?.correo ?? "",
+          curp: response.data?.curp ?? "",
+          fechaNacimiento: response.data?.fechaNacimiento ?? "",
+          sexo: response.data?.sexo ?? 0,
+          sitioWeb: response.data?.sitioWeb ?? "",
+          avatar: response.data?.fotoUrl ?? "",
+          acerca: response.data?.acerca ?? "",
+          descripcionCorta: response.data?.descripcionCorta ?? "",
+          paisNacimiento: response.data?.paisNacimiento ?? "",
+          tipoPersona: SpecialistEnum.PROVIDER,
+          cedulaProfesional: response.data?.cedulaProfesional ?? null,
+          profesionPQAId: response.data?.profesionPQAId ?? "",
+          institucionCedulaProfesional: response.data?.institucionCedulaProfesional ?? "",
+          EspecialidadesDoctores: response.data?.EspecialidadesDoctores ?? "",
+        }
       }
   
       return specialistDBToMap(data) ?? {} as Specialist;
@@ -92,7 +114,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
       return new SpecialistsFailure(specialistsFailuresEnum.serverError);
     }
   }
-  async getSpecialistLocalities(id:number): Promise<ILocality[] | SpecialistsFailure> {
+  async getSpecialistLocalities(id:number, type:number): Promise<ILocality[] | SpecialistsFailure> {
     try {
       let cookies = nookies.get(undefined, 'access_token');
 
@@ -107,12 +129,16 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         redirect: 'follow'
       } as RequestInit;
 
-      let URL = process.env.NEXT_PUBLIC_API_URL + `/doctor/${id}/location/${"PER"}` as RequestInfo
+      let URL:RequestInfo = "";
+      if(type === SpecialistEnum.DOCTOR){
+        URL = process.env.NEXT_PUBLIC_API_URL + `/doctor/${id}/location/${"PER"}` as RequestInfo
+      }
+      if(type === SpecialistEnum.PROVIDER){
+        URL = process.env.NEXT_PUBLIC_API_URL + `/supplier/${id}/location/${"PER"}` as RequestInfo
+      }
 
       const response = await fetch(URL, requestOptions)
       let data = await response.json()
-
-      console.log("GET_USER_LOCALITIES_ENDPOINT", data["data"])
 
       return data["data"] ?? [];
     } catch (error) {
@@ -121,6 +147,25 @@ export class SpecialistsRepository implements ISpecialistsRepository {
       return new SpecialistsFailure(specialistsFailuresEnum.serverError);
     }
   }
+
+  async getProviderServices(id:number, localityId:number): Promise<IService[] | SpecialistsFailure> {
+    try {
+      const response = await supabase.from("Servicios").select(`*`).eq("proveedorId", id);
+
+      if(response.error)throw new SpecialistsFailure(response.statusText)
+      
+      let data = response.data
+
+      if(localityId) data = data.filter(elem => elem["localidadId"] === localityId)
+
+      return data.map((elem:any)=> serviceDBToMap(elem)) ?? [];
+    } catch (error) {
+      console.log("Error", error)
+      const exception = error as any;
+      return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+    }
+  }
+
   async getSpecialistServices(id:number, localityId?:number): Promise<any[] | SpecialistsFailure> {
     try {
       const response = await supabase.from("ServiciosDoctores").select(`
@@ -135,12 +180,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         ...elem["Servicios"]
       }) )
 
-      if(localityId) {
-        console.log(data)
-        data = data.filter(elem => elem["Servicios"]["localidadId"] === localityId)
-      }
-
-      console.log("GET_SPECIALIST_SERVICES_ENDPOINT", data)
+      if(localityId) data = data.filter(elem => elem["Servicios"]["localidadId"] === localityId)
   
       return data.map((elem:any)=> serviceDBToMap(elem)) ?? [];
     } catch (error) {

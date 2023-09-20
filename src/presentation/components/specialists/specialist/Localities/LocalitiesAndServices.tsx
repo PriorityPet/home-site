@@ -34,7 +34,7 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
             const url = pathname?.split("/")
             if(url){
                 let id = url![url!.length - 1]
-                getSpecialistServices(parseInt(id), locality.id)(dispatch)
+                getSpecialistServices(parseInt(id), specialist.personType, locality.id)(dispatch)
             }
         }
     },[locality])

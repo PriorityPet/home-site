@@ -6,6 +6,7 @@ import { ServiceFailure } from '../../core/failures/service/serviceFailure';
 import { Specialist } from '../../core/entities/specialists/specialist';
 import { SpecialistsRepository } from '@/lib/infrastructure/repositories/specialists/specialistsRepository';
 import { SpecialistsFailure } from '../../core/failures/specialists/specialistsFailure';
+import { SpecialistEnum } from '@/lib/enums/specialist/specialistEnum';
 
 export default class SpecialistsUseCase {
     private _repository: SpecialistsRepository = new SpecialistsRepository();
@@ -32,9 +33,9 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
-    async getSpecialistLocalities(id:number): Promise<ILocality[]> {
+    async getSpecialistLocalities(id:number, type:number): Promise<ILocality[]> {
         try {
-            const response = await this._repository.getSpecialistLocalities(id);
+            const response = await this._repository.getSpecialistLocalities(id, type);
   
             if (response instanceof SpecialistsFailure) throw response;
   
@@ -43,10 +44,18 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
-    async getSpecialistServices(id:number, localityId?:number): Promise<any[]> {
+    async getSpecialistServices(id:number, type:number, localityId:number): Promise<any[]> {
         try {
-            const response = await this._repository.getSpecialistServices(id, localityId);
+
+            if(type === SpecialistEnum.PROVIDER){
+                let response = await this._repository.getProviderServices(id, localityId);
+                if (response instanceof SpecialistsFailure) throw response;
   
+                return response;
+            }
+
+            let response = await this._repository.getSpecialistServices(id, localityId);
+
             if (response instanceof SpecialistsFailure) throw response;
   
             return response;
