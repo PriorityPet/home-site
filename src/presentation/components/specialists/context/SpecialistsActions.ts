@@ -5,6 +5,7 @@ import { Specialist } from '@/lib/domain/core/entities/specialists/specialist';
 import AuthUseCase from '@/lib/domain/useCases/auth/authUseCase';
 import { IPet } from '@/lib/domain/core/entities/petEntity';
 import PetUseCase from '@/lib/domain/useCases/pet/petUseCases';
+import { IService } from '@/lib/domain/core/entities/serviceEntity';
 
 export interface ISpecialistsActions {
   changeStep: Function;
@@ -156,9 +157,9 @@ const createUser = (obj:any) => async (dispatch: Dispatch<any>) => {
 
 const changeStep = (step:number) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_STEP_SUCCESSFUL", payload: { data: step } });
 
-const changeService = (id:number) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_SERVICE_SUCCESSFUL", payload: { data: id } });
+const changeService = (data:IService) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_SERVICE_SUCCESSFUL", payload: { data: data } });
 
-const changeLocality = (id:number) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_LOCALITY_SUCCESSFUL", payload: { data: id } });
+const changeLocality = (data:ILocality) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_LOCALITY_SUCCESSFUL", payload: { data: data } });
 
 const changeHourSelected = (data:string) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_HOUR_SELECTED_SUCCESSFUL", payload: { data } });
 

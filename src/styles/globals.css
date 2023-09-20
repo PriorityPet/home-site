@@ -42,7 +42,7 @@ a {
   }
 
   .btn-primary{
-    @apply bg-primary text-dark-primary
+    @apply bg-primary text-white
   }
 
   .btn-outline-primary{

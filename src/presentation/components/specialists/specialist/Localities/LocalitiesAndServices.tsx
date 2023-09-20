@@ -57,7 +57,7 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
             <>
                 <div onClick={() => step === 0 && change()} className={twMerge([
                     "w-full flex justify-start items-center gap-3 bg-white rounded-md p-3 border-l-8 border border-slate-200",
-                    isActive && "transition-all border-green-500",
+                    isActive && "transition-all border-l-8 border-l-green-500 border-green-500",
                     step === 0 && `cursor-pointer`,
                 ])}>
                     <div className="w-[8%] h-full relative flex flex-col justify-center items-center">

@@ -226,7 +226,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
             {locality &&
               <div className="my-2">
                 <p className='font-medium text-slate-900 text-base'>{locality.name}</p>
-                <p className='font-light text-slate-500 text-sm mt-2'>{locality.postal_code}</p>
+                <p className='font-light text-slate-500 text-sm mt-2'>{locality.address.postal_code}</p>
               </div>
             }
           </div>
@@ -245,8 +245,8 @@ export const DataSelection = ({listOfLocalities, specialist}:{
             <p className='font-light text-slate-500 text-sm'>Selecciona la razón por la cual necesitas la consulta</p>
             { service &&
               <div className="my-2 relative w-full h-fit justify-center items-start bg-white border border-slate-300 rounded-md p-2">
-                <p className='font-medium text-slate-900 text-base'>{service.nombre}</p>
-                <p className='font-light text-slate-500 text-sm mt-2'>${service.precioBase}</p>
+                <p className='font-medium text-slate-900 text-base'>{service.name}</p>
+                <p className='font-light text-slate-500 text-sm mt-2'>${service.base_price}</p>
               </div>
             }
           </div>
@@ -311,7 +311,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
       <div className="w-full border-t border-slate-300 pt-6 mt-3">
         <button 
         disabled={
-          service === 0 ||
+          !service ||
           hourSelected === ""
         } 
         onClick={()=>{ changeHourSelected(hourSelected)(dispatch); changeStep(1)(dispatch) }}

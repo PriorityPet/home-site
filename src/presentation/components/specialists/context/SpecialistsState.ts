@@ -1,4 +1,5 @@
 import { ILocality } from "@/lib/domain/core/entities/localityEntity";
+import { IService } from "@/lib/domain/core/entities/serviceEntity";
 import { Specialist } from "@/lib/domain/core/entities/specialists/specialist";
 import { LocalityFailure } from "@/lib/domain/core/failures/locality/localityFailure";
 import { PetFailure } from "@/lib/domain/core/failures/pet/petFailure";
@@ -17,8 +18,8 @@ export interface ISpecialistsState {
   createAppointment: ISpecialistsSpecialistsState;
   createUser: ISpecialistsSpecialistsState;
   changeStep: ISpecialistsSpecialistsState;
-  changeService: ISpecialistsSpecialistsState;
-  changeLocality: ISpecialistsSpecialistsState;
+  changeService: IChangeServiceState;
+  changeLocality: IChangeLocalityState;
   changeHourSelected: ISpecialistsSpecialistsState;
   changeUserId: ISpecialistsSpecialistsState;
   changeAppointmentData: ISpecialistsSpecialistsState;
@@ -29,6 +30,20 @@ export interface ISpecialistsState {
 
 interface ISpecialistsSpecialistsState {
   data: any;
+  loading: boolean;
+  successful: boolean;
+  error: LocalityFailure | null; 
+}
+
+interface IChangeServiceState {
+  data: IService | null;
+  loading: boolean;
+  successful: boolean;
+  error: LocalityFailure | null; 
+}
+
+interface IChangeLocalityState {
+  data: ILocality | null;
   loading: boolean;
   successful: boolean;
   error: LocalityFailure | null; 
