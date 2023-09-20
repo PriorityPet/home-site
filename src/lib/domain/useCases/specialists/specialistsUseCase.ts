@@ -32,7 +32,7 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
-    async getSpecialistLocalities(id:number): Promise<any[]> {
+    async getSpecialistLocalities(id:number): Promise<ILocality[]> {
         try {
             const response = await this._repository.getSpecialistLocalities(id);
   

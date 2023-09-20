@@ -5,11 +5,13 @@ import { SpecialistsFailure, specialistsFailuresEnum } from '@/lib/domain/core/f
 import { supabase } from '../../config/supabase/supabase-client';
 import { specialistDBToMap } from '@/lib/domain/mappers/specialist/specialistDBToMap';
 import moment from 'moment';
+import { ILocality } from '@/lib/domain/core/entities/localityEntity';
+import { serviceDBToMap } from '@/lib/domain/mappers/service/serviceDBToMap';
 
 export default interface ISpecialistsRepository {
     getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure>;
     getSpecialist(id:number): Promise<Specialist | SpecialistsFailure>;
-    getSpecialistLocalities(id:number): Promise<any[] | SpecialistsFailure>;
+    getSpecialistLocalities(id:number): Promise<ILocality[] | SpecialistsFailure>;
     getSpecialistServices(id:number, localityId?:number): Promise<any[] | SpecialistsFailure>;
     getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure>;
     createAppointment(obj:any): Promise<any | SpecialistsFailure>;
@@ -74,7 +76,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
       return new SpecialistsFailure(specialistsFailuresEnum.serverError);
     }
   }
-  async getSpecialistLocalities(id:number): Promise<any[] | SpecialistsFailure> {
+  async getSpecialistLocalities(id:number): Promise<ILocality[] | SpecialistsFailure> {
     try {
       let cookies = nookies.get(undefined, 'access_token');
 
@@ -89,7 +91,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         redirect: 'follow'
       } as RequestInit;
 
-      let URL = process.env.NEXT_PUBLIC_API_URL + `/doctor/${id}/location` as RequestInfo
+      let URL = process.env.NEXT_PUBLIC_API_URL + `/doctor/${id}/location/${"PER"}` as RequestInfo
 
       const response = await fetch(URL, requestOptions)
       let data = await response.json()
@@ -124,7 +126,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
 
       console.log("GET_SPECIALIST_SERVICES_ENDPOINT", data)
   
-      return data ?? [];
+      return data.map((elem:any)=> serviceDBToMap(elem)) ?? [];
     } catch (error) {
       console.log("Error", error)
       const exception = error as any;
