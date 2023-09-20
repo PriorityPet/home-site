@@ -34,7 +34,7 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
     useEffect(()=>{
         formatDateBirth()
     },[specialist])*/
-
+    console.log(specialist)
     return(
         <div className="w-full lg:w-[55%] bg-white rounded-lg p-6 shadow-sm border relative h-fit flex flex-col justify-start items-start gap-5">
             <div className="w-full h-fit flex justify-start items-center gap-5">
@@ -53,12 +53,12 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
                     </p>
                     <div className="flex flex-col justify-center items-start">
                         <p className='text-base text-slate-500 font-light'>{profesion?.name}</p>
-                        <p className='text-base text-slate-500 font-light my-2'>{specialist.shortDescription}</p>
-                        {specialist.pwaProfressionId && <p className='text-base text-slate-500 font-light'>N° de cédula: {specialist.pwaProfressionId}</p>}
+                        <p className='text-base hidden md:block text-slate-500 font-light my-2'>{specialist.shortDescription}</p>
+                        {specialist.curp && <p className='text-base text-slate-500 font-light my-2 md:my-0'>N° de CURP: {specialist.curp}</p>}
                     </div>
                 </div>
             </div>
-            <InformationComponent specialist={specialist} />
+            {specialist?.aboutMe && <InformationComponent specialist={specialist} />}
             <LocalitiesComponent specialist={specialist} />
         </div>
     )
