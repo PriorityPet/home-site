@@ -3,6 +3,9 @@ import { Dispatch } from "react";
 import SpecialistsUseCase from '@/lib/domain/useCases/specialists/specialistsUseCase';
 import { Specialist } from '@/lib/domain/core/entities/specialists/specialist';
 import AuthUseCase from '@/lib/domain/useCases/auth/authUseCase';
+import { IPet } from '@/lib/domain/core/entities/petEntity';
+import PetUseCase from '@/lib/domain/useCases/pet/petUseCases';
+import { IService } from '@/lib/domain/core/entities/serviceEntity';
 
 export interface ISpecialistsActions {
   changeStep: Function;
@@ -19,7 +22,10 @@ export interface ISpecialistsActions {
   changeUserId: Function;
   changeAppointmentData: Function;
   resetUserCreation: Function
-  resetAppointmentCreation: Function
+  resetAppointmentCreation: Function;
+  createPet: (obj: { pet: IPet, providerId: number|null, doctorId: number|null }) => (dispatch: Dispatch<any>) => {};
+  getSpecies: () =>  (dispatch: Dispatch<any>) => {};
+  getBreeds: (obj: { specieId: number }) => (dispatch: Dispatch<any>) => {};
 }
 
 const getSpecialists = () => async (dispatch: Dispatch<any>) => {
@@ -45,6 +51,42 @@ const getSpecialist = (id:number) => async (dispatch: Dispatch<any>) => {
   } catch (error) {
     console.log("Error calling action", error)
     dispatch({ type: "GET_SPECIALIST_ERROR", payload: { error: error } });
+  }
+}
+
+const createPet = (obj: { pet: IPet, providerId: number|null, doctorId: number|null }) => async (dispatch: Dispatch<any>) => {
+  try {
+    dispatch({ type: "CREATE_PET_LOADING" });
+    
+    const res = await new PetUseCase().createPet(obj);
+
+    dispatch({ type: "CREATE_PET_SUCCESSFUL", payload: { data: res } });
+  } catch (error) {
+    dispatch({ type: "CREATE_PET_ERROR", payload: { error: error } });
+  }
+}
+
+const getSpecies = () => async (dispatch: Dispatch<any>) => {
+  try {
+    dispatch({ type: "GET_SPECIES_LOADING" });
+    
+    const res = await new PetUseCase().getSpecies();
+
+    dispatch({ type: "GET_SPECIES_SUCCESSFUL", payload: { data: res } });
+  } catch (error) {
+    dispatch({ type: "GET_SPECIES_ERROR", payload: { error: error } });
+  }
+}
+
+const getBreeds = (obj: { specieId: number }) => async (dispatch: Dispatch<any>) => {
+  try {
+    dispatch({ type: "GET_BREEDS_LOADING" });
+    
+    const res = await new PetUseCase().getBreeds({ specieId: obj.specieId });
+
+    dispatch({ type: "GET_BREEDS_SUCCESSFUL", payload: { data: res } });
+  } catch (error) {
+    dispatch({ type: "GET_BREEDS_ERROR", payload: { error: error } });
   }
 }
 
@@ -115,9 +157,9 @@ const createUser = (obj:any) => async (dispatch: Dispatch<any>) => {
 
 const changeStep = (step:number) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_STEP_SUCCESSFUL", payload: { data: step } });
 
-const changeService = (id:number) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_SERVICE_SUCCESSFUL", payload: { data: id } });
+const changeService = (data:IService) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_SERVICE_SUCCESSFUL", payload: { data: data } });
 
-const changeLocality = (id:number) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_LOCALITY_SUCCESSFUL", payload: { data: id } });
+const changeLocality = (data:ILocality) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_LOCALITY_SUCCESSFUL", payload: { data: data } });
 
 const changeHourSelected = (data:string) => async (dispatch: Dispatch<any>) => dispatch({ type: "CHANGE_HOUR_SELECTED_SUCCESSFUL", payload: { data } });
 
@@ -143,5 +185,8 @@ export const actions: ISpecialistsActions = {
   changeUserId,
   changeAppointmentData,
   resetUserCreation,
-  resetAppointmentCreation
+  resetAppointmentCreation,
+  createPet,
+  getSpecies,
+  getBreeds,
 }

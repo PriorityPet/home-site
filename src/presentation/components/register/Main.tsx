@@ -8,7 +8,7 @@ function Main() {
     <div className="w-full h-full flex flex-col gap-4 justify-center items-center p-[0%_37%] relative">
 
         <p className="font-semibold text-4xl text-slate-900 text-center">Crea tu cuenta</p>
-        <p className="font-light text-base text-slate-700 text-center">Crea tu cuenta en Prosit para reservar servicios, explorar centros entre otros beneficios</p>
+        <p className="font-light text-base text-slate-700 text-center">Crea tu cuenta en Priority Pet para reservar servicios, explorar centros entre otros beneficios</p>
         <RegisterProvider>
             <Formulary/>
         </RegisterProvider>

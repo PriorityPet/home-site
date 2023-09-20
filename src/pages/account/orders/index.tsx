@@ -6,7 +6,7 @@ import AccountLayout from '@/presentation/components/account/AccountLayout'
 function Index() {
   return (
     <Layout title='Mis ordenes'>
-      <AccountLayout title='Mis reservaciones' description='Todas las transacciones y compras que tengas en Prosit'>
+      <AccountLayout title='Mis reservaciones' description='Todas las transacciones y compras que tengas en Priority Pet'>
         <Main/>
       </AccountLayout>
     </Layout>

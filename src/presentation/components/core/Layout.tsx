@@ -15,7 +15,7 @@ const Layout = (props:Props) => {
         <>
         <div className='h-fit'>
             <Head>
-                <title>{`${title} - Prosit`}</title>
+                <title>{`${title} - Priority Pet`}</title>
                 <link rel="icon" href="/favicon-new.png" sizes="32x32"/>
                 <link rel="icon" href="/favicon-new.png" sizes="192x192"/>
             </Head>

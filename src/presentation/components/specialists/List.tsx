@@ -62,7 +62,7 @@ const List = () => {
     return (
         <div className="flex flex-col flex-wrap justify-start items-stretch gap-4 w-full lg:w-3/4 h-fit">
             <div className="w-full h-fit flex justify-between items-center pb-2">
-                <p className='text-2xl font-semibold text-slate-900'>Especialistas disponibles en Prosit</p>
+                <p className='text-2xl font-semibold text-slate-900'>Especialistas disponibles en Priority Pet</p>
                 <div className="w-[20%]">
                     <InputSelect
                         list={listOfSelect}
