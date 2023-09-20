@@ -55,7 +55,7 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
       {step === 0 && listOfLocalities.length > 0 &&
         <DataSelection specialist={specialist} listOfLocalities={listOfLocalities}/>
       }
-      {step === 1 && <UserConfirmation/>}
+      {/*step === 1 && <UserConfirmation/>*/}
       {step === 2 && <AppointmentConfirmation specialist={specialist}/>}
       {step === 3 && <AppointmentSuccess/>}
       <div className='lg:hidden w-full text-center justify-center items-center'>

@@ -9,12 +9,14 @@ import { VALIDATE_EMAIL, VALIDATE_NUMBERS, VALIDATE_STRING } from "@/lib/utils/e
 import IntlPhoneNumberInput from "@/presentation/components/core/Intl/IntlPhoneNumberInput/IntlPhoneNumberInput";
 import "react-intl-tel-input/dist/main.css";
 import Link from "next/link";
+import { IPet } from "@/lib/domain/core/entities/petEntity";
+import { IOwner } from "@/lib/domain/core/entities/ownerEntity";
 
 export const UserConfirmation = () => {
   
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
   const {
-    createUser,
+    createPet,
     changeUserId,
     changeStep
   } = actions
@@ -24,40 +26,74 @@ export const UserConfirmation = () => {
     loading,
     successful,
     error
-  } = state.createUser
+  } = state.createPet
   const {data: step} = state.changeStep
 
   const [userData, setUserData] = useState({
-    nombres: "",
-    primerApellido: "",
-    email: "",
-    fechaNacimiento: "",
-    telefono: ""
+    id: 0,
+    subjectId: 0,
+    name: "",
+    chip: "",
+    specieId: 0,
+    breedId: 0,
+    sex: 0,
+    ownerId: 0,
+    owner: {} as IOwner,
+    file: {} as File,
+    pictureUrl: "",
+    birthDate: "",
+    createdAt: "",
   })
 
-  const [invalidEmail, setInvalidEmail] = useState(false)
-  const [invalidPhoneNumber, setInvalidPhoneNumber] = useState("")
-  const [invalidFirstname, setInvalidFirstname] = useState(false)
-  const [invalidSecondname, setInvalidSecondname] = useState(false)
+  const [owner, setOwner] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  })
+
+  const [errors, setErrors] = useState({
+    name: "",
+    chip: "",
+    specie: "",
+    breed: "",
+    birthDate: "",
+    sex: "",
+  })
   const [termsContidions, setTermsContidions] = useState(false);
   const [activePolicy, setActivePolicy] = useState(false);
 
   function usetSetterAfterCreation(){
-    changeUserId(data)(dispatch)
+    changeUserId(data.data.ownerId)(dispatch)
     changeStep(2)(dispatch)
   }
 
   const handlephone = (value: string, isValid: boolean) => {
-    setUserData({ ...userData, telefono: value });
+    setOwner({ ...owner, phoneNumber: value });
     if (!VALIDATE_NUMBERS(value) && value.length > 0) {
-      setInvalidPhoneNumber("El teléfono del paciente solo lleva números");
+      setErrors((previousState: any) => {
+        return {
+          ...previousState,
+          phone:"El teléfono del paciente solo lleva números"
+        };
+      });
       return true;
     }
     if (!isValid && value.length > 0) {
-      setInvalidPhoneNumber("El teléfono del paciente no es correcto");
+      setErrors((previousState: any) => {
+        return {
+          ...previousState,
+          phone:"El teléfono del paciente no es correcto"
+        };
+      });
       return true;
     }
-    setInvalidPhoneNumber("");
+    setErrors((previousState: any) => {
+      return {
+          ...previousState,
+          phone:""
+        };
+      });
     return false;
   };
 
@@ -256,15 +292,10 @@ export const UserConfirmation = () => {
           invalidEmail ||
           invalidFirstname ||
           invalidSecondname ||
-          userData.nombres === "" ||
-          userData.primerApellido === "" ||
-          userData.email === "" ||
-          userData.fechaNacimiento === "" ||
-          userData.telefono === "" ||
           !termsContidions || 
           !activePolicy
         } 
-        onClick={()=>{ createUser(userData)(dispatch) }}
+        onClick={()=>{ createPet(userData)(dispatch) }}
         className="btn btn-primary w-full">{loading ? "Creando cuenta..." : "Crear cuenta" }</button>
       </div>
     </div>

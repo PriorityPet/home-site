@@ -317,6 +317,107 @@ export const SpecialistsReducer = (state: any, action: any) => {
           error: null,
         },
       };
+    case 'CREATE_PET_LOADING' :
+      return {
+        ...state,
+        createPet: {
+          ...state.createPet,
+          data: {},
+          loading: true,
+          successful: false,
+          error: null,
+        },
+      };
+    case 'CREATE_PET_SUCCESSFUL' :
+      return {
+        ...state,
+        createPet: {
+          ...state.createPet,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      }
+    case 'CREATE_PET_ERROR' :
+      return {
+        ...state,
+        createPet: {
+          ...state.createPet,
+          data: {},
+          loading: false,
+          successful: false,
+          error: action.payload.error,
+        },
+      }
+
+    case 'GET_SPECIES_LOADING' :
+      return {
+        ...state,
+        species: {
+          ...state.species,
+          data: {},
+          loading: true,
+          successful: false,
+          error: null,
+        },
+      };
+    case 'GET_SPECIES_SUCCESSFUL' :
+      return {
+        ...state,
+        species: {
+          ...state.species,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      }
+    case 'GET_SPECIES_ERROR' :
+      return {
+        ...state,
+        species: {
+          ...state.species,
+          data: {},
+          loading: false,
+          successful: false,
+          error: action.payload.error,
+        },
+      }
+
+    case 'GET_BREEDS_LOADING' :
+      return {
+        ...state,
+        breeds: {
+          ...state.breeds,
+          data: {},
+          loading: true,
+          successful: false,
+          error: null,
+        },
+      };
+    case 'GET_BREEDS_SUCCESSFUL' :
+      return {
+        ...state,
+        breeds: {
+          ...state.breeds,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      }
+    case 'GET_BREEDS_ERROR' :
+      return {
+        ...state,
+        breeds: {
+          ...state.breeds,
+          data: {},
+          loading: false,
+          successful: false,
+          error: action.payload.error,
+        },
+      }
     default:
       return state;
   }

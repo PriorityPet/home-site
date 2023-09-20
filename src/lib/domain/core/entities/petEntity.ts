@@ -1,17 +1,23 @@
-import { IPatient } from "./patientEntity";
+import { IBreed } from "./breedEntity";
+import { IOwner } from "./ownerEntity";
+import { ISpecie } from "./specieEntity";
 
 export interface IPet {
-    petId: string;
+    id: number;
+    subjectId: number;
     name: string;
-    description: string;
-    specie: string;
-    breed: string;
-    gender: string;
-    patientId: string;
-    patient?: IPatient | null;
-    imageUrl: string;
-    birthDate: any | null;
-    createdOn: any | null;
-    updatedOn: any | null;
-    deletedOn: any | null;
+    chip: string;
+    specieId: number;
+    specie: ISpecie;
+    breedId: number;
+    breed: IBreed;
+    sex: number;
+    ownerId: number;
+    owner: IOwner;
+    age?: number | null;
+    ageType?: string;
+    file?: File | null;
+    pictureUrl: string;
+    birthDate?: Date | null;
+    createdAt: Date;
 }
