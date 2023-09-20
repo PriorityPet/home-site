@@ -34,7 +34,7 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
     useEffect(()=>{
         formatDateBirth()
     },[specialist])*/
-    console.log(specialist)
+
     return(
         <div className="w-full lg:w-[55%] bg-white rounded-lg p-6 shadow-sm border relative h-fit flex flex-col justify-start items-start gap-5">
             <div className="w-full h-fit flex justify-start items-center gap-5">

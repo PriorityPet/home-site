@@ -11,7 +11,7 @@ import { IGetSpeciesResponses } from "@/lib/domain/core/response/specieResponses
 
 export interface ISpecialistsState {
   getSpecialists: ISpecialistsSpecialistsState;
-  getSpecialist: ISpecialistsSpecialistsState;
+  getSpecialist: IGetSpecialistState;
   getSpecialistLocalities: ISpecialistsSpecialistsState;
   getSpecialistServices: ISpecialistsSpecialistsState;
   getAttentionWindowsByService: ISpecialistsSpecialistsState;
@@ -30,6 +30,13 @@ export interface ISpecialistsState {
 
 interface ISpecialistsSpecialistsState {
   data: any;
+  loading: boolean;
+  successful: boolean;
+  error: LocalityFailure | null; 
+}
+
+interface IGetSpecialistState {
+  data: Specialist;
   loading: boolean;
   successful: boolean;
   error: LocalityFailure | null; 
