@@ -82,9 +82,9 @@ export default class SpecialistsUseCase {
         }
     }
 
-    async getAttentionWindowsByService(id:number, date:string): Promise<any[]> {
+    async getAttentionWindowsByService(obj:{userId:number; serviceId:number; date:string; type: number}): Promise<any[]> {
         try {
-            const response = await this._repository.getAttentionWindowsByService(id, date);
+            const response = await this._repository.getAttentionWindowsByService(obj.serviceId, obj.date);
   
             if (response instanceof SpecialistsFailure) throw response;
   

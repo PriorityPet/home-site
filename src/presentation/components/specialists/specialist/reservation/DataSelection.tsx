@@ -193,7 +193,12 @@ export const DataSelection = ({listOfLocalities, specialist}:{
   } ,[changedHourSelected])*/
 
   useMemo(()=> {
-    if(changedServiceId && service) getAttentionWindowsByService(service?.id, date)(dispatch)
+    if(changedServiceId && service) getAttentionWindowsByService({
+      userId: specialist.userId,
+      serviceId: service?.id,
+      date,
+      type: specialist.personType,
+    })(dispatch)
   },[date])
 
   /*useMemo(()=>{

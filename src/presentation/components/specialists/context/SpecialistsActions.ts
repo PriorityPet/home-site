@@ -103,7 +103,7 @@ const getSpecialistLocalities = (id:number, type:number) => async (dispatch: Dis
   }
 }
 
-const getSpecialistServices = (id:number, type:number, localityId?:number) => async (dispatch: Dispatch<any>) => {
+const getSpecialistServices = (id:number, type:number, localityId:number) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch({ type: "GET_SPECIALIST_SERVICES_LOADING" });
     
@@ -116,11 +116,11 @@ const getSpecialistServices = (id:number, type:number, localityId?:number) => as
   }
 }
 
-const getAttentionWindowsByService = (id:number, date:string) => async (dispatch: Dispatch<any>) => {
+const getAttentionWindowsByService = (obj:{userId:number; serviceId:number; date:string; type: number}) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch({ type: "GET_SERVICE_ATTENTION_WINDOW_LOADING" });
     
-    const res: any[] = await new SpecialistsUseCase().getAttentionWindowsByService(id, date);
+    const res: any[] = await new SpecialistsUseCase().getAttentionWindowsByService(obj);
 
     dispatch({ type: "GET_SERVICE_ATTENTION_WINDOW_SUCCESSFUL", payload: { data: res } });
   } catch (error) {
