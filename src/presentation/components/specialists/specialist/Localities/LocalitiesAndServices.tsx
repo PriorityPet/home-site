@@ -4,6 +4,8 @@ import { ISpecialistsContext, SpecialistsContext } from "../../context/Specialis
 import { twMerge } from "tailwind-merge";
 import { BsCheckLg } from 'react-icons/bs'
 import { usePathname } from "next/navigation";
+import { ILocality } from "@/lib/domain/core/entities/localityEntity";
+import { IService } from "@/lib/domain/core/entities/serviceEntity";
 
 function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
 
@@ -37,16 +39,16 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
         }
     },[locality])
 
-    const localityComponent = ({elem}:{elem:any}) => {
-        let isActive = locality?.id === elem.id ? true : false;
+    const LocalityComponent = ({data}:{data:ILocality}) => {
+        let isActive = locality?.id === data.id ? true : false;
 
 
         const change = () => {
-            if(locality?.id === elem.id) {
+            if(locality?.id === data.id) {
                 changeLocality(null)(dispatch)
                 changeService(null)(dispatch)
             } else {
-                changeLocality(elem)(dispatch)
+                changeLocality(data)(dispatch)
                 changeService(null)(dispatch)
             }
         }
@@ -54,53 +56,53 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
         return (
             <>
                 <div onClick={() => step === 0 && change()} className={twMerge([
-                    "w-full flex justify-start items-center gap-3 bg-primary bg-opacity-30 rounded-md p-3",
-                    isActive && "border-l-8 border-secondary transition-all",
+                    "w-full flex justify-start items-center gap-3 bg-white rounded-md p-3 border-l-8 border border-slate-200",
+                    isActive && "transition-all border-green-500",
                     step === 0 && `cursor-pointer`,
                 ])}>
                     <div className="w-[8%] h-full relative flex flex-col justify-center items-center">
                         <span className={twMerge([
                             'w-7 h-7 border-[3px] border-secondary text-white text-[12px] rounded-full flex flex-col justify-center items-center',
-                            isActive && "bg-secondary transition-all"
+                            isActive && "bg-green-500 border-green-500 transition-all"
                         ])}>
                             {isActive && <BsCheckLg /> }
                         </span>
                     </div>
                     <div className='w-[92%] flex flex-col justify-center items-start gap-2'>
-                        <p className='paragraph text-slate-900'><b>{elem["name"]}</b></p>
-                        <p className='paragraph'>{elem.postal_code.length > 0 ? elem.postal_code : "Ubicacion no especificada"}</p>
+                        <p className='paragraph text-slate-900'><b>{data["name"]}</b></p>
+                        <p className='paragraph'>{data.address.postal_code.length > 0 ? data.address.postal_code : "Ubicacion no especificada"}</p>
                     </div>
                 </div>
                 <div className={twMerge([
                     "w-full px-10 h-fit rounded-md shadow-md drop-shadow-xl",
                     !isActive && "hidden"
                 ])}>
-                {loadedServices ? 
-                    <div className='w-full h-fit py-3 flex flex-col justify-center items-center gap-2 text-center'>
-                        <p className='text-slate-900 text-base font-medium'>Cargando...</p>
-                        <p className='text-slate-500 text-sm font-light'>Obteniendo los servicios de este consultorio</p>    
-                    </div>
-                : services?.length > 0 ? services.map((p:any)=> 
-                    serviceComponent({p})
-                ) : 
-                    <div className='w-full h-fit py-3 flex flex-col justify-center items-center gap-2 text-center'>
-                        <p className='text-slate-900 text-base font-medium'>Nada por aquí</p>
-                        <p className='text-slate-500 text-sm font-light'>Tal parece que este consultorio no tiene servicios aún</p>    
-                    </div>
-                }
+                    {loadedServices ? 
+                        <div className='w-full h-fit py-3 flex flex-col justify-center items-center gap-2 text-center'>
+                            <p className='text-slate-900 text-base font-medium'>Cargando...</p>
+                            <p className='text-slate-500 text-sm font-light'>Obteniendo los servicios de este consultorio</p>    
+                        </div>
+                    : services?.length > 0 ? services.map((p:IService)=> 
+                        <ServiceComponent data={p} />
+                    ) : 
+                        <div className='w-full h-fit py-3 flex flex-col justify-center items-center gap-2 text-center'>
+                            <p className='text-slate-900 text-base font-medium'>Nada por aquí</p>
+                            <p className='text-slate-500 text-sm font-light'>Tal parece que este consultorio no tiene servicios aún</p>    
+                        </div>
+                    }
                 </div>
             </>
         )
     }
 
-    const serviceComponent = ({p}:{p:any}) => {
-        let isActiveService = service?.id === p.id ? true : false;
+    const ServiceComponent = ({data}:{data:IService}) => {
+        let isActiveService = service?.id === data.id ? true : false;
 
         const change = () => {
-            if(service?.id === p.id) {
+            if(service?.id === data.id) {
                 changeService(null)(dispatch)
             } else {
-                changeService(p)(dispatch)
+                changeService(data)(dispatch)
             }
         }
 
@@ -113,10 +115,10 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
                     ])}>
                         {isActiveService && <BsCheckLg /> }
                     </span>
-                    <p className="font-light">{p.nombre}</p>
+                    <p className="font-light">{data.name}</p>
                 </div>
                 <div className="font-light text-md">
-                    ${p.precioBase}
+                    ${data.base_price}
                 </div>
             </div>
         )
@@ -134,8 +136,8 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
                         <p className='text-slate-900 text-base font-medium'>Cargando...</p>
                         <p className='text-slate-500 text-sm font-light'>Obteniendo los consultorios del especialista</p>    
                     </div>
-                : localities.length > 0 ? localities.map((elem:any)=> 
-                    localityComponent({elem})
+                : localities.length > 0 ? localities.map((elem:ILocality)=> 
+                    <LocalityComponent data={elem} />
                 ) : 
                     <div className='w-full h-fit py-6 flex flex-col justify-center items-center gap-2 text-center'>
                         <p className='text-slate-900 text-base font-medium'>Nada por aquí</p>

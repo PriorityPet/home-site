@@ -8,6 +8,7 @@ import { DataSelection } from './DataSelection'
 import { UserConfirmation } from './UserInformation'
 import { AppointmentConfirmation } from './AppointmentConfirmation'
 import { AppointmentSuccess } from './AppointmentSuccess'
+import { ILocality } from '@/lib/domain/core/entities/localityEntity';
 
 const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Specialist;customStyle:any; setClose:any}) => {
 
@@ -23,10 +24,10 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
   const [listOfLocalities, setListOfLocalities] = useState([])
 
   function handleFormatList(){
-    let list_localities = localities.map((elem:any)=>({
-      title: elem["name"],
-      description: elem["state"]["name"],
-      id: elem["id"]
+    let list_localities = localities.map((elem:ILocality)=>({
+      title: elem.name,
+      description: elem.address.city,
+      id: elem.id
     }))
     setListOfLocalities(list_localities)
   }

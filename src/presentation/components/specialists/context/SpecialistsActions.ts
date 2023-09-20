@@ -52,7 +52,7 @@ const getSpecialistLocalities = (id:number) => async (dispatch: Dispatch<any>) =
   try {
     dispatch({ type: "GET_SPECIALIST_LOCALITIES_LOADING" });
     
-    const res: any[] = await new SpecialistsUseCase().getSpecialistLocalities(id);
+    const res: ILocality[] = await new SpecialistsUseCase().getSpecialistLocalities(id);
 
     dispatch({ type: "GET_SPECIALIST_LOCALITIES_SUCCESSFUL", payload: { data: res } });
   } catch (error) {
