@@ -41,11 +41,11 @@ const getSpecialists = () => async (dispatch: Dispatch<any>) => {
   }
 }
 
-const getSpecialist = (id:number) => async (dispatch: Dispatch<any>) => {
+const getSpecialist = (id:number, type:number | string) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch({ type: "GET_SPECIALIST_LOADING" });
     
-    const res: Specialist = await new SpecialistsUseCase().getSpecialist(id);
+    const res: Specialist = await new SpecialistsUseCase().getSpecialist(id, type);
 
     dispatch({ type: "GET_SPECIALIST_SUCCESSFUL", payload: { data: res } });
   } catch (error) {

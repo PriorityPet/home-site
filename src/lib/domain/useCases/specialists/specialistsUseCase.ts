@@ -21,9 +21,9 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
-    async getSpecialist(id:number): Promise<Specialist> {
+    async getSpecialist(id:number, type: string | number): Promise<Specialist> {
         try {
-            const response = await this._repository.getSpecialist(id);
+            const response = await this._repository.getSpecialist(id, type);
   
             if (response instanceof SpecialistsFailure) throw response;
   

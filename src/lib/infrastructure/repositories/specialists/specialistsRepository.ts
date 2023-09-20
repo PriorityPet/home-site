@@ -10,7 +10,7 @@ import { serviceDBToMap } from '@/lib/domain/mappers/service/serviceDBToMap';
 
 export default interface ISpecialistsRepository {
     getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure>;
-    getSpecialist(id:number): Promise<Specialist | SpecialistsFailure>;
+    getSpecialist(id:number, type: string | number): Promise<Specialist | SpecialistsFailure>;
     getSpecialistLocalities(id:number): Promise<ILocality[] | SpecialistsFailure>;
     getSpecialistServices(id:number, localityId?:number): Promise<any[] | SpecialistsFailure>;
     getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure>;
@@ -47,8 +47,13 @@ export class SpecialistsRepository implements ISpecialistsRepository {
       return new SpecialistsFailure(specialistsFailuresEnum.serverError);
     }
   }
-  async getSpecialist(id:number): Promise<Specialist | SpecialistsFailure> {
+  async getSpecialist(id:number, type: string | number): Promise<Specialist | SpecialistsFailure> {
     try {
+
+      if(type === 1){
+        
+      }
+
       const response = await supabase.from("Doctores").select(`
         *,
         EspecialidadesDoctores (*,
