@@ -9,11 +9,14 @@ import { ILocality } from '@/lib/domain/core/entities/localityEntity';
 import { serviceDBToMap } from '@/lib/domain/mappers/service/serviceDBToMap';
 import { SpecialistEnum } from '@/lib/enums/specialist/specialistEnum';
 import { IService } from '@/lib/domain/core/entities/serviceEntity';
+import { localityFromSupabaseToMap } from '@/lib/domain/mappers/localities/localitiesSupabaseMapper';
 
 export default interface ISpecialistsRepository {
     getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure>;
     getSpecialist(id:number, type: string | number): Promise<Specialist | SpecialistsFailure>;
     getSpecialistLocalities(id:number, type:number): Promise<ILocality[] | SpecialistsFailure>;
+    getPQALocalities(id:number): Promise<ILocality[] | SpecialistsFailure>;
+    getPQAServices(id:number, localityId:number): Promise<IService[] | SpecialistsFailure>;
     getSpecialistServices(id:number, localityId?:number): Promise<any[] | SpecialistsFailure>;
     getProviderServices(id:number, localityId: number): Promise<any[] | SpecialistsFailure>;
     getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure>;
@@ -55,7 +58,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
 
       let data;
 
-      if(type === SpecialistEnum.DOCTOR){
+      if(type === SpecialistEnum.DOCTOR || type === SpecialistEnum.PQA){
         let response = await supabase.from("Doctores").select(`
           *,
           EspecialidadesDoctores (*,
@@ -74,7 +77,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
           }))
         }
         
-        data = {...response.data, tipoPersona: SpecialistEnum.DOCTOR}
+        data = {...response.data, tipoPersona: type}
       }
 
       if(type === SpecialistEnum.PROVIDER){
@@ -148,6 +151,82 @@ export class SpecialistsRepository implements ISpecialistsRepository {
     }
   }
 
+  async getPQAServices(id:number, localityId:number): Promise<IService[] | SpecialistsFailure> {
+    try {
+      let queryOfAttentionWindows = supabase.from("DoctoresEnVentanasAtencion")
+      .select(`*`).eq("doctorId", id);
+      let resAttentionWindows = await queryOfAttentionWindows
+
+      if(resAttentionWindows.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+      if(resAttentionWindows.data?.length === 0) return []
+
+      let queryOfServices = supabase.from("ServiciosEnVentanasAtencion")
+      .select(`*`).in("ventanaAtencionBaseId", resAttentionWindows.data!.map((elem:any)=> elem["ventanaAtencionBaseId"] ))
+      
+      let resServices = await queryOfServices
+
+      if(resServices.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+      if(resServices.data?.length === 0) return []
+
+      let queryOfServicesWithLocalities = supabase.from("Servicios")
+      .select(`*`).in("id", resServices.data!.map((elem:any)=> elem["servicioId"] )).filter("localidadId", "eq", localityId)
+
+      let resServicesWithLocalities = await queryOfServicesWithLocalities
+      
+      if(resServicesWithLocalities.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+      if(resServicesWithLocalities.data?.length === 0) return []
+      
+      return resServicesWithLocalities.data.map((value:any)=> serviceDBToMap(value)) ?? []
+    } catch (error) {
+      console.log("Error", error)
+      const exception = error as any;
+      return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+    }
+  }
+
+  async getPQALocalities(id:number): Promise<ILocality[] | SpecialistsFailure> {
+    try {
+      let queryOfAttentionWindows = supabase.from("DoctoresEnVentanasAtencion")
+      .select(`*`).eq("doctorId", id);
+      let resAttentionWindows = await queryOfAttentionWindows
+
+      if(resAttentionWindows.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+      if(resAttentionWindows.data?.length === 0) return []
+
+      let queryOfServices = supabase.from("ServiciosEnVentanasAtencion")
+      .select(`*`).in("ventanaAtencionBaseId", resAttentionWindows.data!.map((elem:any)=> elem["ventanaAtencionBaseId"] ))
+      
+      let resServices = await queryOfServices
+
+      if(resServices.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+      if(resServices.data?.length === 0) return []
+
+      let queryOfServicesWithLocalities = supabase.from("Servicios")
+      .select(`*, Localidades(*)`).in("id", resServices.data!.map((elem:any)=> elem["servicioId"] ))
+
+      let resServicesWithLocalities = await queryOfServicesWithLocalities
+      
+      if(resServicesWithLocalities.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+      if(resServicesWithLocalities.data?.length === 0) return []
+
+      let localitiesToMapFromSupabase = resServicesWithLocalities.data.map((elem:any)=>({
+        ...elem["Localidades"]
+      }))
+
+      let list:any[] = []
+
+      await Promise.all(localitiesToMapFromSupabase.map((value:any)=>{
+        if(list.filter(elem => elem["id"] === value["id"] ).length === 0) list.push(value)
+      }))
+
+      return list.map((value:any)=> localityFromSupabaseToMap(value)) ?? []
+    } catch (error) {
+      console.log("Error", error)
+      const exception = error as any;
+      return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+    }
+  }
+
   async getProviderServices(id:number, localityId:number): Promise<IService[] | SpecialistsFailure> {
     try {
       const response = await supabase.from("Servicios").select(`*`).eq("proveedorId", id);
@@ -189,6 +268,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
       return new SpecialistsFailure(specialistsFailuresEnum.serverError);
     }
   }
+
   async getSpecialistServiceWindow(id:number): Promise<any[] | SpecialistsFailure> {
     try {
       const response = await supabase.from("ServiciosDoctores").select(`
@@ -212,6 +292,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
       return new SpecialistsFailure(specialistsFailuresEnum.serverError);
     }
   }
+
   async getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure> {
     try {
       

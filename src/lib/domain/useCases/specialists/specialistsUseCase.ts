@@ -22,6 +22,7 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
+
     async getSpecialist(id:number, type: string | number): Promise<Specialist> {
         try {
             const response = await this._repository.getSpecialist(id, type);
@@ -33,8 +34,17 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
+
     async getSpecialistLocalities(id:number, type:number): Promise<ILocality[]> {
         try {
+            if(type === SpecialistEnum.PQA){
+                const response = await this._repository.getPQALocalities(id);
+      
+                if (response instanceof SpecialistsFailure) throw response;
+      
+                return response;
+            }
+
             const response = await this._repository.getSpecialistLocalities(id, type);
   
             if (response instanceof SpecialistsFailure) throw response;
@@ -44,11 +54,19 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
+
     async getSpecialistServices(id:number, type:number, localityId:number): Promise<any[]> {
         try {
 
             if(type === SpecialistEnum.PROVIDER){
                 let response = await this._repository.getProviderServices(id, localityId);
+                if (response instanceof SpecialistsFailure) throw response;
+  
+                return response;
+            }
+
+            if(type === SpecialistEnum.PQA){
+                let response = await this._repository.getPQAServices(id, localityId);
                 if (response instanceof SpecialistsFailure) throw response;
   
                 return response;
@@ -63,6 +81,7 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
+
     async getAttentionWindowsByService(id:number, date:string): Promise<any[]> {
         try {
             const response = await this._repository.getAttentionWindowsByService(id, date);
@@ -74,6 +93,7 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
+    
     async createAppointment(obj:any): Promise<any> {
         try {
             const response = await this._repository.createAppointment(obj);

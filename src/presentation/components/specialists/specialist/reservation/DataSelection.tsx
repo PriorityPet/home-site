@@ -186,7 +186,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
 
   useMemo(()=>{
     if(changedServiceId) loadServiceIntoAppointmentData()
-  },[changedServiceId])
+  },[service])
 
   /*useMemo(()=> {
     if(changedHourSelected) changeStep(1)(dispatch)
