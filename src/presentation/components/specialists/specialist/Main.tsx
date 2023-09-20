@@ -49,7 +49,7 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
                 </div>
                 <div className="h-36 flex flex-col justify-start items-start text-left">
                     <p className='text-lg text-slate-900 font-semibold'>
-                        {specialist.sex === 1 ? "Dr." : "Dra."} {specialist?.names} {specialist?.firstName}
+                        {specialist.sex === 1 ? "Dra." : "Dr."} {specialist?.names} {specialist?.firstName}
                     </p>
                     <div className="flex flex-col justify-center items-start">
                         <p className='text-base text-slate-500 font-light'>{profesion?.name}</p>
@@ -137,7 +137,7 @@ function Main() {
       const url = pathname?.split("/")
       if(url){
         let id = url![url!.length - 1]
-        getSpecialist(parseInt(id), searchParams.get("type"))(dispatch)
+        getSpecialist(parseInt(id), parseInt(searchParams.get("type") ?? "0"))(dispatch)
         getSpecialistLocalities(parseInt(id))(dispatch)
       }
     }, [pathname]);

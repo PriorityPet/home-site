@@ -7,6 +7,7 @@ import { specialistDBToMap } from '@/lib/domain/mappers/specialist/specialistDBT
 import moment from 'moment';
 import { ILocality } from '@/lib/domain/core/entities/localityEntity';
 import { serviceDBToMap } from '@/lib/domain/mappers/service/serviceDBToMap';
+import { SpecialistEnum } from '@/lib/enums/specialist/specialistEnum';
 
 export default interface ISpecialistsRepository {
     getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure>;
@@ -50,31 +51,41 @@ export class SpecialistsRepository implements ISpecialistsRepository {
   async getSpecialist(id:number, type: string | number): Promise<Specialist | SpecialistsFailure> {
     try {
 
-      if(type === 1){
-        
-      }
+      let data;
 
-      const response = await supabase.from("Doctores").select(`
-        *,
-        EspecialidadesDoctores (*,
-          Especialidades(
-            nombre
+      if(type === SpecialistEnum.DOCTOR){
+        let response = await supabase.from("Doctores").select(`
+          *,
+          EspecialidadesDoctores (*,
+            Especialidades(
+              nombre
+            )
           )
-        )
-      `).eq("id", id).single();
-
-      if(response.error)throw new SpecialistsFailure(response.statusText)
-
-      if(response.data["EspecialidadesDoctores"].length > 0){
-        response.data["EspecialidadesDoctores"] = response.data["EspecialidadesDoctores"].map((elem:any)=>({
-          ...elem,
-          nombre: elem["Especialidades"]["nombre"]
-        }))
+        `).eq("id", id).single();
+  
+        if(response.error)throw new SpecialistsFailure(response.statusText)
+  
+        if(response.data["EspecialidadesDoctores"].length > 0){
+          response.data["EspecialidadesDoctores"] = response.data["EspecialidadesDoctores"].map((elem:any)=>({
+            ...elem,
+            nombre: elem["Especialidades"]["nombre"]
+          }))
+        }
+        
+        data = {...response.data, tipoPersona: SpecialistEnum.DOCTOR}
+        console.log("DOCTOR", data)
       }
 
-      console.log("GET_SPECIALIST_ENDPOINT", response.data)
+      if(type === SpecialistEnum.PROVIDER){
+        let response = await supabase.from("Proveedores").select(`*`).eq("id", id).single();
   
-      return specialistDBToMap(response.data) ?? {} as Specialist;
+        if(response.error)throw new SpecialistsFailure(response.statusText)
+        
+        data = {...response.data, tipoPersona: SpecialistEnum.PROVIDER}
+        console.log("PROVIDER", data)
+      }
+  
+      return specialistDBToMap(data) ?? {} as Specialist;
     } catch (error) {
       console.log("Error", error)
       const exception = error as any;
