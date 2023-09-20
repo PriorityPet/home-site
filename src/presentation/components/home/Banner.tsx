@@ -8,7 +8,7 @@ const Banner = () => {
         ">
             <div className="bg-white relative w-full h-[35vh] lg:h-[45vh] rounded-[1rem] overflow-hidden">
                 
-                <div className="flex justify-between items-center w-full h-full px-[5%] bg-gradient-to-r from-dark-primary to-dark-primary/50 absolute top-0 left-0">
+                <div className="flex justify-between items-center w-full h-full px-[5%] bg-gradient-to-r from-primary to-[#7D56F5]/50 absolute top-0 left-0">
     
                     <div className="flex flex-col justify-center items-start w-full lg:w-1/2 h-full relative gap-7">
                         <div className="flex flex-col w-full gap-4">

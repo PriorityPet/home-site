@@ -135,7 +135,7 @@ export default function Formulary() {
           <p className="text-slate-900 text-[14px]">{errors.password}</p>
         </div>
       )}
-      <div onClick={()=>{ !loading && onSubmit() }} className="btn btn-primary w-full">
+      <div onClick={()=>{ !loading && onSubmit() }} className="btn btn-primary w-full text-white">
         {loading ? <p>Cargando...</p> : <p>Crear</p>}
       </div>
       <p className="font-light text-base text-slate-700 text-center mx-auto">Ya tengo una cuenta, <Link href={"/login"} className="font-semibold text-base text-slate-900">iniciar sesion</Link></p>

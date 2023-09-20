@@ -9,7 +9,7 @@ const Header = () => {
     ">
 
       <div className="bg-primary relative w-full h-fit rounded-[2rem] overflow-hidden">
-        <div className="w-full h-full bg-gradient-to-r from-[#0C4A6F] to-[#0C4A6F]/50 absolute top-0 left-0">
+        <div className="w-full h-full bg-gradient-to-r from-primary to-[#7D56F5]/50 absolute top-0 left-0">
           <div className="flex justify-between items-center w-full h-full relative px-[5%]">
 
             <div className="flex flex-col justify-center items-start w-1/2 h-full relative gap-10">
