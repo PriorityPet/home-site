@@ -23,6 +23,7 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
 
     const { data: service, successful: changedServiceId } = state.changeService;
     const { data: locality, successful: changedLocalityId } = state.changeLocality;
+    const {data: step} = state.changeStep
 
     const pathname = usePathname();
     
@@ -43,16 +44,19 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
         const change = () => {
             if(locality?.id === elem.id) {
                 changeLocality(null)(dispatch)
+                changeService(null)(dispatch)
             } else {
                 changeLocality(elem)(dispatch)
+                changeService(null)(dispatch)
             }
         }
 
         return (
             <>
-                <div onClick={() => change()} className={twMerge([
-                    "w-full flex justify-start items-center gap-3 bg-primary bg-opacity-30 rounded-md p-3 cursor-pointer",
+                <div onClick={() => step === 0 && change()} className={twMerge([
+                    "w-full flex justify-start items-center gap-3 bg-primary bg-opacity-30 rounded-md p-3",
                     isActive && "border-l-8 border-secondary transition-all",
+                    step === 0 && `cursor-pointer`,
                 ])}>
                     <div className="w-[8%] h-full relative flex flex-col justify-center items-center">
                         <span className={twMerge([
@@ -101,7 +105,7 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
         }
 
         return (
-            <div onClick={() => change()} className="flex w-full justify-between cursor-pointer">
+            <div onClick={() => step === 0 && change()} className={`flex w-full justify-between ${step === 0 && `cursor-pointer`}`}>
                 <div className="flex gap-5 mb-3">
                     <span className={twMerge([
                         'w-7 h-7 border-[3px] border-secondary text-white text-[12px] rounded-full flex flex-col justify-center items-center',

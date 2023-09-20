@@ -45,7 +45,7 @@ const HourComponent = ({hour, setHourSelected, hourSelected}:{
       isEqual && "text-white bg-secondary",
       isntFree && "bg-transparent text-gray-500 line-through",
       disabled && "bg-transparent text-gray-500 cursor-not-allowed",
-      (!disabled && !isntFree) && "cursor-pointer hover:bg-secondary hover:border-secondary"
+      (!disabled && !isntFree) && "cursor-pointer hover:border-secondary hover:focus:bg-secondary"
     ])}>
       <p>{hourToShow}</p>
     </div>
@@ -178,8 +178,8 @@ export const DataSelection = ({listOfLocalities, specialist}:{
     let findedService = services.find((elem:any)=> elem["id"] === service?.id )
     findedService = {
       ...appointmentData,
-      title: findedService["nombre"],
-      price: findedService["precioBase"]
+      title: findedService?.nombre,
+      price: findedService?.precioBase
     }
     changeAppointmentData(findedService)(dispatch)
   }
@@ -207,7 +207,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
   },[locality])*/
 
   useMemo(()=>{
-    if(service) getAttentionWindowsByService(service?.id, date)(dispatch)
+    getAttentionWindowsByService(service?.id, date)(dispatch)
   },[service])
 
   return(
@@ -246,7 +246,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
             { service &&
               <div className="my-2 relative w-full h-fit justify-center items-start bg-white border border-slate-300 rounded-md p-2">
                 <p className='font-medium text-slate-900 text-base'>{service.nombre}</p>
-                <p className='font-light text-slate-500 text-sm mt-2'>{service.precioBase}</p>
+                <p className='font-light text-slate-500 text-sm mt-2'>${service.precioBase}</p>
               </div>
             }
           </div>
