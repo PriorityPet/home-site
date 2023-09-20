@@ -206,6 +206,25 @@ export const UserConfirmation = () => {
     );
   };
 
+  const validForm = () => {
+    let errorsFieldsCount = 0;
+
+    if (errors.breed.length > 0) errorsFieldsCount++;
+    if (errors.email.length > 0) errorsFieldsCount++;
+    if (errors.lastnameOwner.length > 0) errorsFieldsCount++;
+    if (errors.namePet.length > 0) errorsFieldsCount++;
+    if (errors.nameOwner.length > 0) errorsFieldsCount++;
+    if (errors.phoneNumber.length > 0) errorsFieldsCount++;
+    if (errors.specie.length > 0) errorsFieldsCount++;
+    if(pet.name.length === 0) errorsFieldsCount++;
+    if(owner.firstName.length === 0) errorsFieldsCount++;
+    if(owner.lastName.length === 0) errorsFieldsCount++;
+    if(owner.email.length === 0) errorsFieldsCount++;
+    if(owner.phoneNumber.length === 0) errorsFieldsCount++;
+
+    return errorsFieldsCount;
+  };
+
   const onSubmit = async () => {
     const ownerData: IOwner = {
       id: 0,
@@ -231,7 +250,7 @@ export const UserConfirmation = () => {
       specie: {} as ISpecie,
       breedId: pet.breedId,
       breed: {} as IBreed,
-      sex: 1,
+      sex: 0,
       file: null,
       owner: ownerData,
       pictureUrl: "",
@@ -244,7 +263,7 @@ export const UserConfirmation = () => {
       createPet({pet: petData, doctorId: null, providerId: parseInt(specialist.userId)})(dispatch);
     }
   }
-console.log(specialist)
+
   useMemo(() =>{
     if(successful) usetSetterAfterCreation()
   }, [successful])
@@ -420,7 +439,8 @@ console.log(specialist)
         disabled={
           loading ||
           !termsContidions || 
-          !activePolicy
+          !activePolicy ||
+          validForm() > 0 
         } 
         onClick={()=>{ onSubmit() }}
         className="btn btn-primary w-full text-white">{loading ? "Creando cuenta..." : "Crear cuenta" }</button>

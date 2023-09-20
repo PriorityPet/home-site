@@ -29,8 +29,10 @@ export default class PetUseCase {
 
       if (response instanceof PetFailure) throw response;
 
-      await this._repository.createSubjectRelation({subjectId:response.data.subjectId, userId: obj.doctorId, typeUser: 2, providerId: obj.providerId});
-      await this._repository.createSubjectRelation({subjectId:obj.pet.ownerId, userId: obj.doctorId, typeUser: 2, providerId: obj.providerId});
+      const typeUser = obj.doctorId !== null ? 1 : 2;
+
+      await this._repository.createSubjectRelation({subjectId:response.data.subjectId, userId: obj.doctorId, typeUser: typeUser, providerId: obj.providerId});
+      await this._repository.createSubjectRelation({subjectId:obj.pet.ownerId, userId: obj.doctorId, typeUser: typeUser, providerId: obj.providerId});
 
       return response
     } catch (error) {
