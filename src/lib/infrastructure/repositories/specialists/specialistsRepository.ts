@@ -20,6 +20,7 @@ export default interface ISpecialistsRepository {
     getSpecialistServices(id:number, localityId?:number): Promise<any[] | SpecialistsFailure>;
     getProviderServices(id:number, localityId: number): Promise<any[] | SpecialistsFailure>;
     getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure>;
+    getAttentionWindowsByServicePQA(obj:{userId:number; serviceId:number; date:string; type: number}): Promise<any[] | SpecialistsFailure>;
     createAppointment(obj:any): Promise<any | SpecialistsFailure>;
 }
 
@@ -293,6 +294,77 @@ export class SpecialistsRepository implements ISpecialistsRepository {
     }
   }
 
+  async getAttentionWindowsByServicePQA(obj:{userId:number; serviceId:number; date:string; type: number}): Promise<any[] | SpecialistsFailure> {
+    try {
+
+      let queryOfAttentionWindows = supabase.from("DoctoresEnVentanasAtencion")
+      .select(`*`).eq("doctorId", obj.userId);
+
+      let resAttentionWindows = await queryOfAttentionWindows
+
+      if(resAttentionWindows.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+      if(resAttentionWindows.data?.length === 0) return []
+
+      let queryOfServiciosEnVentanasAtencion = supabase.from("ServiciosEnVentanasAtencion")
+      .select(`*`).in("ventanaAtencionBaseId", resAttentionWindows.data!.map((elem:any)=> elem["ventanaAtencionBaseId"] ))
+      .filter("servicioId", "eq", obj.serviceId)
+        
+      let resServiciosEnVentanasAtencion = await queryOfServiciosEnVentanasAtencion
+
+      if(resServiciosEnVentanasAtencion.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+      if(resServiciosEnVentanasAtencion.data?.length === 0) return []
+      
+      let date = moment(obj.date).format('YYYY-MM-DD')
+      let dateEnd = moment(obj.date, "YYYY-MM-DD").add(5, 'days').format('YYYY-MM-DD')
+
+      let queryVentanasAtencion = supabase.from("VentanasAtencion")
+      .select(`*`).in("ventanaAtencionBaseId", resServiciosEnVentanasAtencion.data!.map((elem:any)=> elem["ventanaAtencionBaseId"] ))
+      .filter('fechaInicio', 'gte', date)
+      .filter('fechaFin', 'lte', dateEnd)
+
+      let resVentanasAtencion = await queryVentanasAtencion
+
+      if(resVentanasAtencion.data?.length === 0) return []
+
+      let queryCitas = supabase.from("Citas").select(`*`)
+      .in("ventanaAtencionId", resVentanasAtencion.data!.map((elem:any)=> elem["id"] ))
+
+      let resCitas = await queryCitas
+
+      if(resCitas.error) throw new SpecialistsFailure(specialistsFailuresEnum.serverError)
+
+      let initialDate = moment(date, "YYYY-MM-DD")
+      let finalDate = moment(dateEnd, "YYYY-MM-DD")
+      let list = []
+
+      do {
+        list.push(initialDate.format("YYYY-MM-DD"))
+        initialDate = initialDate.add(1, "days")
+      } while (initialDate.isBefore(finalDate));
+
+      list = list.map((elem:any)=>{
+        let dateOfWindow = resCitas.data!.filter((w:any)=> elem === moment(w["fechaReserva"]).format("YYYY-MM-DD") )
+        let object = dateOfWindow ? 
+          {
+            fechaInicio: moment(elem, "YYYY-MM-DD").toDate(),
+            Citas: dateOfWindow
+          }
+        : {
+          fechaInicio: moment(elem, "YYYY-MM-DD").toDate(),
+          Citas: []
+        }
+        return object
+      })
+
+      if(list.every((elem:any)=> elem["Citas"].length === 0 )) return []
+      
+      return list ?? [];
+    } catch (error) {
+      const exception = error as any;
+      return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+    }
+  }
+
   async getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure> {
     try {
       
@@ -308,10 +380,11 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         let dateEnd = moment(date, "YYYY-MM-DD").add(5, 'days').format('YYYY-MM-DD')
 
         let windowAttentionId = resServiciosEnVentanasAtencion.data![0]["ventanaAtencionBaseId"].toString()
-            let queryVentanasAtencion = supabase.from("VentanasAtencion")
-            .select(`*`).eq("ventanaAtencionBaseId", windowAttentionId)
-            .filter('fechaInicio', 'gte', date)
-            .filter('fechaFin', 'lte', dateEnd)
+
+        let queryVentanasAtencion = supabase.from("VentanasAtencion")
+        .select(`*`).eq("ventanaAtencionBaseId", windowAttentionId)
+        .filter('fechaInicio', 'gte', date)
+        .filter('fechaFin', 'lte', dateEnd)
 
         let resVentanasAtencion = await queryVentanasAtencion
         

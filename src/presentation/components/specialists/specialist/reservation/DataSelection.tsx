@@ -185,7 +185,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
   }
 
   useMemo(()=>{
-    if(changedServiceId) loadServiceIntoAppointmentData()
+    if(changedServiceId && service && services) loadServiceIntoAppointmentData()
   },[service])
 
   /*useMemo(()=> {
@@ -193,13 +193,15 @@ export const DataSelection = ({listOfLocalities, specialist}:{
   } ,[changedHourSelected])*/
 
   useMemo(()=> {
-    if(changedServiceId && service) getAttentionWindowsByService({
-      userId: specialist.userId,
-      serviceId: service?.id,
-      date,
-      type: specialist.personType,
-    })(dispatch)
-  },[date])
+    if(changedServiceId && service){
+      getAttentionWindowsByService({
+        userId: specialist.accountId,
+        serviceId: service?.id,
+        date,
+        type: specialist.personType,
+      })(dispatch)
+    }
+  },[service, date])
 
   /*useMemo(()=>{
     if(changedLocalityId){
@@ -210,10 +212,6 @@ export const DataSelection = ({listOfLocalities, specialist}:{
       }
     }
   },[locality])*/
-
-  useMemo(()=>{
-    getAttentionWindowsByService(service?.id, date)(dispatch)
-  },[service])
 
   return(
     <div className="w-full h-fit flex flex-col justify-start items-start gap-3">
@@ -273,7 +271,9 @@ export const DataSelection = ({listOfLocalities, specialist}:{
           <input 
             type="date" 
             value={date}
-            onChange={(e)=>{ setDate(e.target.value) }} 
+            onChange={(e)=>{
+              setDate(e.target.value)
+            }} 
             min={moment().format("YYYY-MM-DD")} 
             className={twMerge([
               "w-1/2 relative block",

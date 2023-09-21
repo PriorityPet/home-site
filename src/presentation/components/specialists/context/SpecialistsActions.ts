@@ -119,7 +119,7 @@ const getSpecialistServices = (id:number, type:number, localityId:number) => asy
 const getAttentionWindowsByService = (obj:{userId:number; serviceId:number; date:string; type: number}) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch({ type: "GET_SERVICE_ATTENTION_WINDOW_LOADING" });
-    
+
     const res: any[] = await new SpecialistsUseCase().getAttentionWindowsByService(obj);
 
     dispatch({ type: "GET_SERVICE_ATTENTION_WINDOW_SUCCESSFUL", payload: { data: res } });

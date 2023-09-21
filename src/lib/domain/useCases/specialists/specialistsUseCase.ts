@@ -84,6 +84,14 @@ export default class SpecialistsUseCase {
 
     async getAttentionWindowsByService(obj:{userId:number; serviceId:number; date:string; type: number}): Promise<any[]> {
         try {
+            if(obj.type === SpecialistEnum.PQA){
+                const response = await this._repository.getAttentionWindowsByServicePQA(obj);
+  
+                if (response instanceof SpecialistsFailure) throw response;
+    
+                return response;
+            }
+
             const response = await this._repository.getAttentionWindowsByService(obj.serviceId, obj.date);
   
             if (response instanceof SpecialistsFailure) throw response;
