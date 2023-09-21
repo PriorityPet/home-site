@@ -14,7 +14,6 @@ interface FilterTagProp{
 
 const List = () => {
 
-
     const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
     const { getSpecialists } = actions
 

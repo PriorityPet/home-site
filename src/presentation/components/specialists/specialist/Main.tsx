@@ -3,7 +3,7 @@ import { DefaultInput } from '../../core/Inputs'
 import { FiDollarSign, FiGlobe, FiHome, FiImage, FiPhone, FiStar, FiUser } from 'react-icons/fi'
 import { twMerge } from 'tailwind-merge'
 import { useRouter } from 'next/router'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { ISpecialistsContext, SpecialistsContext } from '../context/SpecialistsContext'
 import { Specialist } from '@/lib/domain/core/entities/specialists/specialist'
 import ReservationCard from './reservation/Main'
@@ -13,7 +13,7 @@ import LocalitiesComponent from './Localities/LocalitiesAndServices'
 const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
 
     //const [profesion, setProfesion] = useState("")
-
+    
     let listProfesions = [
         { id: 8, name: "Bioanalista" },
         { id: 7, name: "Enfermero/a" },
@@ -34,7 +34,7 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
     useEffect(()=>{
         formatDateBirth()
     },[specialist])*/
-    console.log(specialist)
+
     return(
         <div className="w-full lg:w-[55%] bg-white rounded-lg p-6 shadow-sm border relative h-fit flex flex-col justify-start items-start gap-5">
             <div className="w-full h-fit flex justify-start items-center gap-5">
@@ -110,6 +110,7 @@ function Main() {
 
     const pathname = usePathname();
     const router = useRouter();
+    let searchParams = useSearchParams()
     
     const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
     const { 
@@ -128,7 +129,7 @@ function Main() {
         loading: loadingLocalities, 
         successful: loadedLocalities, 
         error: errorLocalities
-      } = state.getSpecialistLocalities;
+    } = state.getSpecialistLocalities;
 
     const [activeReservationCard, setActiveReservationCard] = useState(false)
   
@@ -136,8 +137,8 @@ function Main() {
       const url = pathname?.split("/")
       if(url){
         let id = url![url!.length - 1]
-        getSpecialist(parseInt(id))(dispatch)
-        getSpecialistLocalities(parseInt(id))(dispatch)
+        getSpecialist(parseInt(id), parseInt(searchParams.get("type") ?? "0"))(dispatch)
+        getSpecialistLocalities(parseInt(id), parseInt(searchParams.get("type") ?? "0"))(dispatch)
       }
     }, [pathname]);
 

@@ -49,7 +49,7 @@ export const AppointmentConfirmation = ({specialist}:{
         
         <div className='w-full h-fit flex justify-center items-start gap-2 text-left'>
           <p className='w-1/3 font-light text-slate-500 text-sm'>Servicio</p>
-          <p className='w-2/3 font-medium text-slate-900 text-base'>{appointmentData.title}</p>
+          <p className='w-2/3 font-medium text-slate-900 text-base'>{service?.name}</p>
         </div>
         <div className='w-full h-fit flex justify-center items-start gap-2 text-left'>
           <p className='w-1/3 font-light text-slate-500 text-sm'>El</p>
@@ -61,7 +61,7 @@ export const AppointmentConfirmation = ({specialist}:{
         </div>
         <div className='w-full h-fit flex justify-center items-start gap-2 text-left'>
           <p className='w-1/3 font-light text-slate-500 text-sm'>Precio de la cita</p>
-          <p className='w-2/3 font-medium text-slate-900 text-base'>${appointmentData.price}</p>
+          <p className='w-2/3 font-medium text-slate-900 text-base'>${service?.base_price}</p>
         </div>
 
       </div>
@@ -72,7 +72,7 @@ export const AppointmentConfirmation = ({specialist}:{
         onClick={()=>{ createAppointment({
           pacienteId: pacienteId,
           doctorId: doctorId,
-          servicioId: service["id"],
+          servicioId: service && service["id"],
           id: id
         })(dispatch) }} className="btn btn-primary w-full">{loading ? "Agendando..." : "Confirmar"}</button>
       </div>
