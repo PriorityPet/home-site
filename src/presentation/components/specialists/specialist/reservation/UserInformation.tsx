@@ -256,14 +256,9 @@ export const UserConfirmation = () => {
       pictureUrl: "",
       birthDate: null,
     };
-    if(specialist.personType === SpecialistEnum.DOCTOR) {
-      createPet({pet: petData, doctorId: parseInt(specialist.userId), providerId: null})(dispatch);
-    }
-    if(specialist.personType === SpecialistEnum.PROVIDER) {
-      createPet({pet: petData, doctorId: null, providerId: parseInt(specialist.userId)})(dispatch);
-    }
+      createPet({pet: petData, doctorId: null, providerId: parseInt(specialist.accountId)})(dispatch);
   }
-
+console.log(specialist)
   useMemo(() =>{
     if(successful) usetSetterAfterCreation()
   }, [successful])
