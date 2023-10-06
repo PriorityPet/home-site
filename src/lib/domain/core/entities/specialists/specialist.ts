@@ -23,4 +23,22 @@ export interface Specialist {
     specialities: any[];
     role: string;
     createdOn: any | null;
+    provider: IProvider | null;
+}
+
+export interface IProvider {
+    id: number;
+    userId: number;
+    avatar: string;
+    name: string;
+    email?: string | null;
+    phoneNumber?: string | null;
+    role: string;
+    createdOn: any | null;
+    address?: string | null;
+    personType: string | null;
+    ruc?: string | null;
+    servicesSummary?: string | null;
+    shortDescription?: string | null;
+    providerTypeId?: string | number;
 }
