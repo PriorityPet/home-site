@@ -54,7 +54,7 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
                     <div className="flex flex-col justify-center items-start">
                         <p className='text-base text-slate-500 font-light'>{profesion?.name}</p>
                         <p className='text-base hidden md:block text-slate-500 font-light my-2'>{specialist.shortDescription}</p>
-                        {specialist.curp && <p className='text-base text-slate-500 font-light my-2 md:my-0'>N° de CURP: {specialist.curp}</p>}
+                        {specialist.curp && <p className='text-base text-slate-500 font-light my-2 md:my-0'>N° de DNI: {specialist.curp}</p>}
                     </div>
                 </div>
             </div>
@@ -64,6 +64,37 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
     )
 }
 
+const UserCardComponentProvider = ({specialist}:{specialist:Specialist}) => {
+
+    return(
+        <div className="w-full lg:w-[55%] bg-white rounded-lg p-6 shadow-sm border relative h-fit flex flex-col justify-start items-start gap-5">
+            <div className="w-full h-fit flex justify-start items-center gap-5">
+                <div className='w-36 h-36 overflow-hidden rounded-md border'>
+                    {specialist?.provider?.avatar !== "" ? 
+                        <img src={specialist?.provider?.avatar} className='w-full h-full object-cover' />
+                    :     
+                        <span className='w-full h-full flex justify-center items-center bg-slate-200 text-slate-400 text-4xl'>
+                            <FiImage/>
+                        </span>
+                    }
+                </div>
+                <div className="h-36 flex flex-col justify-start items-start text-left">
+                    <p className='text-lg text-slate-900 font-semibold'>
+                        {specialist?.provider?.name}
+                    </p>
+                    <div className="flex flex-col justify-center items-start">
+                        <p className='text-base hidden md:block text-slate-500 font-light my-2'>{specialist.shortDescription}</p>
+                        {specialist.provider?.ruc && <p className='text-base text-slate-500 font-light my-2 md:my-0'>RUC: {specialist.provider?.ruc}</p>}
+                    </div>
+                </div>
+            </div>
+            {specialist?.provider?.shortDescription && <InformationComponent specialist={specialist} />}
+            <LocalitiesComponent specialist={specialist} />
+        </div>
+    )
+}
+
+
 const InformationComponent = ({specialist}:{specialist:Specialist}) => {
     return(
         <div className="w-full relative h-fit flex flex-col justify-start items-start gap-6">
@@ -72,35 +103,7 @@ const InformationComponent = ({specialist}:{specialist:Specialist}) => {
                 <div className="w-full bg-slate-300 h-px block relative"></div>
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-4">
-                <p className='text-base text-slate-500 font-light'>{specialist?.aboutMe}</p>
-                {/*<div className="w-full flex justify-between items-center gap-3">
-                    <div className="w-1/2 flex justify-start items-start gap-3">
-                        <div className="flex justify-center items-center w-12 h-12 text-lg text-secondary text-center rounded-md bg-white border">
-                            <FiStar/>
-                        </div>
-                        <div className="flex flex-col justify-center items-start gap-2">
-                            <p className='subtitle'>Especialista en:</p>
-                            <div className="flex flex-col justify-center items-start gap-1">
-                                {specialist.specialities.map((elem:any)=> 
-                                    <div className='w-full flex justify-start items-center gap-2'>
-                                        <span className='w-1 h-1 rounded-full bg-slate-500'></span>
-                                        <p className='paragraph'>{elem["nombre"]} - {elem["institucion"]}</p>
-                                    </div>
-                                )}
-                                {specialist.specialities.length === 0 && <p className='paragraph'>No especificado</p>}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="w-1/2 flex justify-start items-start gap-3">
-                        <div className="flex justify-center items-center w-12 h-12 text-lg text-secondary text-center rounded-md bg-white border">
-                            <FiPhone/>
-                        </div>
-                        <div className="flex flex-col justify-center items-start gap-1">
-                            <p className='subtitle'>Teléfono:</p>
-                            <p className='paragraph'>{specialist?.phone}</p>
-                        </div>
-                    </div>
-                                </div>*/}
+                <p className='text-base text-slate-500 font-light'>{specialist.provider ? specialist?.provider.shortDescription : specialist?.aboutMe}</p>
             </div>
         </div>
     )
@@ -130,7 +133,7 @@ function Main() {
         successful: loadedLocalities, 
         error: errorLocalities
     } = state.getSpecialistLocalities;
-
+console.log(data)
     const [activeReservationCard, setActiveReservationCard] = useState(false)
   
     useMemo(() => {
@@ -149,7 +152,11 @@ function Main() {
                 <p className='font-light text-sm text-slate-700'>Obteniendo información del especialista</p>
             </div>}
             {successful && loadedLocalities && <>
-                <UserCardComponent specialist={data as Specialist}/>
+                {!data.provider ?
+                    <UserCardComponent specialist={data as Specialist}/>
+                :
+                    <UserCardComponentProvider specialist={data as Specialist}/>
+                }
                 <ReservationCard setClose={setActiveReservationCard} customStyle={twMerge([
                     activeReservationCard ? "flex z-10" : "lg:flex hidden"
                 ])} specialist={data as Specialist} />

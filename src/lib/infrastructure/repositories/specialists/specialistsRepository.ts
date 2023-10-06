@@ -57,9 +57,8 @@ export class SpecialistsRepository implements ISpecialistsRepository {
   async getSpecialist(id:number, type: string | number): Promise<Specialist | SpecialistsFailure> {
     try {
 
-      let data;
+      let data, provider;
 
-      if(type === SpecialistEnum.DOCTOR || type === SpecialistEnum.PQA){
         let response = await supabase.from("Doctores").select(`
           *,
           EspecialidadesDoctores (*,
@@ -79,39 +78,22 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         }
         
         data = {...response.data, tipoPersona: type}
-      }
 
-      if(type === SpecialistEnum.PROVIDER){
-        let response = await supabase.from("Proveedores").select(`*`).eq("id", id).single();
-  
-        if(response.error)throw new SpecialistsFailure(response.statusText)
+      if(type === SpecialistEnum.DOCTOR){
+
+        let relation= await supabase.from("ProveedoresDoctores").select(`*`).eq("doctorId", id).eq("esCreador", true).single();
         
-        data = {
-          usuarioId: response.data?.id ?? "",
-          id: response.data?.id ?? "",
-          nombres: response.data?.nombre ?? "",
-          primerApellido: "",
-          segundoApellido: "",
-          telefono: response.data?.telefono ?? "",
-          estado: response.data?.estado ?? 0,
-          email: response.data?.correo ?? "",
-          curp: response.data?.curp ?? "",
-          fechaNacimiento: response.data?.fechaNacimiento ?? "",
-          sexo: response.data?.sexo ?? 0,
-          sitioWeb: response.data?.sitioWeb ?? "",
-          avatar: response.data?.fotoUrl ?? "",
-          acerca: response.data?.acerca ?? "",
-          descripcionCorta: response.data?.descripcionCorta ?? "",
-          paisNacimiento: response.data?.paisNacimiento ?? "",
-          tipoPersona: SpecialistEnum.PROVIDER,
-          cedulaProfesional: response.data?.cedulaProfesional ?? null,
-          profesionPQAId: response.data?.profesionPQAId ?? "",
-          institucionCedulaProfesional: response.data?.institucionCedulaProfesional ?? "",
-          EspecialidadesDoctores: response.data?.EspecialidadesDoctores ?? "",
+        if(relation.data) {
+          let res= await supabase.from("Proveedores").select(`*`).eq("id", relation.data.proveedorId).single();
+
+          if(res.error)throw new SpecialistsFailure(res.statusText)
+
+          provider = res.data ? res.data : {};
         }
+
       }
   
-      return specialistDBToMap(data) ?? {} as Specialist;
+      return specialistDBToMap(data, provider) ?? {} as Specialist;
     } catch (error) {
       console.log("Error", error)
       const exception = error as any;

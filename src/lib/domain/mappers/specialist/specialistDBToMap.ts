@@ -1,6 +1,6 @@
-import { Specialist } from "../../core/entities/specialists/specialist";
+import { IProvider, Specialist } from "../../core/entities/specialists/specialist";
 
-export function specialistDBToMap(data: any): Specialist {
+export function specialistDBToMap(data: any, provider: any): Specialist {
   return {
     userId: data?.usuarioId ?? "",
     accountId: data?.id ?? "",
@@ -23,5 +23,25 @@ export function specialistDBToMap(data: any): Specialist {
     professionalLicense: data?.profesionPQAId ?? "",
     professionalLicenseInstitution: data?.institucionCedulaProfesional ?? "",
     specialities: data?.EspecialidadesDoctores ?? "",
+    provider: provider ? providerSupabaseToMap(provider) : null,
   } as Specialist;
+}
+
+export function providerSupabaseToMap(data: any): IProvider {
+  return {
+    id: data?.user ?? "",
+    userId: data?.id ?? "",
+    avatar: data?.fotoUrl ?? "",
+    ruc: data?.ruc ?? "",
+    servicesSummary: data?.resumenServicios ?? "",
+    shortDescription: data?.descripcionCorta ?? "",
+    address: data?.direccion ?? "",
+    personType: data?.tipoPersona ?? "",
+    providerTypeId: data?.tipoProveedorId ?? "",
+    name: data?.nombre ?? "",
+    email: data?.correo ?? "",
+    phoneNumber: data?.telefono ?? "",
+    role: data?.rol ?? "",
+    createdOn: data?.fechaCreacion ?? "",
+  } as IProvider;
 }
