@@ -80,14 +80,14 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
                     {loadedServices ? 
                         <div className='w-full h-fit py-3 flex flex-col justify-center items-center gap-2 text-center'>
                             <p className='text-slate-900 text-base font-medium'>Cargando...</p>
-                            <p className='text-slate-500 text-sm font-light'>Obteniendo los servicios de este consultorio</p>    
+                            <p className='text-slate-500 text-sm font-light'>Obteniendo los servicios de esta localidad</p>    
                         </div>
                     : services?.length > 0 ? services.map((p:IService)=> 
                         <ServiceComponent data={p} />
                     ) : 
                         <div className='w-full h-fit py-3 flex flex-col justify-center items-center gap-2 text-center'>
                             <p className='text-slate-900 text-base font-medium'>Nada por aquí</p>
-                            <p className='text-slate-500 text-sm font-light'>Tal parece que este consultorio no tiene servicios aún</p>    
+                            <p className='text-slate-500 text-sm font-light'>Tal parece que esta localidad no tiene servicios aún</p>    
                         </div>
                     }
                 </div>
@@ -127,21 +127,21 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
     return(
         <div className="w-full relative h-fit flex flex-col justify-start items-start gap-6">
             <div className='w-full flex flex-col justify-center items-start gap-2'>
-                <p className='text-lg text-slate-900 font-semibold'>Consultorios</p>
+                <p className='text-lg text-slate-900 font-semibold'>Localidades</p>
                 <div className="w-full bg-slate-300 h-px block relative"></div>
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-4">
                 {loadingLocalities ? 
                     <div className='w-full h-fit py-6 flex flex-col justify-center items-center gap-2 text-center'>
                         <p className='text-slate-900 text-base font-medium'>Cargando...</p>
-                        <p className='text-slate-500 text-sm font-light'>Obteniendo los consultorios del especialista</p>    
+                        <p className='text-slate-500 text-sm font-light'>Obteniendo las localidades del especialista</p>    
                     </div>
                 : localities.length > 0 ? localities.map((elem:ILocality)=> 
                     <LocalityComponent data={elem} />
                 ) : 
                     <div className='w-full h-fit py-6 flex flex-col justify-center items-center gap-2 text-center'>
                         <p className='text-slate-900 text-base font-medium'>Nada por aquí</p>
-                        <p className='text-slate-500 text-sm font-light'>Tal parece que este especialista no tiene consultorios aún</p>    
+                        <p className='text-slate-500 text-sm font-light'>Tal parece que este especialista no tiene localidades aún</p>    
                     </div>
                 }
             </div>
