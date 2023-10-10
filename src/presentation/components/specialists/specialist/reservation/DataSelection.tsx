@@ -224,8 +224,8 @@ export const DataSelection = ({listOfLocalities, specialist}:{
         </div>
         <div className='w-[90%] relative flex flex-col justify-start items-start gap-2'>
           <div className=''>
-            <p className='font-medium text-slate-900 text-lg'>Consultorio</p>
-            { !locality && <p className='font-light text-slate-500 text-sm'>Selecciona el consultorio que te convenga más</p>}
+            <p className='font-medium text-slate-900 text-lg'>Localidad</p>
+            { !locality && <p className='font-light text-slate-500 text-sm'>Selecciona la localidad que te convenga más</p>}
             {locality &&
               <div className="my-2">
                 <p className='font-medium text-slate-900 text-base'>{locality.name}</p>
