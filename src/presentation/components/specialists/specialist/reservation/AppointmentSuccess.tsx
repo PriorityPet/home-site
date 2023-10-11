@@ -20,7 +20,7 @@ export const AppointmentSuccess = () => {
         </span>
         <div className='w-full h-fit flex flex-col justify-center items-center gap-1'>
           <p className='text-slate-900 text-xl font-semibold'>Excelente</p>
-          <p className='text-slate-500 text-base font-light'>Tu cita ha sido agendada exitosamente</p>
+          <p className='text-slate-500 text-base font-light'>Tu reserva ha sido agendada exitosamente</p>
         </div>
       </div>
       <div className="w-full border-t border-slate-300 pt-6 mt-3">

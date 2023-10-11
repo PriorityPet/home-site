@@ -249,7 +249,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
             { service &&
               <div className="my-2 relative w-full h-fit justify-center items-start bg-white border border-slate-300 rounded-md p-2">
                 <p className='font-medium text-slate-900 text-base'>{service.name}</p>
-                <p className='font-light text-slate-500 text-sm mt-2'>${service.base_price}</p>
+                <p className='font-light text-slate-500 text-sm mt-2'>s\{service.base_price}</p>
               </div>
             }
           </div>

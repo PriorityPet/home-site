@@ -61,7 +61,7 @@ export const AppointmentConfirmation = ({specialist}:{
         </div>
         <div className='w-full h-fit flex justify-center items-start gap-2 text-left'>
           <p className='w-1/3 font-light text-slate-500 text-sm'>Precio de la cita</p>
-          <p className='w-2/3 font-medium text-slate-900 text-base'>${service?.base_price}</p>
+          <p className='w-2/3 font-medium text-slate-900 text-base'>s\{service?.base_price}</p>
         </div>
 
       </div>

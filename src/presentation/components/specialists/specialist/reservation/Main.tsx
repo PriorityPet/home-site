@@ -46,10 +46,10 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
     ])}>
       <div className="w-full h-fit pb-3 mb-3 border-b border-slate-300">
         <p className="text-lg text-slate-900 font-semibold">
-          {step === 0 && "Agendar cita"}
+          {step === 0 && "Agendar reserva"}
           {step === 1 && "Crear cuenta"}
           {step === 2 && "Confirma la información"}
-          {step === 3 && "Cita creada exitosamente"}
+          {step === 3 && "Reservación creada exitosamente"}
         </p>
       </div>
       {step === 0 && listOfLocalities.length > 0 &&
