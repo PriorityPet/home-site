@@ -118,7 +118,7 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
                     <p className="font-light">{data.name}</p>
                 </div>
                 <div className="font-light text-md">
-                    s\{data.base_price}
+                    S\{data.base_price}
                 </div>
             </div>
         )
