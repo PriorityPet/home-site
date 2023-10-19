@@ -40,7 +40,7 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
             <div className="w-full h-fit flex justify-start items-center gap-5">
                 <div className='w-36 h-36 overflow-hidden rounded-md border'>
                     {specialist?.avatar !== "" ? 
-                        <img src={specialist?.avatar} className='w-full h-full object-cover' />
+                        <img src={specialist?.avatar} className='w-full h-full object-contain' />
                     :     
                         <span className='w-full h-full flex justify-center items-center bg-slate-200 text-slate-400 text-4xl'>
                             <FiImage/>
@@ -71,7 +71,7 @@ const UserCardComponentProvider = ({specialist}:{specialist:Specialist}) => {
             <div className="w-full h-fit flex justify-start items-center gap-5">
                 <div className='w-36 h-36 overflow-hidden rounded-md border'>
                     {specialist?.provider?.avatar !== "" ? 
-                        <img src={specialist?.provider?.avatar} className='w-full h-full object-cover' />
+                        <img src={specialist?.provider?.avatar} className='w-full h-full object-contain' />
                     :     
                         <span className='w-full h-full flex justify-center items-center bg-slate-200 text-slate-400 text-4xl'>
                             <FiImage/>
