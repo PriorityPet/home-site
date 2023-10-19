@@ -20,6 +20,8 @@ export default interface ISpecialistsRepository {
     getSpecialistServices(id:number, localityId?:number): Promise<any[] | SpecialistsFailure>;
     getProviderServices(id:number, localityId: number): Promise<any[] | SpecialistsFailure>;
     getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure>;
+    getInitialDate(id:number, date?:string): Promise<any[] | SpecialistsFailure>;
+    getInitialDatePQA(obj:{userId:number; serviceId:number; date:string; type: number}): Promise<any[] | SpecialistsFailure>;
     getAttentionWindowsByServicePQA(obj:{userId:number; serviceId:number; date:string; type: number}): Promise<any[] | SpecialistsFailure>;
     createAppointment(obj:any): Promise<any | SpecialistsFailure>;
 }
@@ -347,6 +349,48 @@ export class SpecialistsRepository implements ISpecialistsRepository {
     }
   }
 
+  async getInitialDatePQA(obj:{userId:number; serviceId:number; date:string; type: number}): Promise<any[] | SpecialistsFailure> {
+    try {
+      let queryOfAttentionWindows = supabase.from("DoctoresEnVentanasAtencion")
+      .select(`*`).eq("doctorId", obj.userId);
+
+      let resAttentionWindows = await queryOfAttentionWindows
+
+      if(resAttentionWindows.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+      if(resAttentionWindows.data?.length === 0) return []
+
+      let queryOfServiciosEnVentanasAtencion = supabase.from("ServiciosEnVentanasAtencion")
+      .select(`*`).in("ventanaAtencionBaseId", resAttentionWindows.data!.map((elem:any)=> elem["ventanaAtencionBaseId"] ))
+      .filter("servicioId", "eq", obj.serviceId)
+        
+      let resServiciosEnVentanasAtencion = await queryOfServiciosEnVentanasAtencion
+
+      if(resServiciosEnVentanasAtencion.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+      if(resServiciosEnVentanasAtencion.data?.length === 0) return []
+      
+      let date = moment(obj.date).format('YYYY-MM-DD')
+      let dateEnd = moment(obj.date, "YYYY-MM-DD").add(5, 'days').format('YYYY-MM-DD')
+
+      let queryVentanasAtencion = supabase.from("VentanasAtencion")
+      .select(`*`).in("ventanaAtencionBaseId", resServiciosEnVentanasAtencion.data!.map((elem:any)=> elem["ventanaAtencionBaseId"] ))
+      .gte('fechaInicio', date).order('fechaInicio', { ascending: true })
+      .limit(1)
+
+      let resVentanasAtencion = await queryVentanasAtencion
+
+      if(resVentanasAtencion.data?.length === 0) return []
+
+      let res = resVentanasAtencion.data !== null ? resVentanasAtencion.data : [];
+
+      console.log(res)
+
+      return res;
+    } catch (error) {
+      const exception = error as any;
+      return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+    }
+  }
+
   async getAttentionWindowsByService(id:number, date?:string): Promise<any[] | SpecialistsFailure> {
     try {
       
@@ -408,6 +452,37 @@ export class SpecialistsRepository implements ISpecialistsRepository {
     } catch (error) {
         const exception = error as any;
         return new SpecialistsFailure(specialistsFailuresEnum.serverError);
+    }
+  }
+
+  async getInitialDate(id:number, date?:string): Promise<any[] | SpecialistsFailure> {
+    try {
+      let queryServiciosEnVentanasAtencion = supabase.from("ServiciosEnVentanasAtencion")
+      .select(`*, VentanasAtencionBase(*)`).eq("servicioId", id)
+
+      let resServiciosEnVentanasAtencion = await queryServiciosEnVentanasAtencion
+
+      if(resServiciosEnVentanasAtencion.data?.length === 0) return []
+      
+      date = moment(date).format('YYYY-MM-DD')
+
+      let windowAttentionId = resServiciosEnVentanasAtencion.data![0]["ventanaAtencionBaseId"].toString()
+
+      let queryVentanasAtencion = supabase.from("VentanasAtencion")
+      .select(`*`).eq("ventanaAtencionBaseId", windowAttentionId)
+      .gte('fechaInicio', date).order('fechaInicio', { ascending: true })
+      .limit(1)
+
+      let resVentanasAtencion = await queryVentanasAtencion
+
+      if(resVentanasAtencion.data?.length === 0) return []
+
+      let res = resVentanasAtencion.data !== null ? resVentanasAtencion.data : [];
+
+      return res;
+    } catch (error) {
+      const exception = error as any;
+      return new SpecialistsFailure(specialistsFailuresEnum.serverError);
     }
   }
   

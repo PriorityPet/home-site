@@ -101,6 +101,26 @@ export default class SpecialistsUseCase {
             throw error;
         }
     }
+
+    async getInitialDate(obj:{userId:number; serviceId:number; date:string; type: number}): Promise<string> {
+        try {
+            if(obj.type === SpecialistEnum.PQA){
+                const response = await this._repository.getInitialDatePQA(obj);
+  
+                if (response instanceof SpecialistsFailure) throw response;
+    
+                return response[0].fechaInicio;
+            }
+
+            const response = await this._repository.getInitialDate(obj.serviceId, obj.date);
+  
+            if (response instanceof SpecialistsFailure) throw response;
+  
+            return response[0].fechaInicio;
+        } catch (error) {
+            throw error;
+        }
+    }
     
     async createAppointment(obj:any): Promise<any> {
         try {

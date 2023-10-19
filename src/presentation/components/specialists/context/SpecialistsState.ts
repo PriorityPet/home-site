@@ -26,6 +26,7 @@ export interface ISpecialistsState {
   createPet: IPetCreateState;
   species: IGetSpeciesState;
   breeds: IGetBreedsState;
+  getInitialDate: ISpecialistsSpecialistsState;
 }
 
 interface ISpecialistsSpecialistsState {
@@ -173,5 +174,11 @@ export const initialState: ISpecialistsState = {
       loading: false,
       successful: false,
       error: null,
+  },
+  getInitialDate: {
+    data: "",
+    loading: false,
+    successful: false,
+    error: null,
   },
 }

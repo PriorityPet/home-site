@@ -14,6 +14,7 @@ export interface ISpecialistsActions {
   getSpecialistLocalities: Function;
   getSpecialistServices: Function;
   getAttentionWindowsByService: Function;
+  getInitialDate: Function;
   createAppointment: Function;
   createUser: Function;
   changeService: Function;
@@ -129,6 +130,21 @@ const getAttentionWindowsByService = (obj:{userId:number; serviceId:number; date
   }
 }
 
+const getInitialDate = (obj:{userId:number; serviceId:number; date:string; type: number}) => async (dispatch: Dispatch<any>) => {
+  try {
+    dispatch({ type: "GET_INITIAL_DATE_LOADING" });
+
+    console.log(obj.date)
+
+    const res: string= await new SpecialistsUseCase().getInitialDate(obj);
+
+    dispatch({ type: "GET_INITIAL_DATE_SUCCESSFUL", payload: { data: res } });
+  } catch (error) {
+    console.log("Error calling action", error)
+    dispatch({ type: "GET_INITIAL_DATE_ERROR", payload: { error: error } });
+  }
+}
+
 const createAppointment = (obj:any) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch({ type: "CREATE_APPOINTMENT_LOADING" });
@@ -177,6 +193,7 @@ export const actions: ISpecialistsActions = {
   getSpecialistLocalities,
   getSpecialistServices,
   getAttentionWindowsByService,
+  getInitialDate,
   createAppointment,
   createUser,
   changeService,

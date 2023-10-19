@@ -133,7 +133,7 @@ function Main() {
         successful: loadedLocalities, 
         error: errorLocalities
     } = state.getSpecialistLocalities;
-console.log(data)
+
     const [activeReservationCard, setActiveReservationCard] = useState(false)
   
     useMemo(() => {

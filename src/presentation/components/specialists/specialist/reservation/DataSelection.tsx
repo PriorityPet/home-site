@@ -127,6 +127,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
     changeHourSelected,
     changeStep,
     getAttentionWindowsByService,
+    getInitialDate,
     getSpecialistServices,
     changeAppointmentData
   } = actions
@@ -142,6 +143,13 @@ export const DataSelection = ({listOfLocalities, specialist}:{
   } = state.getAttentionWindowsByService;
 
   const { 
+    data: initialDate, 
+    loading: loadinginitialDate, 
+    successful: loadedinitialDate, 
+    error: errorinitialDate
+  } = state.getInitialDate;
+
+  const { 
     data: services,
     successful: loadedServices,
   } = state.getSpecialistServices;
@@ -155,7 +163,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
   } = state.changeAppointmentData;
 
   const [hourSelected, setHourSelected] = useState("")
-  const [date, setDate] = useState(moment().format("YYYY-MM-DD"))
+  const [date, setDate] = useState("")
 
   const [listOfServices, setListOfServices] = useState([])
 
@@ -192,26 +200,38 @@ export const DataSelection = ({listOfLocalities, specialist}:{
     if(changedHourSelected) changeStep(1)(dispatch)
   } ,[changedHourSelected])*/
 
+  useMemo(() => {
+    if(service) {
+      setDate("")
+    }
+  }, [service])
+
+  useMemo(() => {
+    if(date.length === 0) {
+      setDate(moment().format("YYYY-MM-DD"))
+    } 
+  }, [date])
+
   useMemo(()=> {
-    if(changedServiceId && service){
-      getAttentionWindowsByService({
+    if(date.length > 0){
+      getInitialDate({
         userId: specialist.accountId,
         serviceId: service?.id,
         date,
         type: specialist.personType,
       })(dispatch)
     }
-  },[service, date])
+  },[date])
 
-  /*useMemo(()=>{
-    if(changedLocalityId){
-      const url = pathname?.split("/")
-      if(url){
-        let id = url![url!.length - 1]
-        getSpecialistServices(parseInt(id), locality)(dispatch)
-      }
-    }
-  },[locality])*/
+  useMemo(()=> {
+    if(initialDate) setDate(moment(initialDate).format("YYYY-MM-DD"))
+    getAttentionWindowsByService({
+      userId: specialist.accountId,
+      serviceId: service?.id,
+      date,
+      type: specialist.personType,
+    })(dispatch)
+  },[initialDate])
 
   return(
     <div className="w-full h-fit flex flex-col justify-start items-start gap-3">
@@ -300,16 +320,16 @@ export const DataSelection = ({listOfLocalities, specialist}:{
           <p className='text-sm text-slate-500 font-light'>Cargando la disponibilidad del servicio</p>
         </div>
       }
-      {(!loadedWindows && !loadingWindows) && 
+      {(!loadedWindows && !loadingWindows && !loadedinitialDate && !loadinginitialDate) && 
         <div className="w-full h-fit flex flex-col justify-center items-center text-center gap-2">
           <p className="text-base text-slate-900 font-medium">Nada por aquí</p>
-          <p className='text-sm text-slate-500 font-light'>Seleccina un servicio para conocer la disponibilidad</p>
+          <p className='text-sm text-slate-500 font-light'>Seleccina un servicio que tenga disponibilidad</p>
         </div>
       }
-      {(loadedWindows && windows.length === 0) && 
+      {(loadedWindows && windows.length === 0 && initialDate.length === 0) && 
         <div className="w-full h-fit flex flex-col justify-center items-center text-center gap-2">
           <p className="text-base text-slate-900 font-medium">No hay disponibilidad</p>
-          <p className='text-sm text-slate-500 font-light'>No hay disponibilidad para esta semana</p>
+          <p className='text-sm text-slate-500 font-light'>No hay disponibilidad para este servicio</p>
         </div>
       }
       {(loadedWindows && windows.length > 0) && <AttentionWindowsComponent setHourSelected={setHourSelected} hourSelected={hourSelected} windows={windows as any[]} />}
