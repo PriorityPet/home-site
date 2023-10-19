@@ -201,37 +201,32 @@ export const DataSelection = ({listOfLocalities, specialist}:{
   } ,[changedHourSelected])*/
 
   useMemo(() => {
-    if(service) {
-      setDate("")
-    }
-  }, [service])
+    getInitialDate({
+      userId: specialist.accountId,
+      serviceId: service?.id,
+      date: moment().format("YYYY-MM-DD"),
+      type: specialist.personType,
+    })(dispatch);
+  }, [service]);
 
   useMemo(() => {
-    if(date.length === 0) {
-      setDate(moment().format("YYYY-MM-DD"))
-    } 
-  }, [date])
+    if (initialDate && initialDate.length > 0) {
+      setDate(moment(initialDate).format("YYYY-MM-DD"));
+    } else {
+      setDate(moment().format("YYYY-MM-DD"));
+    }
+  }, [initialDate]);
 
-  useMemo(()=> {
-    if(date.length > 0){
-      getInitialDate({
+  useMemo(() => {
+    if (service && service?.id && date && date.length > 0) {
+      getAttentionWindowsByService({
         userId: specialist.accountId,
         serviceId: service?.id,
         date,
         type: specialist.personType,
-      })(dispatch)
+      })(dispatch);
     }
-  },[date])
-
-  useMemo(()=> {
-    if(initialDate) setDate(moment(initialDate).format("YYYY-MM-DD"))
-    getAttentionWindowsByService({
-      userId: specialist.accountId,
-      serviceId: service?.id,
-      date,
-      type: specialist.personType,
-    })(dispatch)
-  },[initialDate])
+  }, [service, date]);
 
   return(
     <div className="w-full h-fit flex flex-col justify-start items-start gap-3">
