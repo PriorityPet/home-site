@@ -240,7 +240,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
         <div className='w-[90%] relative flex flex-col justify-start items-start gap-2'>
           <div className=''>
             <p className='font-medium text-slate-900 text-lg'>Localidad</p>
-            { !locality && <p className='font-light text-slate-500 text-sm'>Selecciona la localidad que te convenga más</p>}
+            { !locality && <p className='font-light text-slate-500 text-sm'>No se ha seleccionado una localidad</p>}
             {locality &&
               <div className="my-2">
                 <p className='font-medium text-slate-900 text-base'>{locality.name}</p>
@@ -260,7 +260,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
         <div className='w-[90%] relative flex flex-col justify-start items-start gap-2'>
           <div className='w-full'>
             <p className='font-medium text-slate-900 text-lg'>Servicio</p>
-            <p className='font-light text-slate-500 text-sm'>Selecciona la razón por la cual necesitas la consulta</p>
+            { !service && <p className='font-light text-slate-500 text-sm'>No se ha seleccionado un servicio</p>}
             { service &&
               <div className="my-2 relative w-full h-fit justify-center items-start bg-white border border-slate-300 rounded-md p-2">
                 <p className='font-medium text-slate-900 text-base'>{service.name}</p>

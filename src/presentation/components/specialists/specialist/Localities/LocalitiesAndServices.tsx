@@ -127,7 +127,10 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
     return(
         <div className="w-full relative h-fit flex flex-col justify-start items-start gap-6">
             <div className='w-full flex flex-col justify-center items-start gap-2'>
-                <p className='text-lg text-slate-900 font-semibold'>Localidades</p>
+                <div>
+                    <p className='text-lg text-slate-900 font-semibold'>Localidades</p>
+                    <p className='text-base text-slate-500 font-light'>Selecciona el consultorio y servicio de tu conveniencia</p>
+                </div>
                 <div className="w-full bg-slate-300 h-px block relative"></div>
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-4">
