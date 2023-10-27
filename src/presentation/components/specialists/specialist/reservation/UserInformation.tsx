@@ -64,7 +64,11 @@ export const UserConfirmation = () => {
   const [activePolicy, setActivePolicy] = useState(false);
 
   function usetSetterAfterCreation(){
-    changeUserId(data.data.subjectId)(dispatch)
+    changeUserId({
+      id: data.data.subjectId,
+      names: `${owner.firstName} ${owner.lastName}`,
+      email: owner.email,
+    })(dispatch)
     changeStep(2)(dispatch)
   }
 

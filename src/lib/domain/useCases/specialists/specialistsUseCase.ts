@@ -7,9 +7,11 @@ import { Specialist } from '../../core/entities/specialists/specialist';
 import { SpecialistsRepository } from '@/lib/infrastructure/repositories/specialists/specialistsRepository';
 import { SpecialistsFailure } from '../../core/failures/specialists/specialistsFailure';
 import { SpecialistEnum } from '@/lib/enums/specialist/specialistEnum';
+import { EmailRepository } from '@/lib/infrastructure/repositories/email/emailRepository';
 
 export default class SpecialistsUseCase {
     private _repository: SpecialistsRepository = new SpecialistsRepository();
+    private _emailRepository: EmailRepository = new EmailRepository()
     
     async getSpecialists(): Promise<Array<Specialist>> {
         try {
@@ -127,6 +129,15 @@ export default class SpecialistsUseCase {
             const response = await this._repository.createAppointment(obj);
   
             if (response instanceof SpecialistsFailure) throw response;
+
+            await this._emailRepository.sendAppointmentEmail({
+                owner: obj["paciente"], 
+                user: obj["doctor"], 
+                date: obj["date"], 
+                serviceName: obj["nombreServicio"], 
+                address: obj["direccion"],
+                hour: obj["hour"],
+            })
   
             return response;
         } catch (error) {

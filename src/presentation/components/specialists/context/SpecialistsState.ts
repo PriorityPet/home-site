@@ -146,7 +146,7 @@ export const initialState: ISpecialistsState = {
     error: null,
   },
   changeUserId: {
-    data: null,
+    data: {},
     loading: false,
     successful: false,
     error: null,
