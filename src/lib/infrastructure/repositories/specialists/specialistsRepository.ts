@@ -405,10 +405,8 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         date = moment(date).format('YYYY-MM-DD')
         let dateEnd = moment(date, "YYYY-MM-DD").add(5, 'days').format('YYYY-MM-DD')
 
-        let windowAttentionId = resServiciosEnVentanasAtencion.data![0]["ventanaAtencionBaseId"].toString()
-
         let queryVentanasAtencion = supabase.from("VentanasAtencion")
-        .select(`*`).eq("ventanaAtencionBaseId", windowAttentionId)
+        .select(`*`).in("ventanaAtencionBaseId", resServiciosEnVentanasAtencion.data!.map((elem:any) => elem["ventanaAtencionBaseId"]))
         .filter('fechaInicio', 'gte', date)
         .filter('fechaFin', 'lte', dateEnd)
 
@@ -447,6 +445,8 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         })
 
         if(list.every((elem:any)=> elem["Citas"].length === 0 )) return []
+
+        console.log(list)
         
         return list ?? [];
     } catch (error) {
