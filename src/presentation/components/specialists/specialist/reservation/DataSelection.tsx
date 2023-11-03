@@ -33,7 +33,7 @@ const HourComponent = ({hour, setHourSelected, hourSelected}:{
     setHourSelected(data["id"])
     let dateDataChanged = {
       ...appointmentData,
-      date: moment(data["fechaReserva"]).utc().format("dddd, MMMM D YYYY"),
+      date: moment(data["fechaReserva"]).utc().format("dddd, D MMMM YYYY"),
       hour: moment(data["fechaReserva"]).utc().format("hh:mm a")
     }
     changeAppointmentData(dateDataChanged)(dispatch)
