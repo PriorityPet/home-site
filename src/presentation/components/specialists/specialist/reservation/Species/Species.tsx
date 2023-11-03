@@ -42,6 +42,12 @@ export default function Species({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successful]);
 
+  species && species.data !== null
+    ? species.data?.sort((x: { name: string }, y: { name: any }) =>
+        x.name.localeCompare(y.name)
+      )
+    : species;
+
   return (
     <>
       <p className="font-light text-slate-500 text-sm">Especie</p>

@@ -78,7 +78,7 @@ export const AppointmentConfirmation = ({specialist}:{
           id: id,
           doctor: specialist,
           nombreServicio: service && service["name"],
-          direccion: locality?.address.department,
+          direccion: locality?.address.postal_code,
           date: appointmentData["date"],
           hour: appointmentData["hour"],
         })(dispatch) }} className="btn btn-primary w-full">{loading ? "Agendando..." : "Confirmar"}</button>

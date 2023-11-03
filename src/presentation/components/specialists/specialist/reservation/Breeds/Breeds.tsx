@@ -43,6 +43,12 @@ export default function Breeds({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successful]);
 
+  breeds && breeds.data !== null
+    ? breeds.data?.sort((x: { name: string }, y: { name: any }) =>
+        x.name.localeCompare(y.name)
+      )
+    : breeds;
+
   if (values.specieId === 0) return <div />;
 
   return (
