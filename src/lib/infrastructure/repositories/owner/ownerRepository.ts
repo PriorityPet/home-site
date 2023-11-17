@@ -57,6 +57,11 @@ export class OwnerRepository implements IOwnerRepository {
 
         const res = await query;
 
+        if (res.error) { 
+          if(res.error.code === "23505") return new OwnerFailure(ownerFailuresEnum.alreadyExists);
+          return new OwnerFailure(ownerFailuresEnum.serverError);
+        } 
+
         const owners: IOwner[] = [];
 
         if (res.data && res.data.length > 0) {

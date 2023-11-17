@@ -3,12 +3,10 @@ import { useContext, useState, useMemo } from "react";
 import { FiCheck, FiHeart, FiMessageSquare, FiUser } from "react-icons/fi";
 import { AiOutlinePhone } from "react-icons/ai";
 import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext";
-import moment from "moment";
 import { twMerge } from "tailwind-merge";
-import { VALIDATE_EMAIL, VALIDATE_NAMES, VALIDATE_NUMBERS, VALIDATE_STRING } from "@/lib/utils/errors-validation";
+import { VALIDATE_EMAIL, VALIDATE_NAMES, VALIDATE_NUMBERS } from "@/lib/utils/errors-validation";
 import IntlPhoneNumberInput from "@/presentation/components/core/Intl/IntlPhoneNumberInput/IntlPhoneNumberInput";
 import "react-intl-tel-input/dist/main.css";
-import Link from "next/link";
 import { IPet } from "@/lib/domain/core/entities/petEntity";
 import { IOwner } from "@/lib/domain/core/entities/ownerEntity";
 import { MdOutlinePets } from "react-icons/md";
@@ -16,7 +14,7 @@ import Species from "./Species/Species";
 import Breeds from "./Breeds/Breeds";
 import { ISpecie } from "@/lib/domain/core/entities/specieEntity";
 import { IBreed } from "@/lib/domain/core/entities/breedEntity";
-import { SpecialistEnum } from "@/lib/enums/specialist/specialistEnum";
+import { ownerFailuresEnum } from "@/lib/domain/core/failures/owner/ownerFailure";
 
 export const UserConfirmation = () => {
   
@@ -372,6 +370,11 @@ console.log(specialist)
             value={owner.email}
           />
           {errors.email && <p className="text-xs text-red-700 font-medium">El email no es correcto</p>}
+          {error?.code === ownerFailuresEnum.alreadyExists &&
+            <p className="text-xs text-red-700 font-medium">
+              Este email ya esta siendo usado por otro usuario.
+            </p>
+          }
         </div>
       </div>
       <div className='w-full flex justify-start items-start gap-5'>

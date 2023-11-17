@@ -2,7 +2,7 @@ import IOwnerRepository, { OwnerRepository } from "@/lib/infrastructure/reposito
 import { PetRepository } from "@/lib/infrastructure/repositories/pet/petRepository";
 import { IPet } from "../../core/entities/petEntity";
 import { ICreatePetResponse } from "../../core/response/petResponse";
-import { OwnerFailure } from "../../core/failures/owner/ownerFailure";
+import { OwnerFailure, ownerFailuresEnum } from "../../core/failures/owner/ownerFailure";
 import { PetFailure, petFailuresEnum } from "../../core/failures/pet/petFailure";
 import { IGetSpeciesResponses } from "../../core/response/specieResponses";
 import { SpecieFailure } from "../../core/failures/specie/specieFailures";
@@ -19,7 +19,9 @@ export default class PetUseCase {
       if (obj.pet.owner && obj.pet.owner.id === 0) {
         const res = await this._ownerRepository.createOwner({ owner: obj.pet.owner });
 
-        if (res instanceof OwnerFailure) throw new PetFailure(petFailuresEnum.serverError);
+        if (res instanceof OwnerFailure) {
+          throw new OwnerFailure(ownerFailuresEnum.alreadyExists);
+        }
 
         obj.pet.ownerId = res.data.id;
         obj.pet.owner.subjectId = res.data.subjectId;
