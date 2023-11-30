@@ -69,7 +69,7 @@ const UserCardComponentProvider = ({specialist}:{specialist:Specialist}) => {
     return(
         <div className="w-full lg:w-[55%] bg-white rounded-lg p-6 shadow-sm border relative h-fit flex flex-col justify-start items-start gap-5">
             <div className="w-full h-fit flex justify-start items-center gap-5">
-                <div className='w-36 h-36 overflow-hidden rounded-md border'>
+                <div className='h-36 md:w-36 w-[50%] rounded-md border'>
                     {specialist?.provider?.avatar !== "" ? 
                         <img src={specialist?.provider?.avatar} className='w-full h-full object-contain' />
                     :     
@@ -78,13 +78,13 @@ const UserCardComponentProvider = ({specialist}:{specialist:Specialist}) => {
                         </span>
                     }
                 </div>
-                <div className="h-36 flex flex-col justify-start items-start text-left">
-                    <p className='text-lg text-slate-900 font-semibold'>
+                <div className="h-fit md:w-[60%] w-[50%] flex flex-col justify-start items-start text-left">
+                    <p className='text-lg text-slate-900 font-semibold w-full truncate'>
                         {specialist?.provider?.name}
                     </p>
-                    <div className="flex flex-col justify-center items-start">
-                        <p className='text-base hidden md:block text-slate-500 font-light my-2'>{specialist.shortDescription}</p>
-                        {specialist.provider?.ruc && <p className='text-base text-slate-500 font-light my-2 md:my-0'>RUC: {specialist.provider?.ruc}</p>}
+                    <div className="flex flex-col justify-center items-start w-full">
+                        <p className='text-base hidden md:block text-slate-500 font-light my-2 overflow-hidden w-full'>{specialist.shortDescription}</p>
+                        {specialist.provider?.ruc && <p className='text-base text-slate-500 font-light my-2 md:my-0 w-full truncate'>RUC: {specialist.provider?.ruc}</p>}
                     </div>
                 </div>
             </div>
