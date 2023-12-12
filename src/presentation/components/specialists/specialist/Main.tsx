@@ -88,7 +88,7 @@ const UserCardComponentProvider = ({specialist}:{specialist:Specialist}) => {
                     </div>
                 </div>
             </div>
-            {specialist?.provider?.shortDescription && <InformationComponent specialist={specialist} />}
+            {specialist?.aboutMe && <InformationComponent specialist={specialist} />}
             <LocalitiesComponent specialist={specialist} />
         </div>
     )
@@ -103,7 +103,7 @@ const InformationComponent = ({specialist}:{specialist:Specialist}) => {
                 <div className="w-full bg-slate-300 h-px block relative"></div>
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-4">
-                <p className='text-base text-slate-500 font-light'>{specialist.provider ? specialist?.provider.shortDescription : specialist?.aboutMe}</p>
+                <p className='text-base text-slate-500 font-light'>{specialist?.aboutMe}</p>
             </div>
         </div>
     )
