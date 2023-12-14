@@ -260,7 +260,7 @@ export const UserConfirmation = () => {
     };
       createPet({pet: petData, doctorId: null, providerId: parseInt(specialist.accountId)})(dispatch);
   }
-console.log(specialist)
+
   useMemo(() =>{
     if(successful) usetSetterAfterCreation()
   }, [successful])

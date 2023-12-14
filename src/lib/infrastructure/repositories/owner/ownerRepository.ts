@@ -20,6 +20,10 @@ export default interface IOwnerRepository {
     createOwner(obj: { 
         owner: IOwner;
     }): Promise<ICreateOwnerResponse | OwnerFailure>;
+    createRelationSubject(
+      subjectId: number, 
+      copmpanionId: number
+    ): Promise<boolean | OwnerFailure>;
 }
 
 export class OwnerRepository implements IOwnerRepository {
@@ -160,6 +164,27 @@ export class OwnerRepository implements IOwnerRepository {
         }
 
         return JSON.parse(JSON.stringify(response));
+      } catch (error) {
+        const exception = error as any;
+        return new OwnerFailure(ownerFailuresEnum.serverError);
+      }
+    }
+
+    async createRelationSubject(subjectId: number, companionId: number): Promise<boolean | OwnerFailure> {
+      try {
+        const relationSubject = {
+          type: 1,
+          subjectId: subjectId,
+          companionId: companionId,
+        }
+
+        await supabase.from("RelacionesSujetos").insert({
+          tipo: relationSubject.type,
+          sujetoPrincipalId: relationSubject.subjectId,
+          sujetoSecundarioId: relationSubject.companionId,
+        })
+
+        return true;
       } catch (error) {
         const exception = error as any;
         return new OwnerFailure(ownerFailuresEnum.serverError);
