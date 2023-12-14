@@ -6,8 +6,9 @@ import { BsCheckLg } from 'react-icons/bs'
 import { usePathname } from "next/navigation";
 import { ILocality } from "@/lib/domain/core/entities/localityEntity";
 import { IService } from "@/lib/domain/core/entities/serviceEntity";
+import { CountriesIntlEnum } from "@/lib/enums/countries/countriesIntlEnum";
 
-function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
+function LocalitiesComponent ({specialist, country}:{specialist:Specialist; country: string}) {
 
     const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
     const { changeLocality, changeService, getSpecialistServices } = actions
@@ -118,7 +119,7 @@ function LocalitiesComponent ({specialist}:{specialist:Specialist}) {
                     <p className="font-light">{data.name}</p>
                 </div>
                 <div className="font-light text-md">
-                    S\{data.base_price}
+                    {country === CountriesIntlEnum.PERU ? "S\\" : "$"}{data.base_price}
                 </div>
             </div>
         )

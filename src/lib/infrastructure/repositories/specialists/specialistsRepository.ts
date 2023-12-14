@@ -10,11 +10,12 @@ import { serviceDBToMap } from '@/lib/domain/mappers/service/serviceDBToMap';
 import { SpecialistEnum } from '@/lib/enums/specialist/specialistEnum';
 import { IService } from '@/lib/domain/core/entities/serviceEntity';
 import { localityFromSupabaseToMap } from '@/lib/domain/mappers/localities/localitiesSupabaseMapper';
+import { CountriesIntlApiEnum, CountriesIntlEnum } from '@/lib/enums/countries/countriesIntlEnum';
 
 export default interface ISpecialistsRepository {
     getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure>;
     getSpecialist(id:number, type: string | number): Promise<Specialist | SpecialistsFailure>;
-    getSpecialistLocalities(id:number, type:number): Promise<ILocality[] | SpecialistsFailure>;
+    getSpecialistLocalities(id:number, type:number, country: string): Promise<ILocality[] | SpecialistsFailure>;
     getPQALocalities(id:number): Promise<ILocality[] | SpecialistsFailure>;
     getPQAServices(id:number, localityId:number): Promise<IService[] | SpecialistsFailure>;
     getSpecialistServices(id:number, localityId?:number): Promise<any[] | SpecialistsFailure>;
@@ -102,7 +103,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
       return new SpecialistsFailure(specialistsFailuresEnum.serverError);
     }
   }
-  async getSpecialistLocalities(id:number, type:number): Promise<ILocality[] | SpecialistsFailure> {
+  async getSpecialistLocalities(id:number, type:number, country: string): Promise<ILocality[] | SpecialistsFailure> {
     try {
       let cookies = nookies.get(undefined, 'access_token');
 
@@ -119,11 +120,13 @@ export class SpecialistsRepository implements ISpecialistsRepository {
 
       let URL:RequestInfo = "";
       if(type === SpecialistEnum.DOCTOR){
-        URL = process.env.NEXT_PUBLIC_API_URL + `/doctor/${id}/location/${"PER"}` as RequestInfo
+        URL = process.env.NEXT_PUBLIC_API_URL + 
+          `/doctor/${id}/location/${country === CountriesIntlEnum.PERU ? CountriesIntlApiEnum.PERU : CountriesIntlApiEnum.MEXICO}` as RequestInfo;
       }
-      if(type === SpecialistEnum.PROVIDER){
-        URL = process.env.NEXT_PUBLIC_API_URL + `/supplier/${id}/location/${"PER"}` as RequestInfo
-      }
+      /*if(type === SpecialistEnum.PROVIDER){
+        URL = process.env.NEXT_PUBLIC_API_URL + 
+          `/supplier/${id}/location/${country === CountriesIntlEnum.PERU ? CountriesIntlApiEnum.PERU : CountriesIntlApiEnum.MEXICO}` as RequestInfo;
+      }*/
 
       const response = await fetch(URL, requestOptions)
       let data = await response.json()

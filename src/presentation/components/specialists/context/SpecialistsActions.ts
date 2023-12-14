@@ -91,11 +91,11 @@ const getBreeds = (obj: { specieId: number }) => async (dispatch: Dispatch<any>)
   }
 }
 
-const getSpecialistLocalities = (id:number, type:number) => async (dispatch: Dispatch<any>) => {
+const getSpecialistLocalities = (id:number, type:number, country: string) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch({ type: "GET_SPECIALIST_LOCALITIES_LOADING" });
     
-    const res: ILocality[] = await new SpecialistsUseCase().getSpecialistLocalities(id, type);
+    const res: ILocality[] = await new SpecialistsUseCase().getSpecialistLocalities(id, type, country);
 
     dispatch({ type: "GET_SPECIALIST_LOCALITIES_SUCCESSFUL", payload: { data: res } });
   } catch (error) {
