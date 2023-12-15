@@ -2,9 +2,11 @@ import { useContext, useState, useMemo } from "react";
 import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext";
 import { Specialist } from "@/lib/domain/core/entities/specialists/specialist";
 import { usePathname } from "next/navigation";
+import { CountriesIntlEnum } from "@/lib/enums/countries/countriesIntlEnum";
 
-export const AppointmentConfirmation = ({specialist}:{
-  specialist:Specialist
+export const AppointmentConfirmation = ({specialist, country}:{
+  specialist:Specialist;
+  country: string;
 }) => {
 
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
@@ -62,7 +64,7 @@ export const AppointmentConfirmation = ({specialist}:{
         </div>
         <div className='w-full h-fit flex justify-center items-start gap-2 text-left'>
           <p className='w-1/3 font-light text-slate-500 text-sm'>Precio de la cita</p>
-          <p className='w-2/3 font-medium text-slate-900 text-base'>S\{service?.base_price}</p>
+          <p className='w-2/3 font-medium text-slate-900 text-base'>{country === CountriesIntlEnum.PERU ? "S\\" : "$"}{service?.base_price}</p>
         </div>
 
       </div>

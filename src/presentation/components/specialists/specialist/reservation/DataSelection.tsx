@@ -8,6 +8,7 @@ import { ISpecialistsContext, SpecialistsContext } from "../../context/Specialis
 import { MdArrowBack, MdArrowLeft } from "react-icons/md"
 import { Specialist } from "@/lib/domain/core/entities/specialists/specialist"
 import { usePathname } from "next/navigation"
+import { CountriesIntlEnum } from "@/lib/enums/countries/countriesIntlEnum"
 
 const HourComponent = ({hour, setHourSelected, hourSelected}:{
     hour:any;
@@ -114,9 +115,10 @@ const AttentionWindowsComponent = ({windows, setHourSelected, hourSelected}:{
     )
 }
 
-export const DataSelection = ({listOfLocalities, specialist}:{
+export const DataSelection = ({listOfLocalities, specialist, country}:{
   listOfLocalities: any[];
   specialist: Specialist;
+  country: string;
 }) => {
 
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
@@ -264,7 +266,7 @@ export const DataSelection = ({listOfLocalities, specialist}:{
             { service &&
               <div className="my-2 relative w-full h-fit justify-center items-start bg-white border border-slate-300 rounded-md p-2">
                 <p className='font-medium text-slate-900 text-base'>{service.name}</p>
-                <p className='font-light text-slate-500 text-sm mt-2'>S\{service.base_price}</p>
+                <p className='font-light text-slate-500 text-sm mt-2'>{country === CountriesIntlEnum.PERU ? "S\\" : "$"}{service.base_price}</p>
               </div>
             }
           </div>
