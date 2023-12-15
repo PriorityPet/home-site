@@ -17,7 +17,7 @@ export default async function sendEmail(req, res) {
 
     let resSendgrid = await sendgrid.send({
       to: email_to,
-      from: "prioritypet.tech@gmail.com",
+      from: "hola@prioritypet.club",
       subject: `Reservación confirmada - Priority Pet`,
       html: `<div>
         <div style="

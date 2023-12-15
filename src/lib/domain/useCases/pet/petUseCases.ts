@@ -35,6 +35,7 @@ export default class PetUseCase {
 
       await this._repository.createSubjectRelation({subjectId:response.data.subjectId, userId: obj.doctorId, typeUser: typeUser, providerId: obj.providerId});
       await this._repository.createSubjectRelation({subjectId:obj.pet.ownerId, userId: obj.doctorId, typeUser: typeUser, providerId: obj.providerId});
+      await this._ownerRepository.createRelationSubject(response.data.subjectId, obj.pet.ownerId);
 
       return response
     } catch (error) {
