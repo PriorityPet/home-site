@@ -9,8 +9,9 @@ import { Specialist } from '@/lib/domain/core/entities/specialists/specialist'
 import ReservationCard from './reservation/Main'
 import moment from 'moment';
 import LocalitiesComponent from './Localities/LocalitiesAndServices'
+import { CountriesIntlEnum } from '@/lib/enums/countries/countriesIntlEnum'
 
-const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
+const UserCardComponent = ({specialist, country}:{specialist:Specialist; country: string}) => {
 
     //const [profesion, setProfesion] = useState("")
     
@@ -54,17 +55,17 @@ const UserCardComponent = ({specialist}:{specialist:Specialist}) => {
                     <div className="flex flex-col justify-center items-start">
                         <p className='text-base text-slate-500 font-light'>{profesion?.name}</p>
                         <p className='text-base hidden md:block text-slate-500 font-light my-2'>{specialist.shortDescription}</p>
-                        {specialist.curp && <p className='text-base text-slate-500 font-light my-2 md:my-0'>N° de DNI: {specialist.curp}</p>}
+                        {specialist.curp && <p className='text-base text-slate-500 font-light my-2 md:my-0'>N° de {country === CountriesIntlEnum.PERU ? "DNI" : "CURP"}: {specialist.curp}</p>}
                     </div>
                 </div>
             </div>
             {specialist?.aboutMe && <InformationComponent specialist={specialist} />}
-            <LocalitiesComponent specialist={specialist} />
+            <LocalitiesComponent specialist={specialist} country={country} />
         </div>
     )
 }
 
-const UserCardComponentProvider = ({specialist}:{specialist:Specialist}) => {
+const UserCardComponentProvider = ({specialist, country}:{specialist:Specialist; country: string}) => {
 
     return(
         <div className="w-full lg:w-[55%] bg-white rounded-lg p-6 shadow-sm border relative h-fit flex flex-col justify-start items-start gap-5">
@@ -84,12 +85,12 @@ const UserCardComponentProvider = ({specialist}:{specialist:Specialist}) => {
                     </p>
                     <div className="flex flex-col justify-center items-start w-full">
                         <p className='text-base hidden md:block text-slate-500 font-light my-2 overflow-hidden w-full'>{specialist.shortDescription}</p>
-                        {specialist.provider?.ruc && <p className='text-base text-slate-500 font-light my-2 md:my-0 w-full truncate'>RUC: {specialist.provider?.ruc}</p>}
+                        {specialist.provider?.ruc && <p className='text-base text-slate-500 font-light my-2 md:my-0 w-full truncate'>{country === CountriesIntlEnum.PERU ? "RUC" : "RFC"}: {specialist.provider?.ruc}</p>}
                     </div>
                 </div>
             </div>
             {specialist?.aboutMe && <InformationComponent specialist={specialist} />}
-            <LocalitiesComponent specialist={specialist} />
+            <LocalitiesComponent specialist={specialist} country={country} />
         </div>
     )
 }
@@ -110,11 +111,10 @@ const InformationComponent = ({specialist}:{specialist:Specialist}) => {
 }
 
 function Main() {
-
     const pathname = usePathname();
     const router = useRouter();
     let searchParams = useSearchParams()
-    
+    const country = router.query.country?.toString() ?? "";
     const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
     const { 
         getSpecialist, 
@@ -141,7 +141,7 @@ function Main() {
       if(url){
         let id = url![url!.length - 1]
         getSpecialist(parseInt(id), parseInt(searchParams.get("type") ?? "0"))(dispatch)
-        getSpecialistLocalities(parseInt(id), parseInt(searchParams.get("type") ?? "0"))(dispatch)
+        getSpecialistLocalities(parseInt(id), parseInt(searchParams.get("type") ?? "0"), country)(dispatch)
       }
     }, [pathname]);
 
@@ -153,13 +153,13 @@ function Main() {
             </div>}
             {successful && loadedLocalities && <>
                 {!data.provider ?
-                    <UserCardComponent specialist={data as Specialist}/>
+                    <UserCardComponent specialist={data as Specialist} country= {country ?? ""} />
                 :
-                    <UserCardComponentProvider specialist={data as Specialist}/>
+                    <UserCardComponentProvider specialist={data as Specialist} country= {country ?? ""} />
                 }
                 <ReservationCard setClose={setActiveReservationCard} customStyle={twMerge([
                     activeReservationCard ? "flex z-10" : "lg:flex hidden"
-                ])} specialist={data as Specialist} />
+                ])} specialist={data as Specialist} country={country} />
                 <div className='lg:hidden fixed bottom-0 left-0 w-full p-4 flex flex-col justify-center items-center bg-white'>
                     <div onClick={()=>{ setActiveReservationCard(true) }} className='btn btn-primary w-full'>Agendar cita</div>
                 </div>

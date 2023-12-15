@@ -37,7 +37,7 @@ export default class SpecialistsUseCase {
         }
     }
 
-    async getSpecialistLocalities(id:number, type:number): Promise<ILocality[]> {
+    async getSpecialistLocalities(id:number, type:number, country: string): Promise<ILocality[]> {
         try {
             if(type === SpecialistEnum.PQA){
                 const response = await this._repository.getPQALocalities(id);
@@ -47,7 +47,7 @@ export default class SpecialistsUseCase {
                 return response;
             }
 
-            const response = await this._repository.getSpecialistLocalities(id, type);
+            const response = await this._repository.getSpecialistLocalities(id, type, country);
   
             if (response instanceof SpecialistsFailure) throw response;
   

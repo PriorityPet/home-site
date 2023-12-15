@@ -15,8 +15,9 @@ import Breeds from "./Breeds/Breeds";
 import { ISpecie } from "@/lib/domain/core/entities/specieEntity";
 import { IBreed } from "@/lib/domain/core/entities/breedEntity";
 import { ownerFailuresEnum } from "@/lib/domain/core/failures/owner/ownerFailure";
+import { CountriesIntlEnum } from "@/lib/enums/countries/countriesIntlEnum";
 
-export const UserConfirmation = () => {
+export const UserConfirmation = ({country}:{country:string;}) => {
   
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
   const {
@@ -390,8 +391,8 @@ export const UserConfirmation = () => {
           </div>
           <div className="w-full">
           <IntlPhoneNumberInput
-            preferredCountries={["pe"]}
-            defaultCountry={"pe"}
+            preferredCountries={country === CountriesIntlEnum.PERU ?  ["pe"] : ["mx"]}
+            defaultCountry={country === CountriesIntlEnum.PERU ? "pe" : "mx"}
             containerClassName="intl-tel-input w-full"
             onPhoneNumberChange={(isValid, value, countryData, fullNumber) =>
               handlephone(fullNumber, isValid) 

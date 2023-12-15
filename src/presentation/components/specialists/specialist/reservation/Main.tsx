@@ -10,7 +10,17 @@ import { AppointmentConfirmation } from './AppointmentConfirmation'
 import { AppointmentSuccess } from './AppointmentSuccess'
 import { ILocality } from '@/lib/domain/core/entities/localityEntity';
 
-const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Specialist;customStyle:any; setClose:any}) => {
+const ReservationCard = ({
+    specialist, 
+    customStyle, 
+    setClose, 
+    country
+  }:{
+    specialist:Specialist;
+    customStyle:any; 
+    setClose:any;
+    country: string;
+  }) => {
 
   const { state, actions, dispatch } = useContext<ISpecialistsContext>(SpecialistsContext);
 
@@ -53,10 +63,10 @@ const ReservationCard = ({specialist, customStyle, setClose}:{specialist:Special
         </p>
       </div>
       {step === 0 && listOfLocalities.length > 0 &&
-        <DataSelection specialist={specialist} listOfLocalities={listOfLocalities}/>
+        <DataSelection specialist={specialist} listOfLocalities={listOfLocalities} country={country} />
       }
-      {step === 1 && <UserConfirmation/>}
-      {step === 2 && <AppointmentConfirmation specialist={specialist}/>}
+      {step === 1 && <UserConfirmation country={country} />}
+      {step === 2 && <AppointmentConfirmation specialist={specialist} country={country} />}
       {step === 3 && <AppointmentSuccess/>}
       <div className='lg:hidden w-full text-center justify-center items-center'>
         <p onClick={()=>{ setClose(false) }} className='cursor-pointer text-base text-secondary font-light'>Regresar</p>
