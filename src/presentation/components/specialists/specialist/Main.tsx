@@ -10,6 +10,7 @@ import ReservationCard from './reservation/Main'
 import moment from 'moment';
 import LocalitiesComponent from './Localities/LocalitiesAndServices'
 import { CountriesIntlEnum } from '@/lib/enums/countries/countriesIntlEnum'
+import RegisterClient from './RegisterClient'
 
 const UserCardComponent = ({specialist, country}:{specialist:Specialist; country: string}) => {
 
@@ -146,24 +147,27 @@ function Main() {
     }, [pathname]);
 
     return (
-        <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6 px-[7%] lg:px-[8%] relative">
-            {loadingLocalities && <div className='w-full h-[40vh] flex flex-col justify-center items-center text-center'>
-                <p className='font-semibold text-base text-slate-900'>Espere un momento...</p>
-                <p className='font-light text-sm text-slate-700'>Obteniendo información del especialista</p>
-            </div>}
-            {successful && loadedLocalities && <>
-                {!data.provider ?
-                    <UserCardComponent specialist={data as Specialist} country= {country ?? ""} />
-                :
-                    <UserCardComponentProvider specialist={data as Specialist} country= {country ?? ""} />
-                }
-                <ReservationCard setClose={setActiveReservationCard} customStyle={twMerge([
-                    activeReservationCard ? "flex z-10" : "lg:flex hidden"
-                ])} specialist={data as Specialist} country={country} />
-                <div className='lg:hidden fixed bottom-0 left-0 w-full p-4 flex flex-col justify-center items-center bg-white'>
-                    <div onClick={()=>{ setActiveReservationCard(true) }} className='btn btn-primary w-full'>Agendar cita</div>
+        <div className='px-[7%] lg:px-[8%]'>            
+                {loadingLocalities && <div className='w-full h-[40vh] flex flex-col justify-center items-center text-center'>
+                    <p className='font-semibold text-base text-slate-900'>Espere un momento...</p>
+                    <p className='font-light text-sm text-slate-700'>Obteniendo información del especialista</p>
+                </div>}
+                {successful && loadedLocalities && <>
+                <RegisterClient setActivationReservationCard={setActiveReservationCard} />
+                <div className="w-full flex flex-wrap flex-col lg:flex-row lg:flex-nowrap justify-between items-start gap-6 relative">
+                    {!data.provider ?
+                        <UserCardComponent specialist={data as Specialist} country= {country ?? ""} />
+                    :
+                        <UserCardComponentProvider specialist={data as Specialist} country= {country ?? ""} />
+                    }
+                    <ReservationCard setClose={setActiveReservationCard} customStyle={twMerge([
+                        activeReservationCard ? "flex z-10" : "lg:flex hidden"
+                    ])} specialist={data as Specialist} country={country} />
+                    <div className='lg:hidden fixed bottom-0 left-0 w-full p-4 flex flex-col justify-center items-center bg-white'>
+                        <div onClick={()=>{ setActiveReservationCard(true) }} className='btn btn-primary w-full'>Agendar cita</div>
+                    </div>
                 </div>
-            </>}
+                </>}
         </div>
     )
 }

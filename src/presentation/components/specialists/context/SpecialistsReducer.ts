@@ -451,6 +451,17 @@ export const SpecialistsReducer = (state: any, action: any) => {
           error: action.payload.error,
         },
       }
+    case 'IS_REGISTER_CLIENT_SUCCESSFUL' :
+      return {
+        ...state,
+        registerClient: {
+          ...state.registerClient,
+          data: action.payload.data,
+          loading: false,
+          successful: true,
+          error: null,
+        },
+      }
     default:
       return state;
   }

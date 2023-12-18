@@ -27,10 +27,18 @@ export interface ISpecialistsState {
   species: IGetSpeciesState;
   breeds: IGetBreedsState;
   getInitialDate: ISpecialistsSpecialistsState;
+  registerClient: IRegisterSpecialistsState;
 }
 
 interface ISpecialistsSpecialistsState {
   data: any;
+  loading: boolean;
+  successful: boolean;
+  error: LocalityFailure | null; 
+}
+
+interface IRegisterSpecialistsState {
+  data: boolean;
   loading: boolean;
   successful: boolean;
   error: LocalityFailure | null; 
@@ -177,6 +185,12 @@ export const initialState: ISpecialistsState = {
   },
   getInitialDate: {
     data: "",
+    loading: false,
+    successful: false,
+    error: null,
+  },
+  registerClient: {
+    data: false,
     loading: false,
     successful: false,
     error: null,

@@ -9,6 +9,7 @@ import { UserConfirmation } from './UserInformation'
 import { AppointmentConfirmation } from './AppointmentConfirmation'
 import { AppointmentSuccess } from './AppointmentSuccess'
 import { ILocality } from '@/lib/domain/core/entities/localityEntity';
+import { RegisterSuccess } from './RegisterSuccess';
 
 const ReservationCard = ({
     specialist, 
@@ -60,6 +61,7 @@ const ReservationCard = ({
           {step === 1 && "Crear cuenta"}
           {step === 2 && "Confirma la información"}
           {step === 3 && "Reservación creada exitosamente"}
+          {step === 4 && "Cuenta creada exitosamente"}
         </p>
       </div>
       {step === 0 && listOfLocalities.length > 0 &&
@@ -68,6 +70,7 @@ const ReservationCard = ({
       {step === 1 && <UserConfirmation country={country} />}
       {step === 2 && <AppointmentConfirmation specialist={specialist} country={country} />}
       {step === 3 && <AppointmentSuccess/>}
+      {step === 4 && <RegisterSuccess/>}
       <div className='lg:hidden w-full text-center justify-center items-center'>
         <p onClick={()=>{ setClose(false) }} className='cursor-pointer text-base text-secondary font-light'>Regresar</p>
       </div>

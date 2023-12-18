@@ -27,6 +27,7 @@ export interface ISpecialistsActions {
   createPet: (obj: { pet: IPet, providerId: number|null, doctorId: number|null }) => (dispatch: Dispatch<any>) => {};
   getSpecies: () =>  (dispatch: Dispatch<any>) => {};
   getBreeds: (obj: { specieId: number }) => (dispatch: Dispatch<any>) => {};
+  isRegisterClient: (data: boolean) => (dispatch: Dispatch<any>) => {};
 }
 
 const getSpecialists = () => async (dispatch: Dispatch<any>) => {
@@ -186,6 +187,8 @@ const changeAppointmentData = (data:any) => async (dispatch: Dispatch<any>) => d
 const resetUserCreation = () => async (dispatch: Dispatch<any>) => dispatch({ type: "RESET_CREATION_USER", payload: {} });
 const resetAppointmentCreation = () => async (dispatch: Dispatch<any>) => dispatch({ type: "RESET_CREATION_APPOINTMENT", payload: {} });
 
+const isRegisterClient = (data: boolean) => async (dispatch: Dispatch<any>) => dispatch({ type: "IS_REGISTER_CLIENT_SUCCESSFUL", payload: { data } });
+
 export const actions: ISpecialistsActions = {
   changeStep,
   getSpecialists,
@@ -206,4 +209,5 @@ export const actions: ISpecialistsActions = {
   createPet,
   getSpecies,
   getBreeds,
+  isRegisterClient
 }

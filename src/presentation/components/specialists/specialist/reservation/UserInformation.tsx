@@ -32,7 +32,7 @@ export const UserConfirmation = ({country}:{country:string;}) => {
     successful,
     error
   } = state.createPet
-  const {data: step} = state.changeStep
+  const {data: isRegisterClient} = state.registerClient;
   const {
     data: specialist,
   } = state.getSpecialist
@@ -63,12 +63,16 @@ export const UserConfirmation = ({country}:{country:string;}) => {
   const [activePolicy, setActivePolicy] = useState(false);
 
   function usetSetterAfterCreation(){
-    changeUserId({
-      id: data.data.subjectId,
-      names: `${owner.firstName} ${owner.lastName}`,
-      email: owner.email,
-    })(dispatch)
-    changeStep(2)(dispatch)
+    if(isRegisterClient) {
+      changeStep(4)(dispatch)
+    } else {
+      changeUserId({
+        id: data.data.subjectId,
+        names: `${owner.firstName} ${owner.lastName}`,
+        email: owner.email,
+      })(dispatch)
+      changeStep(2)(dispatch)
+    }
   }
 
   const handlename = (value: string) => {
