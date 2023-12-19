@@ -23,7 +23,8 @@ export const UserConfirmation = ({country}:{country:string;}) => {
   const {
     createPet,
     changeUserId,
-    changeStep
+    changeStep,
+    isRegisterClient
   } = actions
 
   const {
@@ -32,7 +33,7 @@ export const UserConfirmation = ({country}:{country:string;}) => {
     successful,
     error
   } = state.createPet
-  const {data: isRegisterClient} = state.registerClient;
+  const {data: isRegisterClientData} = state.registerClient;
   const {
     data: specialist,
   } = state.getSpecialist
@@ -63,7 +64,7 @@ export const UserConfirmation = ({country}:{country:string;}) => {
   const [activePolicy, setActivePolicy] = useState(false);
 
   function usetSetterAfterCreation(){
-    if(isRegisterClient) {
+    if(isRegisterClientData) {
       changeStep(4)(dispatch)
     } else {
       changeUserId({
@@ -439,7 +440,7 @@ export const UserConfirmation = ({country}:{country:string;}) => {
         </div>
       </div>
       <div className="w-full border-t border-slate-300 pt-6 mt-3">
-        <div className="w-full text-center mb-4 cursor-pointer text-gray-500 text-sm" onClick={()=>{ changeStep(0)(dispatch) }}>
+        <div className="w-full text-center mb-4 cursor-pointer text-gray-500 text-sm" onClick={()=>{ changeStep(0)(dispatch); isRegisterClient(false) }}>
           Volver
         </div>
         <button 
