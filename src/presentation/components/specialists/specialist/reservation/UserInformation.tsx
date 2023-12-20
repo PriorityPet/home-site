@@ -4,9 +4,7 @@ import { FiCheck, FiHeart, FiMessageSquare, FiUser } from "react-icons/fi";
 import { AiOutlinePhone } from "react-icons/ai";
 import { ISpecialistsContext, SpecialistsContext } from "../../context/SpecialistsContext";
 import { twMerge } from "tailwind-merge";
-import { VALIDATE_EMAIL, VALIDATE_NAMES, VALIDATE_NUMBERS } from "@/lib/utils/errors-validation";
-import IntlPhoneNumberInput from "@/presentation/components/core/Intl/IntlPhoneNumberInput/IntlPhoneNumberInput";
-import "react-intl-tel-input/dist/main.css";
+import { VALIDATE_EMAIL, VALIDATE_NAMES } from "@/lib/utils/errors-validation";
 import { IPet } from "@/lib/domain/core/entities/petEntity";
 import { IOwner } from "@/lib/domain/core/entities/ownerEntity";
 import { MdOutlinePets } from "react-icons/md";
@@ -15,6 +13,8 @@ import Breeds from "./Breeds/Breeds";
 import { ISpecie } from "@/lib/domain/core/entities/specieEntity";
 import { IBreed } from "@/lib/domain/core/entities/breedEntity";
 import { ownerFailuresEnum } from "@/lib/domain/core/failures/owner/ownerFailure";
+import PhoneNumberInput from "@/presentation/components/core/Inputs/PhoneNumberInput/PhoneNumberInput";
+import { ErrorValidatorType } from "@/presentation/components/core/Inputs/PhoneNumberInput/Validators/Validators";
 import { CountriesIntlEnum } from "@/lib/enums/countries/countriesIntlEnum";
 
 export const UserConfirmation = ({country}:{country:string;}) => {
@@ -163,32 +163,15 @@ export const UserConfirmation = ({country}:{country:string;}) => {
     return false;
   };
 
-  const handlephone = (value: string, isValid: boolean) => {
-    setOwner({ ...owner, phoneNumber: value });
-    if (!VALIDATE_NUMBERS(value) && value.length > 0) {
-      setErrors((previousState: any) => {
-        return {
-          ...previousState,
-          phoneNumber:"El teléfono del paciente solo lleva números"
-        };
-      });
+  const handlephone = (value: string, validator: ErrorValidatorType | null) => {
+    setOwner({ ...owner, phoneNumber: value.trim() });
+
+    if (!validator?.isValid) {
+      setErrors({ ...errors, phoneNumber: validator?.error?.es ?? "" });
       return true;
     }
-    if (!isValid && value.length > 0) {
-      setErrors((previousState: any) => {
-        return {
-          ...previousState,
-          phoneNumber:"El teléfono del paciente no es correcto"
-        };
-      });
-      return true;
-    }
-    setErrors((previousState: any) => {
-      return {
-          ...previousState,
-          phoneNumber:""
-        };
-      });
+
+    setErrors({ ...errors, phoneNumber: "" });
     return false;
   };
 
@@ -395,22 +378,13 @@ export const UserConfirmation = ({country}:{country:string;}) => {
             <p className='font-light text-slate-500 text-sm'>Indica tu teléfono de contacto</p>
           </div>
           <div className="w-full">
-          <IntlPhoneNumberInput
-            preferredCountries={country === CountriesIntlEnum.PERU ?  ["pe"] : ["mx"]}
-            defaultCountry={country === CountriesIntlEnum.PERU ? "pe" : "mx"}
-            containerClassName="intl-tel-input w-full"
-            onPhoneNumberChange={(isValid, value, countryData, fullNumber) =>
-              handlephone(fullNumber, isValid) 
-            }
-            inputClassName={twMerge([
-              "min-w-[4rem] w-full max-w-full",
-              "transition bg-white border border-slate-300 rounded-md font-normal text-slate-900 text-sm p-[0.5rem_0.6rem]",
-              "focus:outline-none focus:border-slate-400",
-              "placeholder-slate-500"
-            ])}
-          />
+            <PhoneNumberInput
+              defaultSelectedCountry={country === CountriesIntlEnum.PERU ? "pe" : "mx"}
+              onPhoneNumberChange={(values) => {
+                handlephone(values.fullPhoneNumber, values.validator);
+              }}
+            />
           </div>
-          {errors.phoneNumber && <p className="text-xs text-red-700 font-medium">{errors.phoneNumber}</p>}
         </div>
       </div>
       <div className="w-full relative flex flex-col justify-start gap-3 items-start">

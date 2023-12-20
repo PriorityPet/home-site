@@ -13,6 +13,35 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "sjywhbbhktlivbtkmvcj.supabase.co",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "ounzwscwbtqzavselxrz.supabase.co",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "hqdiyiqhqbknumobtkox.supabase.co",
+        port: "",
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig

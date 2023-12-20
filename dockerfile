@@ -1,7 +1,7 @@
 FROM node:lts as dependencies
 WORKDIR /new-ema-centers-app
 COPY package.json ./
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 FROM node:lts as builder
 WORKDIR /new-ema-centers-app
