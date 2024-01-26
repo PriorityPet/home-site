@@ -42,8 +42,8 @@ export default async function sendEmail(req, res) {
             font-size: 20px;
             line-height: 30px;
         ">
-            <p>Estimado ${fullnameOwner}</p>
-            <p>Enhorabuena tu cita de ${serviceName} con ${fullnameUser} esta confirmada.</p>
+            <p>Estimado/a ${fullnameOwner}</p>
+            <p>¡Enhorabuena! Tu cita de ${serviceName} con ${fullnameUser} está confirmada.</p>
             <p>
               Fecha: ${date}<br/>
               Hora: ${hour}<br/>
