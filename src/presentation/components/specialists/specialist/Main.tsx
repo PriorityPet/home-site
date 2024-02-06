@@ -145,7 +145,7 @@ function Main() {
         getSpecialistLocalities(parseInt(id), parseInt(searchParams.get("type") ?? "0"), country)(dispatch)
       }
     }, [pathname]);
-
+console.log(data)
     return (
         <div className='px-[7%] lg:px-[8%]'>            
                 {loadingLocalities && <div className='w-full h-[40vh] flex flex-col justify-center items-center text-center'>

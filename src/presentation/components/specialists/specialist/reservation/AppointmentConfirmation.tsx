@@ -45,6 +45,24 @@ export const AppointmentConfirmation = ({specialist, country}:{
     }
   }, [pathname]);
 
+  const dataPreview = {
+    pacienteId: paciente["id"],
+    ownerId: paciente["ownerId"],
+    paciente: paciente,
+    doctorId: doctorId,
+    providerId: specialist.provider.userId,
+    servicioId: service && service["id"],
+    id: id,
+    doctor: specialist,
+    nombreServicio: service && service["name"],
+    direccion: locality?.address.postal_code,
+    localityId: locality?.id,
+    date: appointmentData["date"],
+    hour: appointmentData["hour"],
+  }
+
+  console.log(dataPreview, specialist)
+
   return(
     <div className="w-full h-fit flex flex-col justify-start items-start gap-3">
       
@@ -74,13 +92,16 @@ export const AppointmentConfirmation = ({specialist, country}:{
         disabled={loading}
         onClick={()=>{ createAppointment({
           pacienteId: paciente["id"],
+          ownerId: paciente["ownerId"],
           paciente: paciente,
           doctorId: doctorId,
+          providerId: specialist.provider.userId,
           servicioId: service && service["id"],
           id: id,
           doctor: specialist,
           nombreServicio: service && service["name"],
           direccion: locality?.address.postal_code,
+          localityId: locality?.id,
           date: appointmentData["date"],
           hour: appointmentData["hour"],
         })(dispatch) }} className="btn btn-primary w-full">{loading ? "Agendando..." : "Confirmar"}</button>

@@ -1,4 +1,4 @@
-import { GET_SPECIALISTS_ENDPOINT } from '../../config/api/dictionary';
+import { CREATE_ORDER_ENDPOINT, GET_SPECIALISTS_ENDPOINT } from '../../config/api/dictionary';
 import nookies from 'nookies';
 import { Specialist } from '@/lib/domain/core/entities/specialists/specialist';
 import { SpecialistsFailure, specialistsFailuresEnum } from '@/lib/domain/core/failures/specialists/specialistsFailure';
@@ -11,6 +11,8 @@ import { SpecialistEnum } from '@/lib/enums/specialist/specialistEnum';
 import { IService } from '@/lib/domain/core/entities/serviceEntity';
 import { localityFromSupabaseToMap } from '@/lib/domain/mappers/localities/localitiesSupabaseMapper';
 import { CountriesIntlApiEnum, CountriesIntlEnum } from '@/lib/enums/countries/countriesIntlEnum';
+import { uuid } from 'uuidv4';
+import { OriginOrderEnum, TypeService } from '@/lib/enums/orders/ordersEnum';
 
 export default interface ISpecialistsRepository {
     getSpecialists(): Promise<Array<Specialist> | SpecialistsFailure>;
@@ -88,6 +90,20 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         
         if(relation.data) {
           let res= await supabase.from("Proveedores").select(`*`).eq("id", relation.data.proveedorId).single();
+
+          if(res.error)throw new SpecialistsFailure(res.statusText)
+
+          provider = res.data ? res.data : {};
+        }
+
+      }
+
+      if(type === SpecialistEnum.PQA){
+
+        let relation= await supabase.from("ProveedoresDoctores").select(`*`).eq("doctorId", id)
+        
+        if(relation.data && relation.data.length > 0) {
+          let res= await supabase.from("Proveedores").select(`*`).eq("id", relation.data[0].proveedorId).single();
 
           if(res.error)throw new SpecialistsFailure(res.statusText)
 
@@ -499,12 +515,48 @@ export class SpecialistsRepository implements ISpecialistsRepository {
         estado: 3
       }
 
-      let query = supabase.from("Citas")
-      .update(appointment)
-      .eq('id', obj["id"])
+      let cookies = nookies.get(undefined, 'access_token');
+
+      var myHeaders = new Headers();
+
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${cookies["access_token"]}`);
+
+      const idGenerate = uuid();
+
+      var raw = JSON.stringify({
+          id: idGenerate,
+          subject_id: obj.ownerId,
+          supplier_id: obj.providerId,
+          location_id: obj.localityId,
+          origin: OriginOrderEnum.Marketplace,
+          date: null,
+          items: [
+              {
+                  service_id: obj.servicioId,
+                  type_service: TypeService.Standar,
+                  quantity: 1,
+                  pqa_id: obj["doctorId"],
+                  subject_id: obj["pacienteId"],
+                  appointment_id: obj.id,
+              }
+          ]
+      });
+
+      var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+      } as RequestInit;
+
+      let URL = CREATE_ORDER_ENDPOINT as RequestInfo
+
+      const response = await fetch(URL, requestOptions)
       
-      let res = await query
-      if(res.error) throw new SpecialistsFailure(specialistsFailuresEnum.serverError)
+      let responseApi = await response.json()
+
+      console.log("CREATE_CREATE_APPOINTMENT_ENDPOINT", responseApi["data"])
 
       const resRelation = await supabase.from("PermisosSujetos").insert({
         sujetoId: obj["pacienteId"],
@@ -513,7 +565,7 @@ export class SpecialistsRepository implements ISpecialistsRepository {
 
       if (resRelation.error) return new SpecialistsFailure(specialistsFailuresEnum.serverError);
 
-      return res.data ?? {};
+      return responseApi.data ?? {};
     } catch (error) {
         const exception = error as any;
         return new SpecialistsFailure(specialistsFailuresEnum.serverError);

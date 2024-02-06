@@ -135,8 +135,6 @@ const getInitialDate = (obj:{userId:number; serviceId:number; date:string; type:
   try {
     dispatch({ type: "GET_INITIAL_DATE_LOADING" });
 
-    console.log(obj.date)
-
     const res: string= await new SpecialistsUseCase().getInitialDate(obj);
 
     dispatch({ type: "GET_INITIAL_DATE_SUCCESSFUL", payload: { data: res } });

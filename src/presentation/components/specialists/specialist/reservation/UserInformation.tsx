@@ -69,6 +69,7 @@ export const UserConfirmation = ({country}:{country:string;}) => {
     } else {
       changeUserId({
         id: data.data.subjectId,
+        ownerId: data.data.ownerId,
         names: `${owner.firstName} ${owner.lastName}`,
         email: owner.email,
       })(dispatch)

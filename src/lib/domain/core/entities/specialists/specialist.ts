@@ -23,7 +23,7 @@ export interface Specialist {
     specialities: any[];
     role: string;
     createdOn: any | null;
-    provider: IProvider | null;
+    provider: IProvider;
 }
 
 export interface IProvider {
