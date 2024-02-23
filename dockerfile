@@ -1,23 +1,18 @@
-FROM node:lts as dependencies
-WORKDIR /new-ema-centers-app
-COPY package.json ./
-RUN npm install
+FROM node:18-alpine as builder
+WORKDIR /xentraly-app
 
-FROM node:lts as builder
-WORKDIR /new-ema-centers-app
+COPY package.json package-lock.json ./
+RUN npm ci --legacy-peer-deps
 COPY . .
-COPY --from=dependencies /new-ema-centers-app/node_modules ./node_modules
 RUN npm run build
 
-FROM node:lts as runner
-WORKDIR /new-ema-centers-app
-ENV NODE_ENV production
-# If you are using a custom next.config.js file, uncomment this line.
-COPY --from=builder /new-ema-centers-app/next.config.js ./
-COPY --from=builder /new-ema-centers-app/public ./public
-COPY --from=builder /new-ema-centers-app/.next ./.next
-COPY --from=builder /new-ema-centers-app/node_modules ./node_modules
-COPY --from=builder /new-ema-centers-app/package.json ./package.json
-
+FROM node:18-alpine as runner
+WORKDIR /xentraly-app
+COPY --from=builder /xentraly-app/package.json .
+COPY --from=builder /xentraly-app/package-lock.json .
+COPY --from=builder /xentraly-app/next.config.js ./
+COPY --from=builder /xentraly-app/public ./public
+COPY --from=builder /xentraly-app/.next/standalone ./
+COPY --from=builder /xentraly-app/.next/static ./.next/static
 EXPOSE 3000
-CMD ["npm", "start"]
+ENTRYPOINT ["npm", "start"]
